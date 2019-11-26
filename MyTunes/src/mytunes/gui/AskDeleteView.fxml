@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="144.0" prefWidth="554.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+   <children>
+      <Label layoutX="122.0" layoutY="38.0" prefHeight="22.0" prefWidth="286.0" text="Are you sure you want to delete ? ">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="83.0" fitWidth="91.0" layoutX="21.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Desktop/483ef8b10a46e28d02293a31570c8c56-warning-sign-colored-stroke-icon-by-vexels.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="364.0" layoutY="88.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="58.0" text="Keep" />
+      <Button layoutX="448.0" layoutY="88.0" mnemonicParsing="false" text="Delete" />
+   </children>
+</AnchorPane>
