@@ -57,7 +57,7 @@ int temporaryId = 20;
 
     
    
-    public Song createSong(String title, String artist, String category, String duration) throws IOException {
+    public Song createSong(String title, String artist, String category, int duration) throws IOException {
         int newId = getNewId();
         Song newSong = new Song(newId, title, artist, category, duration);
         String newSongString;
@@ -117,7 +117,7 @@ int temporaryId = 20;
     String updatedSongTitle = song.getTitle();
     String updatedSongArtist = song.getArtist();
     String updatedSongCategory = song.getCategory();
-    String updatedSongDuration = song.getDuration();
+    int updatedSongDuration = song.getDuration();
 
     deleteSong(song);
     setNewId(songToUpdateId);
@@ -150,7 +150,7 @@ int temporaryId = 20;
         String title = arrSong[1];
         String artist = arrSong[2];
         String category = arrSong[3];
-        String duration = arrSong[4];
+        int duration = Integer.parseInt(arrSong[4]);
         Song song = new Song(id, title, artist, category, duration);
         return song;
     }
@@ -161,7 +161,7 @@ int temporaryId = 20;
         String newSongTitle = song.getTitle();
         String newSongArtist = song.getArtist();
         String newSongCatagory = song.getCategory();
-        String newSongDuration = song.getDuration();
+        int newSongDuration = song.getDuration();
 
         String newSongString = newSongId + ","  + newSongTitle + "," + newSongArtist + "," + newSongCatagory + "," + newSongDuration;
         return newSongString;
