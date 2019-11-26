@@ -58,7 +58,7 @@ public class DalMethodTester {
         String title = "Hump Day";
         String artist = "Tin Huey";
         String category = "ProgRock";
-        String duration = "4.20";
+        int duration = 180;
         songDao.createSong(title, artist, category, duration);  // Tests CreateMovie method
     }
      
@@ -82,7 +82,7 @@ public class DalMethodTester {
         String testTitle = testSong.getTitle();
         String testArtist = testSong.getArtist();
         String testCategory = testSong.getCategory();
-        String testDuration = testSong.getDuration();
+        int testDuration = testSong.getDuration();
 
         System.out.println("");
         System.out.print("Song with ID " + testId + " is: ");
@@ -95,7 +95,7 @@ public class DalMethodTester {
     
     public static void testUpdateSong() throws IOException  {
     Song updatedSong;
-    updatedSong = new Song(5, "Updated Song", "The Drunks", "Reggae","4:20");
+    updatedSong = new Song(5, "Updated Song", "The Drunks", "Reggae",180);
     songDao.updateSong(updatedSong);
     }
     

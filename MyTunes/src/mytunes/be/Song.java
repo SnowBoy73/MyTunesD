@@ -17,11 +17,11 @@ public class Song {
     private String title;
     private String artist;
     private String category;
-    private String duration;
+    private int duration;  // in seconds
 
     
     
-    public Song(int id, String title, String artist, String category, String duration) {
+    public Song(int id, String title, String artist, String category, int duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
@@ -55,7 +55,7 @@ public class Song {
 
     
     
-   public String getDuration() {
+   public int getDuration() {
         return duration;
    }
    
@@ -73,19 +73,19 @@ public class Song {
 
    
    
-     public void setArtist() {
+     public void setArtist(String artist) {
         this.artist = artist;
     }
 
      
     
-    public void setCatagory() {
+    public void setCatagory(String category) {
         this.category = category;
     }
 
    
    
-     public void setDuration(int m, int s) {
+     public void setDuration(int duration) {  // probably unnecessay method
         this.duration = duration;
         
     }

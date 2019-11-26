@@ -1,20 +1,11 @@
-1,song1,artist1,rock,1.24
-2,song2,artist2,rock,2.24
-3,song3,artist3,rock,3.24
-4,song4,artist4,rock,4.24
-5,song5,artist5,rock,5.24
-6,song1,artist6,rock,1.24
-7,song2,artist7,rock,2.24
-8,song3,artist8,rock,3.24
-9,song4,artist9,rock,4.24
-10,song5,artist10,rock,5.24
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
-21,Hump Day,Tin Huey,ProgRock,4.20
+1,song1,artist1,rock,100
+2,song2,artist2,rock,200
+3,song3,artist3,rock,300
+4,song4,artist4,rock,420
+5,song5,artist5,rock,500
+6,song6,artist6,rock,600
+7,song7,artist7,rock,700
+8,song8,artist8,rock,800
+9,song9,artist9,rock,900
+10,song10,artist10,rock,1000
+21,Hump Day,Tin Huey,ProgRock,180
