@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="374.0" prefWidth="289.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="374.0" prefWidth="289.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.EditSongController">
    <children>
       <Label layoutX="5.0" layoutY="14.0" prefHeight="22.0" prefWidth="271.0" text="             New/Edit Song">
          <font>
@@ -26,8 +26,8 @@
       <JFXTextField layoutX="65.0" layoutY="258.0" prefHeight="27.0" prefWidth="126.0" />
       <JFXSpinner layoutX="221.0" layoutY="14.0" />
       <Spinner layoutX="90.0" layoutY="170.0" />
-      <Button layoutX="198.0" layoutY="267.0" mnemonicParsing="false" text="Choose.." />
-      <Button layoutX="74.0" layoutY="324.0" mnemonicParsing="false" text="Cancel" />
-      <Button layoutX="150.0" layoutY="324.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="198.0" layoutY="267.0" mnemonicParsing="false" onAction="#ChooseSong" text="Choose.." />
+      <Button layoutX="74.0" layoutY="324.0" mnemonicParsing="false" onAction="#CancelEditSong" text="Cancel" />
+      <Button layoutX="150.0" layoutY="324.0" mnemonicParsing="false" onAction="#SaveEditSong" text="Save" />
    </children>
 </AnchorPane>
