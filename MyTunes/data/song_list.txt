@@ -8,4 +8,5 @@
 8,song8,artist8,rock,800
 9,song9,artist9,rock,900
 10,song10,artist10,rock,1000
-21,Hump Day,Tin Huey,ProgRock,180
+11,Updated Song,The Drunks,Reggae,120
+12,Hump Day,Tin Huey,ProgRock,180

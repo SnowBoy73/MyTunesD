@@ -6,10 +6,13 @@
 package mytunes.dal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import mytunes.dal.SongDAO;
+import mytunes.dal.PlaylistDAO;
 import mytunes.be.Song; 
+import mytunes.be.Playlist; 
 
 
 /**
@@ -21,34 +24,37 @@ public class DalMethodTester {
  
 
 
-    private static SongDAO songDao = new SongDAO();
+    public static SongDAO songDao = new SongDAO();
+    public static PlaylistDAO playlistDao = new PlaylistDAO();
 
     
     
     public static void main(String[] args) throws IOException
     {
-         testCreateSong();  // Tests CreateSong method
-        //listSongs();
+        //testCreateSong();  // Tests CreateSong method
+        //  listSongs();
         testGetSong();
-         //   songDao.testDeleteSOng();
-         //  testUpdateSong();
-        listSongs();
-
+        //testDeleteSong();
+        testUpdateSong();
+        //listSongs();
+//System.out.println("Start "); //
+        //listPlaylists();
+//System.out.println("End "); //
+       
     }
     
     
     
     public static void listSongs() throws IOException  {
             
-        List<Song> allSongs = songDao.getAllSongs();
+        List<Song> allSongs = songDao.getAllSongsFromFile();
         for (Song allSong : allSongs)
         {
-           System.out.println(allSong.getTitle());
+System.out.println(allSong.getTitle());
         }
-        System.out.println("");  //
-        System.out.println("Song count: " + allSongs.size()); //
-          //
-        System.out.println("");  //
+System.out.println("");  //
+System.out.println("Song count: " + allSongs.size()); //
+System.out.println("");  //
    
     }
 
@@ -59,18 +65,26 @@ public class DalMethodTester {
         String artist = "Tin Huey";
         String category = "ProgRock";
         int duration = 180;
-        songDao.createSong(title, artist, category, duration);  // Tests CreateMovie method
-    }
+        Song createdSong = songDao.createSong(title, artist, category, duration);  // Tests CreateSong method
+        List<Song> updatedSongList = new ArrayList<>();
+        List<Song> songList = songDao.getAllSongsFromFile();
+        updatedSongList = songDao.addSongToSongList(createdSong, songList);
+        songDao.writeSongListToFile(updatedSongList);
+     }
      
         
      
     public static void testDeleteSong() throws IOException {
-        int songToDeleteId = 20; // Test delete song with id 20
-        Song songToDelete = songDao.getSong(songToDeleteId); // Tests DeleteSong method
+        List<Song> allSongs = new ArrayList<Song>();
+        allSongs = songDao.getAllSongsFromFile();
+        int lastSongID = songDao.getNewSongId() - 1;
+        Song songToDelete = songDao.getSong(lastSongID);
+        songDao.deleteSong(songToDelete, allSongs);  // Tests deleteSong method
+
+System.out.println("lastSongID = " + lastSongID); 
+   
         //System.out.print("Song to delete: " + songToDelete);
         //System.out.println("");        
-        //System.out.println("");
-        songDao.deleteSong(songToDelete);  // Tests CreateSong method
     }
     
     
@@ -84,19 +98,55 @@ public class DalMethodTester {
         String testCategory = testSong.getCategory();
         int testDuration = testSong.getDuration();
 
-        System.out.println("");
-        System.out.print("Song with ID " + testId + " is: ");
-        System.out.print("\"" + testTitle + "\", by " +  testArtist + " in the category " + testCategory + " with duration " + testDuration);
-        System.out.println("");    
+System.out.println("");
+System.out.print("Song with ID " + testId + " is: ");
+System.out.print("\"" + testTitle + "\", by " +  testArtist + " in the category " + testCategory + " with duration " + testDuration);
+System.out.println("");    
     }
     
  
     
     
     public static void testUpdateSong() throws IOException  {
+    List<Song> allSongs = new ArrayList<Song>();
+    allSongs = songDao.getAllSongsFromFile();
+            int duration = (int)Math.round(Math.random()*300) + 20;  //
     Song updatedSong;
-    updatedSong = new Song(5, "Updated Song", "The Drunks", "Reggae",180);
+    updatedSong = new Song(11, "Updated Song", "The Drunks", "Reggae", duration);
     songDao.updateSong(updatedSong);
     }
     
+    
+    public static void testCreatePlaylist() throws IOException {
+        int newPlaylistId = playlistDao.getNewPlaylistId();
+        String createdPlaylistString = newPlaylistId + "New Playlist,4,5,6";
+        Playlist createdPlaylist = playlistDao.stringArrayToPlaylist(createdPlaylistString);  // Tests CreateSong method
+        List<Playlist> updatedPlaylistList = new ArrayList<>();
+        List<Playlist> allPlaylists = playlistDao.getAllPlaylistsFromFile();
+        updatedPlaylistList = playlistDao.addPlaylistToPlaylistList(createdPlaylist, allPlaylists);
+        playlistDao.writePlaylistListToFile(updatedPlaylistList);
+     }
+     
+    
+    
+       
+    public static void listPlaylists() throws IOException {
+        List<Playlist> playlists = playlistDao.getAllPlaylistsFromFile();
+System.out.println("listPlaylists Playlist count: " + playlists.size()); //
+
+        
+        for (Playlist currentPlaylist : playlists) {
+        String currentPlaylistString = playlistDao.playlistToString(currentPlaylist);
+            //old bit
+   /*     int testPlaylistId = 1;
+        Playlist testPlaylist = playlistDao.getPlaylist(testPlaylistId);
+        System.out.println("Playlist ID: " + testPlaylist.getId() + "/n");
+        System.out.println("Playlist Name: " + testPlaylist.getName() + "/n");
+        System.out.println("");  //
+    */    //System.out.println("Song count: " + allSongs.size()); //
+        System.out.println("");  //
+        }
+    }  
+
+
 }
