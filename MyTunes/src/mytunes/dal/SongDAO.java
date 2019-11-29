@@ -16,82 +16,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mytunes.be.Song;
-//import mytunes.bll.Duration;
+
 
 /**
- *
  * @author   Louise, Nadia, Superior Martin and Alan
-
  */
+
+
 public class SongDAO {
     
     
 private static final String SONG_SOURCE = "data/song_list.txt";
-int temporaryId = 20;
+boolean isNewSong = true;
+int oldSongId;
 
 
 
-   
-    public List<Song> getAllSongs() throws FileNotFoundException, IOException {
-        List<Song> allSongs = new ArrayList<>();
-        File file = new File(SONG_SOURCE);
-        try (BufferedReader reader = new BufferedReader(new FileReader(file)))
-        {
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                try
-                {
-                    Song song = stringArrayToSong(line);
-                    allSongs.add(song);
-
-                } catch (Exception ex)
-                {
-                    //Do nothing we simply do not accept malformed lines of data.
-                    //In a perfect world you should at least log the incident.
-                }
-            }
-        }
-        return allSongs;
+    public List<Song> getAllSongsFromDB() throws FileNotFoundException, IOException {
+        
+         // YET TO WRITE
+        return null;
     }
-
+    
     
    
     public Song createSong(String title, String artist, String category, int duration) throws IOException {
-        int newId = getNewId();
-        Song newSong = new Song(newId, title, artist, category, duration);
-        String newSongString;
-        
-        //Add newSong to songList
-        List<Song> songList = new ArrayList<>();
-        songList = getAllSongs();
-        songList.add(newSong);
-        
-        //Add newSong to File
-        File file = new File(SONG_SOURCE);
-        try (FileWriter fw = new FileWriter (file, true)) {  
-            newSongString = "\n" + songToString(newSong);
-            fw.write(newSongString);
-            fw.close();
+System.out.println("create song "); //
+System.out.println("isNewSong = " + isNewSong); //
+        int songId;
+        if(isNewSong) {
+             songId = getNewSongId();
+        } else {
+             songId = oldSongId;
         }
-         catch (Exception e)  {
-             System.out.println("Error writing file, dude");
-         }
-        return newSong;
+        Song newlyCreatedSong = new Song(songId, title, artist, category, duration);
+        isNewSong = true;
+        System.out.println("new song "+ songId + title + artist + category + duration);
+System.out.println("Song Created"); //
+        return newlyCreatedSong;
     }
-
+        
     
     
+    public List<Song> addSongToSongList(Song songToBeAdded, List<Song> songList) {
+        //Add newSong to songList
+        songList.add(songToBeAdded);
+        return songList;
+        }
+        
+        
    
-    public void deleteSong(Song songToDelete) throws IOException {
+    public void deleteSong(Song songToDelete, List<Song> songlist) throws IOException {
         
         List<Song> allSongs = new ArrayList<>();
-        allSongs = getAllSongs();
-       
-        if (true) {  // to be replaced with movieExists method (NOT NECESSARY)
+        allSongs = getAllSongsFromFile();
+        if (true) {  // to be replaced with SongExists method (NOT NECESSARY)
             int songToDeleteId = songToDelete.getId();
             songToDelete = getSong(songToDeleteId);
-
             for (int i = 0; i < allSongs.size(); i++) {
                 Song testSong = allSongs.get(i);
                 int testSongId = testSong.getId();
@@ -111,25 +92,44 @@ int temporaryId = 20;
 
     
     
-    
-    public void updateSong(Song song) throws IOException {
-    int songToUpdateId = song.getId();
-    String updatedSongTitle = song.getTitle();
-    String updatedSongArtist = song.getArtist();
-    String updatedSongCategory = song.getCategory();
-    int updatedSongDuration = song.getDuration();
+    public void updateSong(Song songToUpdate) throws IOException {
+        List<Song> allSongs = new ArrayList<>();
+        allSongs = getAllSongsFromFile();
+        List<Song> updatedAllSongs = new ArrayList<>();
 
-    deleteSong(song);
-    setNewId(songToUpdateId);
-    createSong(updatedSongTitle,updatedSongArtist,updatedSongCategory, updatedSongDuration);
-    
-    }
+        int songToUpdateId = songToUpdate.getId();
+        String updatedSongTitle = songToUpdate.getTitle();
+        String updatedSongArtist = songToUpdate.getArtist();
+        String updatedSongCategory = songToUpdate.getCategory();
+        int updatedSongDuration = songToUpdate.getDuration();
+        // new bit
+        
+System.out.println("updatedAllSongs:"); //
+        for (int i = 0; i < allSongs.size(); i++) {
+            Song songBeingChecked = allSongs.get(i);
+            int songBeingCheckedId = songBeingChecked.getId();
+            if(songBeingCheckedId == songToUpdateId) {
+                updatedAllSongs.add(songToUpdate);
+            } else {
+                updatedAllSongs.add(songBeingChecked);
+           }
+System.out.println(songBeingChecked.getId()); //
+        }
+        
+        writeSongListToFile(updatedAllSongs);
+        /*   old bit
+        deleteSong(song, songList);
+        isNewSong = false;
+        oldSongId = songToUpdateId;
+        Song updatedSong = createSong(updatedSongTitle,updatedSongArtist,updatedSongCategory, updatedSongDuration);
+    */
+}
 
     
    
     public Song getSong(int id) throws IOException {
         List<Song> allSongs = new ArrayList<>();
-        allSongs = getAllSongs();
+        allSongs = getAllSongsFromFile();
         for (int i = 0; i < allSongs.size(); i++) {
             Song testSong = allSongs.get(i);
             int foundId = testSong.getId();
@@ -156,6 +156,7 @@ int temporaryId = 20;
     }
 
     
+    
     public String songToString(Song song) {
         int newSongId = song.getId();
         String newSongTitle = song.getTitle();
@@ -169,28 +170,61 @@ int temporaryId = 20;
     
     
     
-    
-    private int getNewId() {
-        temporaryId ++;
-        return temporaryId;
+    public int getNewSongId() throws IOException {
+
+        List<Song> allSongs = getAllSongsFromFile();
+        int songListSize = allSongs.size();
+ System.out.println("allSongs size = " + songListSize); //
+        Song lastSong = allSongs.get(songListSize - 1);
+        int newSongId = lastSong.getId() + 1;
+        return newSongId;
     }
         
     
     
+    public int getOldSongId() throws IOException {
+    return oldSongId;
+    }
     
-    private void setNewId(int id) {
-        temporaryId = id;
-    } 
     
-        
+    
+    public List<Song> getAllSongsFromFile() throws FileNotFoundException, IOException {
+        List<Song> allSongs = new ArrayList<>();
+        File file = new File(SONG_SOURCE);
+        try (BufferedReader reader = new BufferedReader(new FileReader(file)))
+        {
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                try
+                {
+                    Song song = stringArrayToSong(line);
+                    allSongs.add(song);
+
+                } catch (Exception ex)
+                {
+                    //Do nothing we simply do not accept malformed lines of data.
+                    //In a perfect world you should at least log the incident.
+                }
+            }
+        }
+        return allSongs;
+    }
+
+    
   
-     private void writeSongListToFile(List<Song> songList) {
+    public void writeSongListToFile(List<Song> songList) {
         File file = new File(SONG_SOURCE);
         boolean isExistingFile = false;
         
         for (int i = 0; i < songList.size(); i++) {
             Song currentSong = songList.get(i);
-            String newSongString = songToString(currentSong) + "\n";
+            String newSongString;
+            if(i == 0) {
+                 newSongString = songToString(currentSong);
+            } else {
+                 newSongString = "\n" + songToString(currentSong);
+            }
             try (FileWriter fw = new FileWriter (file,isExistingFile)) {
                 fw.write(newSongString);
                 isExistingFile = true;

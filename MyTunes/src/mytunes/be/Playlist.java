@@ -8,30 +8,24 @@ package mytunes.be;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- *
  * @author Louise, Nadia, Superior Martin and Alan
  */
 
-public class Playlist {
-    /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Alan
- */
-//public class Song {
+public class Playlist {
+    
+ 
     private int id;  // was final
     private String name;
-    private List<Song> songList = new ArrayList<>();
+    //private int NoOfSongs;
+    List <Song> songList = new ArrayList<>();
+
+    //NoOfSongs = playList.size();
     
     
-    
-    public Playlist(int id, String name, String artist, String category, String duration) {
+    public Playlist(int id, String name, List<Song> songList) {
         this.id = id;
         this.name = name;
         this.songList = songList;

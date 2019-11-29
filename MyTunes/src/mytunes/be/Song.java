@@ -5,9 +5,8 @@
  */
 package mytunes.be;
 
-import mytunes.bll.Duration;
+
 /**
- *
  * @author Louise, Nadia, Superior Martin and Alan
  */
 

@@ -13,36 +13,38 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+        
+import mytunes.be.Playlist;
 import mytunes.be.Song;
+import static mytunes.dal.DalMethodTester.songDao;
+import mytunes.dal.SongDAO;
+
 
 /**
  *
  * @author Louise, Nadia, Superior Martin and Alan
  */
+
 public class PlaylistDAO {
     
-    /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-/**
- *
- * @author admin
- */
-    
+  
     
 private static final String SONG_SOURCE = "data/song_list.txt";
+private static final String PLAYLIST_SOURCE = "data/playlists.txt";
+
 int temporaryId = 20;
+//List<Song> allSongs = new ArrayList<>();
+   // List<Song> allSongs = mytunes.dal.songDao.getAllSongs();
+   // public static SongDAO songDao = new SongDAO();
 
 
 
    
-    public List<Song> getAllSongs() throws FileNotFoundException, IOException {
-        List<Song> allSongs = new ArrayList<>();
-        File file = new File(SONG_SOURCE);
+    public List<Playlist> getAllPlaylists() throws FileNotFoundException, IOException {
+//System.out.println("Test point 1 "); //
+
+        List<Playlist> allPlaylists = new ArrayList<>();
+        File file = new File(PLAYLIST_SOURCE);
         try (BufferedReader reader = new BufferedReader(new FileReader(file)))
         {
             String line;
@@ -50,8 +52,9 @@ int temporaryId = 20;
             {
                 try
                 {
-                    Song song = stringArrayToSong(line);
-                    allSongs.add(song);
+//System.out.println("Test point 2 getAllPlaylists while loop " ); //
+                    Playlist playlist = stringArrayToPlaylist(line);
+                    allPlaylists.add(playlist);
 
                 } catch (Exception ex)
                 {
@@ -60,14 +63,18 @@ int temporaryId = 20;
                 }
             }
         }
-        return allSongs;
+//System.out.println("/n" + "Test point: getAllPlaylists while loop end "); //
+        return allPlaylists;
     }
 
     
-   
-    public Song createSong(String title, String artist, String category, int duration) throws IOException {
-        int newId = getNewId();
-        Song newSong = new Song(newId, title, artist, category, duration);
+   /*
+    public Playlist createPlaylist(String name, List<Song> songsInNewPlaylist) throws IOException {
+        int newPlaylistId = getNewPlaylistId();
+        Playlist newPlaylist = new Playlist(newPlaylistId, name, songsInNewPlaylist );
+        return 
+        
+        
         String newSongString;
         
         //Add newSong to songList
@@ -88,13 +95,13 @@ int temporaryId = 20;
         return newSong;
     }
 
+    */
     
-    
-   
+  /* 
     public void deleteSong(Song songToDelete) throws IOException {
         
-        List<Song> allSongs = new ArrayList<>();
-        allSongs = getAllSongs();
+        List<Song> allPlaylistSongs = new ArrayList<>();
+        allPlaylistSongs = getAllPlaylistSongs();
        
         if (true) {  // to be replaced with movieExists method (NOT NECESSARY)
             int songToDeleteId = songToDelete.getId();
@@ -116,10 +123,10 @@ int temporaryId = 20;
             System.out.println("");
         }   
     }
-
+    */
     
     
-    
+    /*
     public void updateSong(Song song) throws IOException {
     int songToUpdateId = song.getId();
     String updatedSongTitle = song.getTitle();
@@ -130,20 +137,19 @@ int temporaryId = 20;
     deleteSong(song);
     setNewId(songToUpdateId);
     createSong(updatedSongTitle,updatedSongArtist,updatedSongCategory, updatedSongDuration);
-    
     }
-
+*/
     
    
-    public Song getSong(int id) throws IOException {
-        List<Song> allSongs = new ArrayList<>();
-        allSongs = getAllSongs();
-        for (int i = 0; i < allSongs.size(); i++) {
-            Song testSong = allSongs.get(i);
-            int foundId = testSong.getId();
+    public Playlist getPlaylist(int id) throws IOException {
+        List<Playlist> allPlaylists = new ArrayList<>();
+        allPlaylists = getAllPlaylists();
+        for (int i = 0; i < allPlaylists.size(); i++) {
+            Playlist testPlaylist = allPlaylists.get(i);
+            int foundId = testPlaylist.getId();
             if (foundId == id)  {
             
-            return testSong;
+            return testPlaylist;
             }
         }
         return null;
@@ -151,36 +157,67 @@ int temporaryId = 20;
 
     
    
-    public Song stringArrayToSong(String t) {
-        String[] arrSong = t.split(",");
-
-        int id = Integer.parseInt(arrSong[0]);
-        String title = arrSong[1];
-        String artist = arrSong[2];
-        String category = arrSong[3];
-        int duration = Integer.parseInt(arrSong[4]);
-        Song song = new Song(id, title, artist, category, duration);
-        return song;
+    public Playlist stringArrayToPlaylist(String p) throws IOException {
+        Playlist playlist;
+//System.out.println("Test point: stringArrayToPlaylist" ); //
+        String[] arrPlaylist = p.split(",");
+        int id = Integer.parseInt(arrPlaylist[0]);
+        String name = arrPlaylist[1];
+System.out.println(""); //
+System.out.println(""); //
+System.out.println("Playlist id = " + id); //
+System.out.println("Playlist name = " + name); //
+System.out.println("Playlist song count = " + (arrPlaylist.length - 2)); //
+        List<Song> allSongs = new ArrayList<>();
+        allSongs = songDao.getAllSongsFromFile();
+        List<Song> playlistSongs = new ArrayList<>();
+        int i = 2;  // [0]=id, [1]=name. Songs start at [2]
+System.out.print(" songId's "); //
+        if (arrPlaylist.length >= 2) {
+            while (i <= arrPlaylist.length) { 
+                int songId = Integer.parseInt(arrPlaylist[i]);
+                Song playlistSong = songDao.getSong(songId);
+System.out.print(", " + songId); //
+                playlistSongs.add(playlistSong);
+                i++;
+            }
+            playlist = new Playlist(id, name, playlistSongs);
+        } else {
+            playlist = new Playlist(id, name, null);
+        }
+        return playlist;
     }
-
     
-    public String songToString(Song song) {
-        int newSongId = song.getId();
-        String newSongTitle = song.getTitle();
-        String newSongArtist = song.getArtist();
-        String newSongCatagory = song.getCategory();
-        int newSongDuration = song.getDuration();
-
-        String newSongString = newSongId + ","  + newSongTitle + "," + newSongArtist + "," + newSongCatagory + "," + newSongDuration;
-        return newSongString;
+    
+      
+    public String playlistToString(Playlist playlist) {
+        int newPlaylistId = playlist.getId();
+        String newPlaylistName = playlist.getName();
+        String newSongListString = "";
+        List<Song> playlistSongs = new ArrayList<Song>();
+        playlistSongs = playlist.getSonglist();
+        int playlistSongsSize = playlistSongs.size();
+        if (playlistSongsSize > 0) {
+            for (int i = 0; i < playlistSongsSize; i++) {
+            Song songToAdd = playlistSongs.get(i);
+            int songIdToAdd = songToAdd.getId();
+            newSongListString = newSongListString + "," + songIdToAdd;
+            }
+        }
+        String newPlaylistString = newPlaylistId + ","  + newPlaylistName + "," + newSongListString;
+        return newPlaylistString;
     }
     
     
     
     
-    private int getNewId() {
-        temporaryId ++;
-        return temporaryId;
+    private int getNewPlaylistId() throws IOException {
+        List<Playlist> allPlaylists = getAllPlaylists();
+        int playlistSize = allPlaylists.size();
+        Playlist lastPlaylist = allPlaylists.get(playlistSize);
+
+        int newPlaylistId = lastPlaylist.getId() + 1;
+        return newPlaylistId;
     }
         
     
@@ -191,7 +228,7 @@ int temporaryId = 20;
     } 
     
         
-  
+  /*
      private void writeSongListToFile(List<Song> songList) {
         File file = new File(SONG_SOURCE);
         boolean isExistingFile = false;
@@ -208,6 +245,6 @@ int temporaryId = 20;
             }
         }
     }
-    
+    */
      
 }
