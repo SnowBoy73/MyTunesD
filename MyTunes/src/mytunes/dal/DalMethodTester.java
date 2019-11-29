@@ -117,22 +117,33 @@ System.out.println("");
     }
     
     
-    
+    public static void testCreatePlaylist() throws IOException {
+        int newPlaylistId = playlistDao.getNewPlaylistId();
+        String createdPlaylistString = newPlaylistId + "New Playlist,4,5,6";
+        Playlist createdPlaylist = playlistDao.stringArrayToPlaylist(createdPlaylistString);  // Tests CreateSong method
+        List<Playlist> updatedPlaylistList = new ArrayList<>();
+        List<Playlist> allPlaylists = playlistDao.getAllPlaylistsFromFile();
+        updatedPlaylistList = playlistDao.addPlaylistToPlaylistList(createdPlaylist, allPlaylists);
+        playlistDao.writePlaylistListToFile(updatedPlaylistList);
+     }
+     
     
     
        
     public static void listPlaylists() throws IOException {
-        List<Playlist> playlists = playlistDao.getAllPlaylists();
+        List<Playlist> playlists = playlistDao.getAllPlaylistsFromFile();
 System.out.println("listPlaylists Playlist count: " + playlists.size()); //
 
         
-        for (Playlist allPlaylist : playlists) {
-        int testPlaylistId = 1;
+        for (Playlist currentPlaylist : playlists) {
+        String currentPlaylistString = playlistDao.playlistToString(currentPlaylist);
+            //old bit
+   /*     int testPlaylistId = 1;
         Playlist testPlaylist = playlistDao.getPlaylist(testPlaylistId);
         System.out.println("Playlist ID: " + testPlaylist.getId() + "/n");
         System.out.println("Playlist Name: " + testPlaylist.getName() + "/n");
         System.out.println("");  //
-        //System.out.println("Song count: " + allSongs.size()); //
+    */    //System.out.println("Song count: " + allSongs.size()); //
         System.out.println("");  //
         }
     }  

@@ -31,8 +31,8 @@ public class PlaylistDAO {
     
 private static final String SONG_SOURCE = "data/song_list.txt";
 private static final String PLAYLIST_SOURCE = "data/playlists.txt";
-
-int temporaryId = 20;
+boolean isNewPlaylist = true;
+int oldPlaylistId = 20;
 //List<Song> allSongs = new ArrayList<>();
    // List<Song> allSongs = mytunes.dal.songDao.getAllSongs();
    // public static SongDAO songDao = new SongDAO();
@@ -40,48 +40,44 @@ int temporaryId = 20;
 
 
    
-    public List<Playlist> getAllPlaylists() throws FileNotFoundException, IOException {
-//System.out.println("Test point 1 "); //
-
-        List<Playlist> allPlaylists = new ArrayList<>();
-        File file = new File(PLAYLIST_SOURCE);
-        try (BufferedReader reader = new BufferedReader(new FileReader(file)))
-        {
-            String line;
-            while ((line = reader.readLine()) != null)
-            {
-                try
-                {
-//System.out.println("Test point 2 getAllPlaylists while loop " ); //
-                    Playlist playlist = stringArrayToPlaylist(line);
-                    allPlaylists.add(playlist);
-
-                } catch (Exception ex)
-                {
-                    //Do nothing we simply do not accept malformed lines of data.
-                    //In a perfect world you should at least log the incident.
-                }
-            }
-        }
-//System.out.println("/n" + "Test point: getAllPlaylists while loop end "); //
-        return allPlaylists;
-    }
-
+  
     
-   /*
+    public Playlist createPlaylist(String name, List<Song> songsInNewPlaylist) throws IOException {
+System.out.println("create playlist "); //
+System.out.println("isNewPlaylist = " + isNewPlaylist); //
+        int playlistId;
+        if(isNewPlaylist) {
+             playlistId = getNewPlaylistId();
+        } else {
+             playlistId = oldPlaylistId;
+        }
+        Playlist newlyCreatedPlaylist = new Playlist(playlistId, name, songsInNewPlaylist);
+        isNewPlaylist = true;
+System.out.println("new splaylist " + playlistId + name + songsInNewPlaylist);
+System.out.println("Playlist Created"); //
+        return newlyCreatedPlaylist;
+    }
+    
+    
+    
+     public List<Playlist> addPlaylistToPlaylistList(Playlist playlistToBeAdded, List<Playlist> playlistList) {
+        //Add newSong to songList
+        playlistList.add(playlistToBeAdded);
+        return playlistList;
+        }
+     
+     
+        
+   /*  old version
     public Playlist createPlaylist(String name, List<Song> songsInNewPlaylist) throws IOException {
         int newPlaylistId = getNewPlaylistId();
         Playlist newPlaylist = new Playlist(newPlaylistId, name, songsInNewPlaylist );
         return 
-        
-        
-        String newSongString;
-        
+    String newSongString;
         //Add newSong to songList
         List<Song> songList = new ArrayList<>();
         songList = getAllSongs();
         songList.add(newSong);
-        
         //Add newSong to File
         File file = new File(SONG_SOURCE);
         try (FileWriter fw = new FileWriter (file, true)) {  
@@ -143,12 +139,11 @@ int temporaryId = 20;
    
     public Playlist getPlaylist(int id) throws IOException {
         List<Playlist> allPlaylists = new ArrayList<>();
-        allPlaylists = getAllPlaylists();
+        allPlaylists = getAllPlaylistsFromFile();
         for (int i = 0; i < allPlaylists.size(); i++) {
             Playlist testPlaylist = allPlaylists.get(i);
             int foundId = testPlaylist.getId();
             if (foundId == id)  {
-            
             return testPlaylist;
             }
         }
@@ -211,23 +206,71 @@ System.out.print(", " + songId); //
     
     
     
-    private int getNewPlaylistId() throws IOException {
-        List<Playlist> allPlaylists = getAllPlaylists();
+    public int getNewPlaylistId() throws IOException {
+        List<Playlist> allPlaylists = getAllPlaylistsFromFile();
         int playlistSize = allPlaylists.size();
         Playlist lastPlaylist = allPlaylists.get(playlistSize);
-
         int newPlaylistId = lastPlaylist.getId() + 1;
         return newPlaylistId;
     }
         
     
     
-    
+    /*
     private void setNewId(int id) {
         temporaryId = id;
     } 
-    
+    */
+    public List<Playlist> getAllPlaylistsFromFile() throws FileNotFoundException, IOException {
+//System.out.println("Test point 1 "); //
+        List<Playlist> allPlaylists = new ArrayList<>();
+        File file = new File(PLAYLIST_SOURCE);
+        try (BufferedReader reader = new BufferedReader(new FileReader(file)))
+        {
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                try
+                {
+//System.out.println("Test point 2 getAllPlaylists while loop " ); //
+                    Playlist playlist = stringArrayToPlaylist(line);
+                    allPlaylists.add(playlist);
+
+                } catch (Exception ex)
+                {
+                    //Do nothing we simply do not accept malformed lines of data.
+                    //In a perfect world you should at least log the incident.
+                }
+            }
+        }
+//System.out.println("/n" + "Test point: getAllPlaylists while loop end "); //
+        return allPlaylists;
+    }
+
+      
         
+    // NEW METHOD
+    public void writePlaylistListToFile(List<Playlist> allPlaylistsList) {
+        File file = new File(SONG_SOURCE);
+        boolean isExistingFile = false;
+        
+        for (int i = 0; i < allPlaylistsList.size(); i++) {
+            Playlist currentPlaylist = allPlaylistsList.get(i);
+            String newPlaylistString;
+            if(i == 0) {
+                 newPlaylistString = playlistToString(currentPlaylist);
+            } else {
+                 newPlaylistString = "\n" + playlistToString(currentPlaylist);
+            }
+            try (FileWriter fw = new FileWriter (file,isExistingFile)) {
+                fw.write(newPlaylistString);
+                isExistingFile = true;
+            }
+            catch (Exception e)  {
+                System.out.println("Error writing file while deleting, dude");
+            }
+        }
+    }
   /*
      private void writeSongListToFile(List<Song> songList) {
         File file = new File(SONG_SOURCE);

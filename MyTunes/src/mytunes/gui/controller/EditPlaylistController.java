@@ -3,33 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.gui;
+package mytunes.gui.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 
 /**
+ * FXML Controller class
  *
- * @author admin
+ * @author mega_
  */
-public class MyTunesController implements Initializable {
-    
-    @FXML
-    private Label label;
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
-    
+public class EditPlaylistController implements Initializable {
+
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void CancelEditPlaylist(ActionEvent event) {
+    }
+
+    @FXML
+    private void SaveEditPlaylist(ActionEvent event) {
+    }
     
 }
