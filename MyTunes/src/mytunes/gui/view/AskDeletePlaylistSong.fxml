@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="144.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.view.AskDeletePlaylistSongController">
+<AnchorPane id="AnchorPane" prefHeight="144.0" prefWidth="554.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mytunes.gui.controller.AskDeletePlaylistSongController">
    <children>
       <Label layoutX="122.0" layoutY="38.0" prefHeight="22.0" prefWidth="286.0" text="Are you sure you want to delete ? ">
          <font>

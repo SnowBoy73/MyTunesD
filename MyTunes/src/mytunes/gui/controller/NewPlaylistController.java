@@ -32,6 +32,7 @@ public class NewPlaylistController implements Initializable {
 
     @FXML
     private void SavePlaylist(ActionEvent event) {
+        
     }
     
 }

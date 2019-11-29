@@ -8,6 +8,7 @@ package mytunes.gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,9 +19,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import mytunes.be.Song;
 
 /**
  * FXML Controller class
@@ -40,11 +43,9 @@ public class MyTunesController implements Initializable {
     @FXML
     private Label Playlistsongslabel;
     @FXML
-    private TableView<?> SongTable;
+    private TableView<Song> SongTable;
     @FXML
     private Button playbutton;
-    @FXML
-    private Slider volumeslider;
     @FXML
     private Button backbutton;
     @FXML
@@ -74,15 +75,25 @@ public class MyTunesController implements Initializable {
     @FXML
     private Label songplayerlabel;
     @FXML
-    private Button Searchbutton;
-    @FXML
     private TextField searchbar;
+    @FXML
+    private Slider voliumslider;
+    @FXML
+    private TableColumn<Song, String> allSongsTitle;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        allSongsTitle.setCellValueFactory((param) -> {
+                 
+            return new SimpleStringProperty( param.getValue().getTitle()); 
+//To change body of generated lambdas, choose Tools | Templates.
+        });
+        
+        Song sg = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0);
+        allSongsTitle.getTableView().getItems().add(sg);
         // TODO
     }    
 
