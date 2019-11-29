@@ -7,8 +7,13 @@ package mytunes.gui.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.css.SimpleStyleableObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,8 +47,6 @@ public class MyTunesController implements Initializable {
     private ListView<?> PlaylistsongsView;
     @FXML
     private Label Playlistsongslabel;
-    @FXML
-    private TableView<Song> SongTable;
     @FXML
     private Button playbutton;
     @FXML
@@ -79,7 +82,15 @@ public class MyTunesController implements Initializable {
     @FXML
     private Slider voliumslider;
     @FXML
-    private TableColumn<Song, String> allSongsTitle;
+    private TableView<Song> songTable;
+    @FXML
+    private TableColumn<Song, String> allSongsTitle;  
+    @FXML
+    private TableColumn<Song, String> allSongsArtist;
+    @FXML
+    private TableColumn<Song, String> allSongsCategory;
+    @FXML
+    private TableColumn<Song, Integer> allSongsTime;
 
     /**
      * Initializes the controller class.
@@ -92,8 +103,37 @@ public class MyTunesController implements Initializable {
 //To change body of generated lambdas, choose Tools | Templates.
         });
         
-        Song sg = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0);
-        allSongsTitle.getTableView().getItems().add(sg);
+         
+        
+//To change body of generated lambdas, choose Tools | Templates.
+        
+         allSongsCategory.setCellValueFactory((param) -> {
+                 
+            return new SimpleStringProperty( param.getValue().getCategory()); 
+//To change body of generated lambdas, choose Tools | Templates.
+        });
+        
+        Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0);
+        Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0);
+        List<Song> songs = new ArrayList();
+        songs.add(song);
+        songs.add(song1);
+        
+        songTable.getItems().clear();
+        songTable.getItems().addAll(songs);
+         
+         allSongsArtist.setCellValueFactory((param) -> {
+                 
+            return new SimpleStringProperty( param.getValue().getArtist()); 
+//To change body of generated lambdas, choose Tools | Templates.
+        });
+         allSongsTime.setCellValueFactory((param) -> {
+                 
+            return new SimpleObjectProperty<>( param.getValue().getDuration()); 
+//To change body of generated lambdas, choose Tools | Templates.
+        });
+        // TODO
+       
         // TODO
     }    
 
