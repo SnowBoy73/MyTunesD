@@ -113,11 +113,14 @@ public class MyTunesController implements Initializable {
 //To change body of generated lambdas, choose Tools | Templates.
         });
         
-        Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0);
+        Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 320);
         Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0);
+        Song song2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0);
+        
         List<Song> songs = new ArrayList();
         songs.add(song);
         songs.add(song1);
+        songs.add(song2);
         
         songTable.getItems().clear();
         songTable.getItems().addAll(songs);
