@@ -25,9 +25,9 @@ public class playlistmodel {
         Song playlist2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0);
         
         List<playlistmodel> songs = new ArrayList();
-        songs.add(playlist);
-        songs.add(playlist1);
-        songs.add(playlist2);
+        //songs.add(playlist);
+        //songs.add(playlist1);
+        //songs.add(playlist2);
          return null;
     }
 }

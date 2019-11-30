@@ -25,10 +25,10 @@ public class Playlist {
     //NoOfSongs = playList.size();
     
     
-    public Playlist(int id, String name, List<Song> songList) {
+    public Playlist(int id, String name) {
         this.id = id;
         this.name = name;
-        this.songList = songList;
+        //this.songList = songList; //needs to go
     }
 
     
@@ -66,6 +66,10 @@ public class Playlist {
      public void setSonglist() {
         this.songList = songList;
     }
+     
+     public void addToSongList(Song song){
+     songList.add(song);
+     }
 
     
 
