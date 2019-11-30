@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import mytunes.be.Playlist;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +29,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import mytunes.MyTunes;
 import mytunes.be.Song;
+import mytunes.gui.model.playlistmodel;
 
 /**
  * FXML Controller class
@@ -40,7 +43,7 @@ public class MyTunesController implements Initializable {
     @FXML
     private Label label;
     @FXML
-    private ListView<?> playlistsview;
+    private ListView<Playlist> playlistsview;
     @FXML
     private Label playlistslabel;
     @FXML
@@ -139,9 +142,42 @@ public class MyTunesController implements Initializable {
         });
         // TODO
        
-        // TODO
+        // ListView
+        
+        try
+            
+        {  
+             playlistmodel playlistmodel  = new playlistmodel();
+             
+             /* Need to change those so that the set items is called differently
+             MovieDAO movieDao = new  MovieDAO();
+             List<Movie> allMovies = movieDao.getAllMovies();
+             ObservableList<Movie> obsAllMovies =FXCollections.observableArrayList(allMovies);
+             */
+             playlistsview.setItems(playlistmodel.getAllPlaylist());
+        } catch (Exception ex)
+        { 
+            System.out.println("Ooops");
+            ex.printStackTrace();
+        }
+        
+        /*    
+        ArrayList<Movie>allMovies = new ArrayList<>();
+        //Stuff that we will change eventualy 
+        allMovies.add(new Movie(1,"Det forsømte forår",1983));
+        
+        //GET DATA FROM FILE
+        //Do some magic  to allMovies; 
+        
+        ObservableList<Movie> obsAllMovies =FXCollections.observableArrayList(allMovies);
+        lstView.setItems(obsAllMovies);
+        */
     }    
-
+        
+        
+       
+   
+    
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
 

@@ -51,7 +51,7 @@
       <Button fx:id="newplaylistbutton" layoutX="24.0" layoutY="202.0" mnemonicParsing="false" onAction="#clickNewPlaylist" style="-fx-background-color: #83a6d1#83a6d1;" text="New" />
       <Button fx:id="editplaylistbutton" layoutX="114.0" layoutY="202.0" mnemonicParsing="false" onAction="#clickEditPlaylist" style="-fx-background-color: #83a6d1#83a6d1;" text="Edit" />
       <Button fx:id="deleteplaylistbutton" layoutX="205.0" layoutY="202.0" mnemonicParsing="false" onAction="#clickDeletePlaylist" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
-      <Button fx:id="searchbutton" layoutX="716.0" layoutY="51.0" mnemonicParsing="false" onAction="#clickSearch" prefHeight="27.0" prefWidth="27.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" />
+      <Button fx:id="searchbutton" layoutX="716.0" layoutY="51.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" />
       <Button fx:id="editsongsbutton" layoutX="518.0" layoutY="340.0" mnemonicParsing="false" onAction="#clickEditSong" style="-fx-background-color: #83a6d1#83a6d1;" text="edit" />
       <Button fx:id="deletesongsbutton" layoutX="565.0" layoutY="340.0" mnemonicParsing="false" onAction="#clickDeleteSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
       <Button fx:id="addsongstoplaylistbutton" layoutX="645.0" layoutY="340.0" mnemonicParsing="false" style="-fx-background-color: #83a6d1#83a6d1;" text="add song to playlist" />
