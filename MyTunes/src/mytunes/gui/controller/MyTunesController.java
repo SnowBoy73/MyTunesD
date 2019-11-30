@@ -91,6 +91,8 @@ public class MyTunesController implements Initializable {
     private TableColumn<Song, String> allSongsCategory;
     @FXML
     private TableColumn<Song, Integer> allSongsTime;
+    @FXML
+    private Button Searchbutton;
 
     /**
      * Initializes the controller class.
