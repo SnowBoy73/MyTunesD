@@ -51,7 +51,7 @@ System.out.println("isNewPlaylist = " + isNewPlaylist); //
         } else {
              playlistId = oldPlaylistId;
         }
-        Playlist newlyCreatedPlaylist = new Playlist(playlistId, name, songsInNewPlaylist);
+        Playlist newlyCreatedPlaylist = new Playlist(playlistId, name);
         isNewPlaylist = true;
 System.out.println("new splaylist " + playlistId + name + songsInNewPlaylist);
 System.out.println("Playlist Created"); //
@@ -176,9 +176,9 @@ System.out.print(", " + songId); //
                 playlistSongs.add(playlistSong);
                 i++;
             }
-            playlist = new Playlist(id, name, playlistSongs);
+            playlist = new Playlist(id, name);
         } else {
-            playlist = new Playlist(id, name, null);
+            playlist = new Playlist(id, name);
         }
         return playlist;
     }

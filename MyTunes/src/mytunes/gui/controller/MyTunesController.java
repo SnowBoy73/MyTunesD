@@ -117,7 +117,7 @@ public class MyTunesController implements Initializable {
             return new SimpleStringProperty( param.getValue().getCategory()); 
 //To change body of generated lambdas, choose Tools | Templates.
         });
-        
+         
         Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 320);
         Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0);
         Song song2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0);
@@ -144,22 +144,15 @@ public class MyTunesController implements Initializable {
        
         // ListView
         
-        try
+       
             
-        {  
+        
              playlistmodel playlistmodel  = new playlistmodel();
              
-             /* Need to change those so that the set items is called differently
-             MovieDAO movieDao = new  MovieDAO();
-             List<Movie> allMovies = movieDao.getAllMovies();
-             ObservableList<Movie> obsAllMovies =FXCollections.observableArrayList(allMovies);
-             */
+             
              playlistsview.setItems(playlistmodel.getAllPlaylist());
-        } catch (Exception ex)
-        { 
-            System.out.println("Ooops");
-            ex.printStackTrace();
-        }
+        
+       
         
         /*    
         ArrayList<Movie>allMovies = new ArrayList<>();
