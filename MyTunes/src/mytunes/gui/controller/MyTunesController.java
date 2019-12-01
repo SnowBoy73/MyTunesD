@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.awt.event.KeyEvent;
 import mytunes.be.Playlist;
 import java.io.IOException;
 import java.net.URL;
@@ -153,23 +154,16 @@ public class MyTunesController implements Initializable {
              playlistsview.setItems(playlistmodel.getAllPlaylist());
         
        
-        
-        /*    
-        ArrayList<Movie>allMovies = new ArrayList<>();
-        //Stuff that we will change eventualy 
-        allMovies.add(new Movie(1,"Det forsømte forår",1983));
-        
-        //GET DATA FROM FILE
-        //Do some magic  to allMovies; 
-        
-        ObservableList<Movie> obsAllMovies =FXCollections.observableArrayList(allMovies);
-        lstView.setItems(obsAllMovies);
-        */
     }    
-        
-        
+    
+       
+   @FXML 
+   private void searchSongs(KeyEvent evt){
+       
        
    
+   
+   }
     
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
@@ -194,6 +188,8 @@ public class MyTunesController implements Initializable {
         stage.show();
     
     }
+    
+ 
     
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException {
