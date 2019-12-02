@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.awt.event.KeyEvent;
 import mytunes.be.Playlist;
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +32,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import mytunes.MyTunes;
 import mytunes.be.Song;
+import mytunes.bll.BllManager;
+import mytunes.dal.MockSongDAO;
 import mytunes.gui.model.playlistmodel;
 
 /**
@@ -118,17 +121,12 @@ public class MyTunesController implements Initializable {
 //To change body of generated lambdas, choose Tools | Templates.
         });
          
-        Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 320);
-        Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0);
-        Song song2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0);
+        BllManager bll = new BllManager();
+               
         
-        List<Song> songs = new ArrayList();
-        songs.add(song);
-        songs.add(song1);
-        songs.add(song2);
         
         songTable.getItems().clear();
-        songTable.getItems().addAll(songs);
+        songTable.getItems().addAll(bll.getAllSongs());
          
          allSongsArtist.setCellValueFactory((param) -> {
                  
@@ -153,23 +151,16 @@ public class MyTunesController implements Initializable {
              playlistsview.setItems(playlistmodel.getAllPlaylist());
         
        
-        
-        /*    
-        ArrayList<Movie>allMovies = new ArrayList<>();
-        //Stuff that we will change eventualy 
-        allMovies.add(new Movie(1,"Det forsømte forår",1983));
-        
-        //GET DATA FROM FILE
-        //Do some magic  to allMovies; 
-        
-        ObservableList<Movie> obsAllMovies =FXCollections.observableArrayList(allMovies);
-        lstView.setItems(obsAllMovies);
-        */
     }    
-        
-        
+    
+       
+   @FXML 
+   private void searchSongs(KeyEvent evt){
+       
        
    
+   
+   }
     
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
@@ -180,6 +171,7 @@ public class MyTunesController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
         
     }
     
@@ -195,6 +187,8 @@ public class MyTunesController implements Initializable {
     
     }
     
+ 
+    
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException {
     
@@ -204,6 +198,7 @@ public class MyTunesController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
     
 }
     @FXML

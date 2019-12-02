@@ -6,10 +6,13 @@
 package mytunes.gui.controller;
 
 import java.net.URL;
+import java.util.EventObject;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -28,6 +31,9 @@ public class EditPlaylistController implements Initializable {
 
     @FXML
     private void CancelEditPlaylist(ActionEvent event) {
+        
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
 
     @FXML
