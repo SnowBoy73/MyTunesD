@@ -29,7 +29,7 @@ public class SongDBDAO {
             Statement statement = xd.createStatement();
             ResultSet rs = statement.executeQuery(stat);
             while (rs.next()) {
-                Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getString("artist"), rs.getString("category"), rs.getInt("duration"), rs.getString("path"));
+                Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getString("artist"), rs.getString("category"), rs.getInt("duration"));
                 allSongs.add(song);
             }
             return allSongs;
@@ -39,15 +39,14 @@ public class SongDBDAO {
         }
     }
     
-    public void addSongToDB(String title, String artist, String category, int duration, String path){
-    String stat = "INSERT INTO Song VALUES (?,?,?,?,?)";
+    public void addSongToDB(String title, String artist, String category, int duration){
+    String stat = "INSERT INTO Song VALUES (?,?,?,?)";
     try ( Connection xd = con){
         PreparedStatement stmt=xd.prepareStatement(stat);
         stmt.setString(1, title);
         stmt.setString(2, artist);
         stmt.setString(3, category);
         stmt.setInt(4, duration);
-        stmt.setString(5, path);
         stmt.execute();
     }   catch (SQLException ex) {
             System.out.println("Exception " + ex);
@@ -55,11 +54,11 @@ public class SongDBDAO {
     
 }
     
-    public void removeSongFromDB(Song song){
+    public void removeSongFromDB(Song son){
     String stat = "DELETE FROM song WHERE ID=?";
     try (Connection xd = con){
     PreparedStatement stmt = con.prepareStatement(stat);
-    stmt.setInt(1, song.getId());
+    stmt.setInt(1, son.getId());
     stmt.execute();
     }   catch (SQLException ex) {
             System.out.println("Exception " + ex);
@@ -280,6 +279,7 @@ System.out.println("allSongs size = " + songListSize); //
    
     */
      
+=======
 /* MARTIN'S CODE
     public List<Song> getAllSongs() {
         List<Song> allSongs = new ArrayList<>();
