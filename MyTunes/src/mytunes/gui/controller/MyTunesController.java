@@ -124,17 +124,7 @@ public class MyTunesController implements Initializable {
         BllManager bll = new BllManager();
                
         
-          
-<<<<<<< HEAD
-        Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0,"music/Belshazzar.mp3");
-        Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0,"music/Belshazzar.mp3");
-        List<Song> songs = new ArrayList();
-        songs.add(song);
-        songs.add(song1);
-=======
->>>>>>> 479f1a185a32c87369edc2aa433326aad61bca66
         
-
         songTable.getItems().clear();
         songTable.getItems().addAll(bll.getAllSongs());
          

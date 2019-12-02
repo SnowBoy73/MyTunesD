@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.be.Song;
 import java.sql.ResultSet;
-import java.sql.PreparedStatement;
+
 /**
  *
  * @author admin
@@ -29,6 +29,7 @@ public class SongDBDAO {
             Statement statement = xd.createStatement();
             ResultSet rs = statement.executeQuery(stat);
             while (rs.next()) {
+<<<<<<< HEAD
                 Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getString("artist"), rs.getString("category"), rs.getInt("duration"));
                 allSongs.add(song);
             }
@@ -289,6 +290,8 @@ System.out.println("allSongs size = " + songListSize); //
             Statement statement = xd.createStatement();
             ResultSet rs = statement.executeQuery(stat);
             while (rs.next()) {
+=======
+>>>>>>> parent of f33ab64... Merge branch 'master' of https://github.com/SnowBoy73/MyTunesD
                 Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getString("artist"), rs.getString("category"), rs.getInt("duration"));
                 allSongs.add(song);
             }
@@ -303,8 +306,4 @@ System.out.println("allSongs size = " + songListSize); //
         this.con = con;
     }
     private Connection con;
->>>>>>> 479f1a185a32c87369edc2aa433326aad61bca66
-}
-*/
-    
 }

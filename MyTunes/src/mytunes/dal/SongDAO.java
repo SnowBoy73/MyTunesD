@@ -25,7 +25,7 @@ import mytunes.be.Song;
 
 public class SongDAO {
     
-private static final String MUSIC_SOURCE = "music/Belshazzar.mp3";
+    
 private static final String SONG_SOURCE = "data/song_list.txt";
 boolean isNewSong = true;
 int oldSongId;
@@ -40,7 +40,7 @@ int oldSongId;
     
     
    
-    public Song createSong(String title, String artist, String category, int duration,String path) throws IOException {
+    public Song createSong(String title, String artist, String category, int duration) throws IOException {
 System.out.println("create song "); //
 System.out.println("isNewSong = " + isNewSong); //
         int songId;
@@ -49,9 +49,9 @@ System.out.println("isNewSong = " + isNewSong); //
         } else {
              songId = oldSongId;
         }
-        Song newlyCreatedSong = new Song(songId, title, artist, category, duration, path);
+        Song newlyCreatedSong = new Song(songId, title, artist, category, duration);
         isNewSong = true;
-System.out.println("new song "+ songId + title + artist + category + duration);
+        System.out.println("new song "+ songId + title + artist + category + duration);
 System.out.println("Song Created"); //
         return newlyCreatedSong;
     }
@@ -69,7 +69,7 @@ System.out.println("Song Created"); //
     public void deleteSong(Song songToDelete, List<Song> songlist) throws IOException {
         
         List<Song> allSongs = new ArrayList<>();
-allSongs = getAllSongsFromFile(); //  This won't work. needs to get songs from playlist. Maybe need a deleteSongFromPlaylist, ond 
+        allSongs = getAllSongsFromFile();
         if (true) {  // to be replaced with SongExists method (NOT NECESSARY)
             int songToDeleteId = songToDelete.getId();
             songToDelete = getSong(songToDeleteId);
@@ -96,6 +96,7 @@ allSongs = getAllSongsFromFile(); //  This won't work. needs to get songs from p
         List<Song> allSongs = new ArrayList<>();
         allSongs = getAllSongsFromFile();
         List<Song> updatedAllSongs = new ArrayList<>();
+
         int songToUpdateId = songToUpdate.getId();
         String updatedSongTitle = songToUpdate.getTitle();
         String updatedSongArtist = songToUpdate.getArtist();
@@ -141,7 +142,7 @@ System.out.println(songBeingChecked.getId()); //
 
     
    
-    public Song stringToSong(String t) {
+    public Song stringArrayToSong(String t) {
         String[] arrSong = t.split(",");
 
         int id = Integer.parseInt(arrSong[0]);
@@ -149,9 +150,7 @@ System.out.println(songBeingChecked.getId()); //
         String artist = arrSong[2];
         String category = arrSong[3];
         int duration = Integer.parseInt(arrSong[4]);
-        String path = arrSong[5];
-
-        Song song = new Song(id, title, artist, category, duration, path);
+        Song song = new Song(id, title, artist, category, duration);
         return song;
     }
 
@@ -163,9 +162,8 @@ System.out.println(songBeingChecked.getId()); //
         String newSongArtist = song.getArtist();
         String newSongCatagory = song.getCategory();
         int newSongDuration = song.getDuration();
-        String newSongPath = song.getPath();
 
-        String newSongString = newSongId + ","  + newSongTitle + "," + newSongArtist + "," + newSongCatagory + "," + newSongDuration + "," + newSongPath;
+        String newSongString = newSongId + ","  + newSongTitle + "," + newSongArtist + "," + newSongCatagory + "," + newSongDuration;
         return newSongString;
     }
     
@@ -175,7 +173,7 @@ System.out.println(songBeingChecked.getId()); //
 
         List<Song> allSongs = getAllSongsFromFile();
         int songListSize = allSongs.size();
-System.out.println("allSongs size = " + songListSize); //
+ System.out.println("allSongs size = " + songListSize); //
         Song lastSong = allSongs.get(songListSize - 1);
         int newSongId = lastSong.getId() + 1;
         return newSongId;
@@ -199,7 +197,7 @@ System.out.println("allSongs size = " + songListSize); //
             {
                 try
                 {
-                    Song song = stringToSong(line);
+                    Song song = stringArrayToSong(line);
                     allSongs.add(song);
 
                 } catch (Exception ex)

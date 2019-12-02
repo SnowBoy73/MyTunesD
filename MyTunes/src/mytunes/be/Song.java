@@ -17,19 +17,15 @@ public class Song {
     private String artist;
     private String category;
     private int duration;  // in seconds
-    private String path;
 
     
     
-    
-    public Song(int id, String title, String artist, String category, int duration, String path) {
+    public Song(int id, String title, String artist, String category, int duration) {
         this.id = id;
         this.title = title;
         this.artist = artist;
         this.category = category;
-        this.duration = duration;        
-        this.path = path;
-
+        this.duration = duration;
     }
 
     
@@ -63,11 +59,7 @@ public class Song {
    }
    
     
-   
-    public String getPath() {
-        return path;
-   }
-   
+    
     public void setId() { // may not need this. If not set id variable to final
         this.id = id;
     }
@@ -94,12 +86,7 @@ public class Song {
    
      public void setDuration(int duration) {  // probably unnecessay method
         this.duration = duration;
-    }
-   
-     
-     
-    public void setPATH(String path) {  // probably unnecessay method
-        this.path = path;
+        
     }
     
     
