@@ -39,4 +39,8 @@ public class MockSongDAO {
 
     }
 
+    public List<Song> getAllSongsFromDB() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

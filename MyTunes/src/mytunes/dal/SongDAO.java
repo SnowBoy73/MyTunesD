@@ -26,7 +26,7 @@ import mytunes.be.Song;
 public class SongDAO {
     
     
-private static final String SONG_SOURCE = "data/song_list.txt";
+private static final String SONG_SOURCE = "C:\\Github\\MyTunesD\\MyTunes\\data/song_list.txt";
 boolean isNewSong = true;
 int oldSongId;
 

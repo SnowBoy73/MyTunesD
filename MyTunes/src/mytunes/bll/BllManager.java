@@ -23,7 +23,7 @@ public class BllManager {
     
     
         
-        return songDAO.getAllSongs();
+        return songDAO.getAllSongsFromDB();
         
     
     } 
