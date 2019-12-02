@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
@@ -13,6 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import mytunes.be.Playlist;
+import mytunes.be.Song;
+import mytunes.bll.BllManager;
 
 /**
  * FXML Controller class
@@ -20,6 +24,9 @@ import javafx.stage.Stage;
  * @author mega_
  */
 public class NewPlaylistController implements Initializable {
+
+    @FXML
+    private JFXTextField playlistTextField;
 
     /**
      * Initializes the controller class.
@@ -38,7 +45,18 @@ public class NewPlaylistController implements Initializable {
 
     @FXML
     private void SavePlaylist(ActionEvent event) {
+         BllManager bll = new BllManager();
+        
+       
+        Playlist playlist = new Playlist(0, playlistTextField.getText());
+        
+         bll.savePlaylist(playlist);
+        
+    }
+
+    
+       
         
     }
     
-}
+

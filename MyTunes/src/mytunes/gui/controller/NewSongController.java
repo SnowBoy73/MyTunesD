@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
@@ -12,7 +13,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Spinner;
 import javafx.stage.Stage;
+import mytunes.be.Song;
+import mytunes.bll.BllManager;
 
 /**
  * FXML Controller class
@@ -20,6 +24,17 @@ import javafx.stage.Stage;
  * @author mega_
  */
 public class NewSongController implements Initializable {
+
+    @FXML
+    private JFXTextField titleField;
+    @FXML
+    private JFXTextField artistField;
+    @FXML
+    private JFXTextField timeField;
+    @FXML
+    private JFXTextField fileField;
+    @FXML
+    private Spinner<String> categoryField;
 
     /**
      * Initializes the controller class.
@@ -31,7 +46,11 @@ public class NewSongController implements Initializable {
 
     @FXML
     private void SaveSong(ActionEvent event) {
+        BllManager bll = new BllManager();
         
+       
+        Song song = new Song(0, titleField.getText(), artistField.getText(), categoryField.getValue(), Integer.parseInt(timeField.getText()));
+         bll.saveSong(song);
         
     }
     
