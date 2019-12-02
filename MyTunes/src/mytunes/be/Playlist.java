@@ -25,7 +25,7 @@ public class Playlist {
     //NoOfSongs = playList.size();
     
     
-    public Playlist(int id, String name) {
+    public Playlist(int id, String name, List <Song> songList) {
         this.id = id;
         this.name = name;
     }
