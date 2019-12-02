@@ -20,12 +20,12 @@
       <Label layoutX="22.0" layoutY="175.0" text="Category:" />
       <Label layoutX="22.0" layoutY="220.0" text="Time:" />
       <Label layoutX="22.0" layoutY="263.0" text="File:" />
-      <JFXTextField layoutX="74.0" layoutY="77.0" prefHeight="27.0" prefWidth="149.0" />
-      <JFXTextField layoutX="73.0" layoutY="125.0" />
-      <JFXTextField layoutX="65.0" layoutY="215.0" prefHeight="27.0" prefWidth="38.0" />
-      <JFXTextField layoutX="65.0" layoutY="258.0" prefHeight="27.0" prefWidth="126.0" />
+      <JFXTextField fx:id="titleField" layoutX="74.0" layoutY="77.0" prefHeight="27.0" prefWidth="149.0" />
+      <JFXTextField fx:id="artistField" layoutX="73.0" layoutY="125.0" />
+      <JFXTextField fx:id="timeField" layoutX="65.0" layoutY="215.0" prefHeight="27.0" prefWidth="38.0" />
+      <JFXTextField fx:id="fileField" layoutX="65.0" layoutY="258.0" prefHeight="27.0" prefWidth="126.0" />
       <JFXSpinner layoutX="221.0" layoutY="14.0" />
-      <Spinner layoutX="90.0" layoutY="170.0" />
+      <Spinner fx:id="categoryField" layoutX="90.0" layoutY="170.0" />
       <Button layoutX="198.0" layoutY="267.0" mnemonicParsing="false" text="Choose.." />
       <Button layoutX="74.0" layoutY="324.0" mnemonicParsing="false" onAction="#CancelSong" text="Cancel" />
       <Button layoutX="144.0" layoutY="324.0" mnemonicParsing="false" onAction="#SaveSong" text="Save" />
