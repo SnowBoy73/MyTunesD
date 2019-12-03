@@ -38,5 +38,8 @@ public class MockSongDAO {
         songs.add(song);
 
     }
+    public void cancelSong (Song song) {
 
-}
+        songs.remove(song);
+
+}}
