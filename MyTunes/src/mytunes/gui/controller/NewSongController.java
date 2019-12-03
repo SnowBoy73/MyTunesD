@@ -49,7 +49,7 @@ public class NewSongController implements Initializable {
         BllManager bll = new BllManager();
         
        
-        Song song = new Song(0, titleField.getText(), artistField.getText(), categoryField.getValue(), Integer.parseInt(timeField.getText()));
+        Song song = new Song(0, titleField.getText(), artistField.getText(), categoryField.getValue(), Integer.parseInt(timeField.getText()), fileField.getText());
          bll.saveSong(song);
         
     }

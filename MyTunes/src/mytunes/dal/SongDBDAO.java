@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.be.Song;
 import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -29,8 +30,7 @@ public class SongDBDAO {
             Statement statement = xd.createStatement();
             ResultSet rs = statement.executeQuery(stat);
             while (rs.next()) {
-<<<<<<< HEAD
-                Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getString("artist"), rs.getString("category"), rs.getInt("duration"));
+                Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getString("artist"), rs.getString("category"), rs.getInt("duration"), rs.getString("path"));
                 allSongs.add(song);
             }
             return allSongs;
@@ -40,8 +40,8 @@ public class SongDBDAO {
         }
     }
     
-    public void addSongToDB(String title, String artist, String category, int duration){
-    String stat = "INSERT INTO Song VALUES (?,?,?,?)";
+    public void addSongToDB(String title, String artist, String category, int duration, String path){
+    String stat = "INSERT INTO Song VALUES (?,?,?,?,?)";
     try ( Connection xd = con){
         PreparedStatement stmt=xd.prepareStatement(stat);
         stmt.setString(1, title);
@@ -55,7 +55,7 @@ public class SongDBDAO {
     
 }
     
-    public void removeSongFromDB(Song son){
+    public void removeSongFromDB(Song song){
     String stat = "DELETE FROM song WHERE ID=?";
     try (Connection xd = con){
     PreparedStatement stmt = con.prepareStatement(stat);
@@ -75,10 +75,9 @@ public class SongDBDAO {
     
     
     
+}
     
-    
-    
-    /* 
+      /* 
     ALAN'S CODE
     
    
@@ -280,8 +279,7 @@ System.out.println("allSongs size = " + songListSize); //
    
     */
      
-=======
-/* MARTIN'S CODE
+     /* MARTIN'S CODE
     public List<Song> getAllSongs() {
         List<Song> allSongs = new ArrayList<>();
         String stat = "SELECT * FROM Song";
@@ -306,4 +304,4 @@ System.out.println("allSongs size = " + songListSize); //
         this.con = con;
     }
     private Connection con;
-}
+

@@ -26,6 +26,7 @@ import mytunes.be.Song;
 public class SongDAO {
     
     
+private static final String MUSIC_SOURCE = "music/Belshazzar.mp3";
 private static final String SONG_SOURCE = "data/song_list.txt";
 boolean isNewSong = true;
 int oldSongId;
@@ -40,7 +41,7 @@ int oldSongId;
     
     
    
-    public Song createSong(String title, String artist, String category, int duration) throws IOException {
+    public Song createSong(String title, String artist, String category, int duration, String path) throws IOException {
 System.out.println("create song "); //
 System.out.println("isNewSong = " + isNewSong); //
         int songId;
@@ -49,10 +50,10 @@ System.out.println("isNewSong = " + isNewSong); //
         } else {
              songId = oldSongId;
         }
-        Song newlyCreatedSong = new Song(songId, title, artist, category, duration);
+        Song newlyCreatedSong = new Song(songId, title, artist, category, duration, path);
         isNewSong = true;
-        System.out.println("new song "+ songId + title + artist + category + duration);
-System.out.println("Song Created"); //
+      System.out.println("new song "+ songId + title + artist + category + duration);
+      System.out.println("Song Created"); //
         return newlyCreatedSong;
     }
         
@@ -141,8 +142,7 @@ System.out.println(songBeingChecked.getId()); //
     }
 
     
-   
-    public Song stringArrayToSong(String t) {
+    public Song stringToSong(String t) {
         String[] arrSong = t.split(",");
 
         int id = Integer.parseInt(arrSong[0]);
@@ -150,7 +150,9 @@ System.out.println(songBeingChecked.getId()); //
         String artist = arrSong[2];
         String category = arrSong[3];
         int duration = Integer.parseInt(arrSong[4]);
-        Song song = new Song(id, title, artist, category, duration);
+        String path = arrSong[5];
+
+        Song song = new Song(id, title, artist, category, duration, path);
         return song;
     }
 
@@ -162,8 +164,9 @@ System.out.println(songBeingChecked.getId()); //
         String newSongArtist = song.getArtist();
         String newSongCatagory = song.getCategory();
         int newSongDuration = song.getDuration();
+        String newSongPath = song.getPath();
 
-        String newSongString = newSongId + ","  + newSongTitle + "," + newSongArtist + "," + newSongCatagory + "," + newSongDuration;
+        String newSongString = newSongId + ","  + newSongTitle + "," + newSongArtist + "," + newSongCatagory + "," + newSongDuration + "," + newSongPath;
         return newSongString;
     }
     
@@ -173,7 +176,7 @@ System.out.println(songBeingChecked.getId()); //
 
         List<Song> allSongs = getAllSongsFromFile();
         int songListSize = allSongs.size();
- System.out.println("allSongs size = " + songListSize); //
+System.out.println("allSongs size = " + songListSize); //
         Song lastSong = allSongs.get(songListSize - 1);
         int newSongId = lastSong.getId() + 1;
         return newSongId;
@@ -197,7 +200,7 @@ System.out.println(songBeingChecked.getId()); //
             {
                 try
                 {
-                    Song song = stringArrayToSong(line);
+                    Song song = stringToSong(line);
                     allSongs.add(song);
 
                 } catch (Exception ex)

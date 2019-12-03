@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
@@ -27,7 +28,14 @@ public class NewPlaylistController implements Initializable {
 
     @FXML
     private JFXTextField playlistTextField;
+    @FXML
+    private JFXTextField playlistSongField;
+    @FXML
+    private Button cancelPlaylist;
+    @FXML
+    private Button savePlaylist;
 
+    
     /**
      * Initializes the controller class.
      */
@@ -48,10 +56,10 @@ public class NewPlaylistController implements Initializable {
          BllManager bll = new BllManager();
         
        
-        Playlist playlist = new Playlist(0, playlistTextField.getText());
+      //  Playlist playlist = new Playlist(0, playlistTextField.getText());
         
-         bll.savePlaylist(playlist);
-        
+       //  bll.savePlaylist(playlist);
+       // NEED TO RESOLVE CONVERTING LIST <SONG> INTO STRING
     }
 
     
