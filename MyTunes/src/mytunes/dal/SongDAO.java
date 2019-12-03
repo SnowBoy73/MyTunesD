@@ -61,10 +61,12 @@ System.out.println("isNewSong = " + isNewSong); //
     
     public List<Song> addSongToSongList(Song songToBeAdded, List<Song> songList) {
         //Add newSong to songList
+       
+  
+              
         songList.add(songToBeAdded);
         return songList;
         }
-        
         
    
     public void deleteSong(Song songToDelete, List<Song> songlist) throws IOException {
