@@ -59,7 +59,7 @@ public class SongDBDAO {
     String stat = "DELETE FROM song WHERE ID=?";
     try (Connection xd = con){
     PreparedStatement stmt = con.prepareStatement(stat);
-    stmt.setInt(1, son.getId());
+    stmt.setInt(1, song.getId());
     stmt.execute();
     }   catch (SQLException ex) {
             System.out.println("Exception " + ex);
@@ -75,7 +75,7 @@ public class SongDBDAO {
     
     
     
-}
+
     
       /* 
     ALAN'S CODE
@@ -288,8 +288,8 @@ System.out.println("allSongs size = " + songListSize); //
             Statement statement = xd.createStatement();
             ResultSet rs = statement.executeQuery(stat);
             while (rs.next()) {
-=======
->>>>>>> parent of f33ab64... Merge branch 'master' of https://github.com/SnowBoy73/MyTunesD
+
+ parent of f33ab64... Merge branch 'master' of https://github.com/SnowBoy73/MyTunesD
                 Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getString("artist"), rs.getString("category"), rs.getInt("duration"));
                 allSongs.add(song);
             }
@@ -304,4 +304,5 @@ System.out.println("allSongs size = " + songListSize); //
         this.con = con;
     }
     private Connection con;
-
+*/
+}
