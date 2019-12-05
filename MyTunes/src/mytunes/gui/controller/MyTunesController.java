@@ -6,6 +6,7 @@
 package mytunes.gui.controller;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import mytunes.be.Playlist;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import mytunes.MyTunes;
 import mytunes.be.Song;
@@ -72,8 +75,6 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button deleteplaylistbutton;
     @FXML
-    private Button newsongsbutton;
-    @FXML
     private Button editsongsbutton;
     @FXML
     private Button deletesongsbutton;
@@ -98,11 +99,27 @@ public class MyTunesController implements Initializable {
     @FXML
     private TableColumn<Song, Integer> allSongsTime;
     @FXML
-    private Button Searchbutton;
+    private Button searchbutton;
+    @FXML
+    private Button newsongbutton;
+    @FXML
+    private Button pausebutton;
+    @FXML
+    private Button stopbutton;
+    
 
    /**
      * Initializes the controller class.
      */
+    
+    
+    
+    
+   public MyTunesController(){
+        BllManager bll = new BllManager();
+    
+   }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -174,7 +191,7 @@ public class MyTunesController implements Initializable {
   
    }
 */
-    
+   
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
 
@@ -250,7 +267,7 @@ void DeletePlaylistReal(){
         //playlistModel.deletePlaylist(Playlist);
         playlistsview.getItems().remove(i);
 
-}
+} 
 
 @FXML
 private void clickDeleteSong(ActionEvent event) throws IOException {
@@ -285,6 +302,26 @@ private void clickDeletePlaylistSong(ActionEvent event) throws IOException {
         stage.show();
        
     
+    }
+
+    @FXML
+    private void clickPause(ActionEvent event) {
+    }
+
+    @FXML
+    private void clickStop(ActionEvent event) {
+        MediaPlayer mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));
+        mp.stop();
+    }
+
+    @FXML
+    private void playMyDud(ActionEvent event) {
+        System.out.println("KKK");
+        
+MediaPlayer mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));
+mp.setAutoPlay(true);
+mp.setVolume(0.5);
+     mp.play();
     }
 
 
