@@ -30,7 +30,10 @@ public class Song {
         this.path=path;
     }
 
-    
+     @Override
+    public String toString() {
+        return this.title + " " + this.artist + " " + this.category; //To change body of generated methods, choose Tools | Templates.
+    }
     
     public int getId() {
         return id;

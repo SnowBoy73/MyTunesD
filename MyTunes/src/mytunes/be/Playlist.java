@@ -24,6 +24,16 @@ public class Playlist {
 
     //NoOfSongs = playList.size();
     
+     public Playlist(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return this.name; //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
     public Playlist(int id, String name, List <Song> songList) {
         this.id = id;

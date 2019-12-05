@@ -41,6 +41,9 @@ public class EditSongController implements Initializable {
 
     @FXML
     private void SaveEditSong(ActionEvent event) {
+        
+         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
     
 }

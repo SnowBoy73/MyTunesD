@@ -38,6 +38,10 @@ public class AskDeleteSongController implements Initializable {
 
     @FXML
     private void DeleteDeleteSong(ActionEvent event) {
+        
+        
+         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
     
 }

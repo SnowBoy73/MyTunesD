@@ -102,7 +102,7 @@ System.out.println("Playlist Created"); //
             } 
         } else {
             System.out.println("");
-            System.out.println("Song to delete doesn't exist");
+            System.out.println("Playlist to delete doesn't exist");
             System.out.println("");
         }   
     }

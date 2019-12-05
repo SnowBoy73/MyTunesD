@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.css.SimpleStyleableObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +36,6 @@ import mytunes.be.Song;
 import mytunes.bll.BllManager;
 import mytunes.dal.MockSongDAO;
 import mytunes.gui.model.playlistmodel;
-
 /**
  * FXML Controller class
  *
@@ -46,11 +46,11 @@ public class MyTunesController implements Initializable {
     @FXML
     private Label label;
     @FXML
-    private ListView<Playlist> playlistsview;
+    public ListView<Playlist> playlistsview;
     @FXML
     private Label playlistslabel;
     @FXML
-    private ListView<?> PlaylistsongsView;
+    private ListView<Song> playlistSongsView;
     @FXML
     private Label Playlistsongslabel;
     @FXML
@@ -100,11 +100,22 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button Searchbutton;
 
-    /**
+   /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        playlistsview.getSelectionModel().selectedItemProperty().addListener((observable) -> {
+            Playlist p = playlistsview.getSelectionModel().getSelectedItem();
+            
+           playlistSongsView.getItems().clear();
+           playlistSongsView.getItems().addAll(p.getSonglist());
+             
+            
+        });
+        
+        
         allSongsTitle.setCellValueFactory((param) -> {
                  
             return new SimpleStringProperty( param.getValue().getTitle()); 
@@ -123,11 +134,11 @@ public class MyTunesController implements Initializable {
          
         BllManager bll = new BllManager();
                
-        Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0,"music/Belshazzar.mp3");
+       /* Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0,"music/Belshazzar.mp3");
         Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0,"music/Belshazzar.mp3");
         List<Song> songs = new ArrayList();
         songs.add(song);
-        songs.add(song1);
+        songs.add(song1);*/
         
         songTable.getItems().clear();
         songTable.getItems().addAll(bll.getAllSongs());
@@ -157,14 +168,12 @@ public class MyTunesController implements Initializable {
        
     }    
     
-       
+   /*   SearchSong something method that needs to be done 
    @FXML 
    private void searchSongs(KeyEvent evt){
-       
-       
-   
-   
+  
    }
+*/
     
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
@@ -196,7 +205,11 @@ public class MyTunesController implements Initializable {
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException {
     
-        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/NewSong.fxml"));
+        FXMLLoader songLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/NewSong.fxml"));
+        Parent root = songLoader.load();
+        NewSongController newsong = songLoader.getController();
+        ObservableList<Song> songtable = songTable.getItems();
+        newsong.setSongNew(songtable); //setsongtodeletefromplaylist
         Scene scene = new Scene(root);
         
         Stage stage = new Stage();
@@ -218,30 +231,50 @@ private void clickEditSong(ActionEvent event) throws IOException {
  @FXML
 private void clickDeletePlaylist(ActionEvent event) throws IOException {
     
-        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/AskDeletePlaylist.fxml"));
-        Scene scene = new Scene(root);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/AskDeletePlaylist.fxml"));
+        Parent root = loader.load();
+        AskDeletePlaylistController ctrl = loader.getController();
+        ObservableList<Playlist> playlist = playlistsview.getItems();
+        Playlist Playlist = playlistsview.getSelectionModel().getSelectedItem();
+        playlistsview.getItems().remove(Playlist);
+        ctrl.setPlaylistToDelete(playlist);
         
+        Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-    } @FXML
+    } 
+
+@FXML
 private void clickDeleteSong(ActionEvent event) throws IOException {
-    
-        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/AskDeleteSong.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/AskDeleteSong.fxml"));
+        Parent root = loader.load();
+        AskDeletePlaylistSongController ctrl = loader.getController();
+        ObservableList<Song> playlist = playlistSongsView.getItems();
+        Song song = playlistSongsView.getSelectionModel().getSelectedItem();
+        ctrl.setSongAndPlaylistToDelete(playlist, song); //setsongtodeletefromplaylist
         Scene scene = new Scene(root);
         
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
     } @FXML
 private void clickDeletePlaylistSong(ActionEvent event) throws IOException {
     
-        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/AskDeletePlaylistSong.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/AskDeletePlaylistSong.fxml"));
+        Parent root = loader.load();
+        AskDeletePlaylistSongController ctrl = loader.getController();
+        ObservableList<Song> playlist = playlistSongsView.getItems();
+        Song song = playlistSongsView.getSelectionModel().getSelectedItem();
+        ctrl.setSongAndPlaylistToDelete(playlist, song); //setsongtodeletefromplaylist
         Scene scene = new Scene(root);
         
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+       
+    
     }
 
 

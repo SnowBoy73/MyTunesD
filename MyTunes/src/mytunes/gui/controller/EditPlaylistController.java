@@ -38,6 +38,11 @@ public class EditPlaylistController implements Initializable {
 
     @FXML
     private void SaveEditPlaylist(ActionEvent event) {
+        
+        
+        
+         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
     
 }

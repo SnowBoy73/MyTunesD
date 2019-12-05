@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -55,16 +56,19 @@ public class NewPlaylistController implements Initializable {
     private void SavePlaylist(ActionEvent event) {
          BllManager bll = new BllManager();
         
+        
        
       //  Playlist playlist = new Playlist(0, playlistTextField.getText());
         
        //  bll.savePlaylist(playlist);
        // NEED TO RESOLVE CONVERTING LIST <SONG> INTO STRING
+       
+       //
+       Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
 
-    
-       
-        
+  
     }
     
 

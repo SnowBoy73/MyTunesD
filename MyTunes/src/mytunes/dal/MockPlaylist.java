@@ -25,13 +25,13 @@ public class MockPlaylist {
 
     public MockPlaylist() {
         
-         Playlist playlist = new Playlist(0, "Chilli", songList);
-    Song songToAdd1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0, "Belshazzar.mp3");
-    Song songToAdd2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0, "Belshazzar.mp3");
+        Playlist playlist = new Playlist(0, "Chilli", songList);
+        Song songToAdd1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0, "Belshazzar.mp3");
+        Song songToAdd2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0, "Belshazzar.mp3");
 
-    playlist.addSongToList (songToAdd1);
+        playlist.addSongToList (songToAdd1);
 
-    playlist.addSongToList (songToAdd2);
+        playlist.addSongToList (songToAdd2);
 
     }
      public List<Playlist> getAllPlaylists(){
@@ -43,7 +43,11 @@ public class MockPlaylist {
    public void savePlaylist(Playlist playlist) {
 
         Playlists.add(playlist);
-
     }
+
+    public void deletePlaylist(Playlist playlist) {
+        Playlists.remove(playlist);
+    }
+   
 
 }

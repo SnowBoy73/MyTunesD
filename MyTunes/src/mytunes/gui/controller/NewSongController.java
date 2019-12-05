@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,6 +36,7 @@ public class NewSongController implements Initializable {
     private JFXTextField fileField;
     @FXML
     private Spinner<String> categoryField;
+    private ObservableList<Song>songTable;
 
     /**
      * Initializes the controller class.
@@ -48,9 +50,15 @@ public class NewSongController implements Initializable {
     private void SaveSong(ActionEvent event) {
         BllManager bll = new BllManager();
         
-       
+        //use this for save playlists.
         Song song = new Song(0, titleField.getText(), artistField.getText(), categoryField.getValue(), Integer.parseInt(timeField.getText()), fileField.getText());
          bll.saveSong(song);
+         songTable.add(song);
+         
+         // Close savesong window after saved the song
+         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
+       
         
     }
     
@@ -61,4 +69,7 @@ public class NewSongController implements Initializable {
         stage.close();
     }
     
+    void setSongNew(ObservableList<Song>songtable){
+        this.songTable=songtable;
+    }
 }

@@ -47,6 +47,8 @@ public class BllManager {
     }
 
     public void deletePlaylist(Playlist playlist) {
+        
+        playlistDAO.deletePlaylist(playlist);
 
     }
 
