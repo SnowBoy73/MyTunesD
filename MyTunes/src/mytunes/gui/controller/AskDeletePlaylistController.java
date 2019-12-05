@@ -13,23 +13,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import mytunes.gui.controller.AskDeletePlaylistController;
+import mytunes.bll.BllManager;
+import mytunes.dal.MockPlaylist;
+import mytunes.dal.PlaylistDAO;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
-import mytunes.bll.BllManager;
 
 /**
  * FXML Controller class
  *
- * @author mega_
+ * @author mac
  */
- 
-
-
 public class AskDeletePlaylistController implements Initializable {
-     private ObservableList<Playlist>playlist;
-       private Playlist Playlist;
+    private ObservableList<Playlist>playlist;
+       private Playlist playlyist;
        BllManager bll=new BllManager();
     /**
      * Initializes the controller class.
@@ -41,24 +40,22 @@ public class AskDeletePlaylistController implements Initializable {
 
     @FXML
     private void KeepPlaylist(ActionEvent event) {
-        
-        
-    
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.close();
-    
     }
 
     @FXML
     private void DeletePlaylist(ActionEvent event) {
-       // this.playlist.remove(playlist);
-        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
-         stage.close();
-    }
-
-    void setPlaylistToDelete(ObservableList<Playlist> playlist) {
-        this.playlist=playlist;
-        this.playlist.remove(playlist);
        
+        //playlistview.getItems().remove(playlist);
+        
+        prim.DeletePlaylistReal();
+        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
+        stage.close();
     }
+private MyTunesController prim;
+
+    void setUpContr(MyTunesController prim) {
+    this.prim = prim;   }
+    
 }
