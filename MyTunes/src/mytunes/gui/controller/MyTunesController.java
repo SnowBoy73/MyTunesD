@@ -234,16 +234,23 @@ private void clickDeletePlaylist(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/AskDeletePlaylist.fxml"));
         Parent root = loader.load();
         AskDeletePlaylistController ctrl = loader.getController();
-        ObservableList<Playlist> playlist = playlistsview.getItems();
-        Playlist Playlist = playlistsview.getSelectionModel().getSelectedItem();
-        playlistsview.getItems().remove(Playlist);
-        ctrl.setPlaylistToDelete(playlist);
+        
+        
+        ctrl.setUpContr(this);
         
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
     } 
+
+void DeletePlaylistReal(){
+        int i = playlistsview.getSelectionModel().getSelectedIndex();
+        
+        //playlistModel.deletePlaylist(Playlist);
+        playlistsview.getItems().remove(i);
+
+}
 
 @FXML
 private void clickDeleteSong(ActionEvent event) throws IOException {
