@@ -30,12 +30,18 @@ public class NewPlaylistController implements Initializable {
     @FXML
     private JFXTextField playlistTextField;
     @FXML
+    private JFXTextField titleField;
+    @FXML
     private JFXTextField playlistSongField;
+    @FXML
+    private JFXTextField fileField;
     @FXML
     private Button cancelPlaylist;
     @FXML
     private Button savePlaylist;
-
+    @FXML
+    //private ObservableList<Playlist>playlistview;
+    private ObservableList<Playlist> playlistsview;
     
     /**
      * Initializes the controller class.
@@ -56,18 +62,26 @@ public class NewPlaylistController implements Initializable {
     private void SavePlaylist(ActionEvent event) {
          BllManager bll = new BllManager();
         
+        //use this for save playlists.
         
+        Playlist playlist = new Playlist(0, playlistTextField.getText());
+       // Playlist playlist = new Playlist(0, titleField.getText());//(fileField.getText());
+         bll.savePlaylist(playlist);
+         playlistsview.add(playlist);
        
-      //  Playlist playlist = new Playlist(0, playlistTextField.getText());
+      //  
         
        //  bll.savePlaylist(playlist);
-       // NEED TO RESOLVE CONVERTING LIST <SONG> INTO STRING
        
-       //
+       
+       
        Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.close();
     }
-
+    
+    void setPlaylistNew(ObservableList<Playlist>playlistsview){
+        this.playlistsview=playlistsview;
+    }
   
     }
     
