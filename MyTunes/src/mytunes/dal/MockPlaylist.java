@@ -26,8 +26,8 @@ public class MockPlaylist {
     public MockPlaylist() {
         
         Playlist playlist = new Playlist(0, "Chilli", songList);
-        Song songToAdd1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0, "Belshazzar.mp3");
-        Song songToAdd2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0, "Belshazzar.mp3");
+        Song songToAdd1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0, "Khul.mp3");
+        Song songToAdd2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0, "Khul.mp3");
 
         playlist.addSongToList (songToAdd1);
 
