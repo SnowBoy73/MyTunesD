@@ -112,6 +112,9 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button stopbutton;
     
+    private MediaPlayer mp;
+    private MediaPlayer mediaPlayer;
+    
 
    /**
      * Initializes the controller class.
@@ -312,21 +315,33 @@ private void clickDeletePlaylistSong(ActionEvent event) throws IOException {
 
     @FXML
     private void clickPause(ActionEvent event) {
+
+        mp.pause();
     }
 
     @FXML
     private void clickStop(ActionEvent event) {
-        MediaPlayer mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));
+               
+
         mp.stop();
+        mp.dispose();
     }
 
     @FXML
-    private void playMyDud(ActionEvent event) {    
-        MediaPlayer mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));
-        //mp.setAutoPlay(true);
-        //mp.setVolume(1.0);
-        mp.setStartTime(new Duration(0));
-        mp.play();
+    private void playMyDud(ActionEvent event) {  
+       if(mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED)
+       {
+           mp.play();
+       }
+       else
+       {
+           mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));
+            // mp.setAutoPlay(true);
+            // mp.setVolume(1.0);
+            mp.setStartTime(new Duration(0)); 
+            mp.play();
+       }
+       
     }
 
 

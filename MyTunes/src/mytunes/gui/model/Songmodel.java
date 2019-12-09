@@ -10,7 +10,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mytunes.be.Song;
-import mytunes.bll.SearchSong;
+import mytunes.bll.util.SearchSong;
 /**
  *
  * @author mac
