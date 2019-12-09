@@ -37,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
@@ -320,13 +321,12 @@ private void clickDeletePlaylistSong(ActionEvent event) throws IOException {
     }
 
     @FXML
-    private void playMyDud(ActionEvent event) {
-        
-      
-MediaPlayer mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));
-//mp.setAutoPlay(true);
-//mp.setVolume(1.0);
-     mp.play();
+    private void playMyDud(ActionEvent event) {    
+        MediaPlayer mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));
+        //mp.setAutoPlay(true);
+        //mp.setVolume(1.0);
+        mp.setStartTime(new Duration(0));
+        mp.play();
     }
 
 
