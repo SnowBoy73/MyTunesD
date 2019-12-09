@@ -60,7 +60,7 @@
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="songplayerlabel" cache="true" layoutX="230.0" layoutY="379.0" prefHeight="27.0" prefWidth="537.0" text="Now Playing SongTeamD fejwoghw lalalalalalallalaaaaallalalalalalaChiliNadiaSINGINGG" textFill="#83a6d1" />
+      <Label fx:id="songplayerlabel" cache="true" layoutX="230.0" layoutY="379.0" prefHeight="27.0" prefWidth="537.0" text="Now Playing SongTeamD fejwoghw lalalalalalallalaaaaallalalalalalaChiliNadiaSINGINGG" textFill="#4a5bbf" />
       <ImageView fitHeight="27.0" fitWidth="31.0" layoutX="689.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../../../Desktop/volume-512.png" />
