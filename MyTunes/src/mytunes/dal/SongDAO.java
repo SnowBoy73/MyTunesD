@@ -14,7 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+import mytunes.dal.SongDAO;
 import mytunes.be.Song;
 
 
@@ -26,7 +26,7 @@ import mytunes.be.Song;
 public class SongDAO {
     
     
-private static final String MUSIC_SOURCE = "music/Belshazzar.mp3";
+private static final String MUSIC_SOURCE = "src/khul.mp3";
 private static final String SONG_SOURCE = "data/song_list.txt";
 boolean isNewSong = true;
 int oldSongId;
@@ -54,8 +54,11 @@ System.out.println("isNewSong = " + isNewSong); //
         isNewSong = true;
       System.out.println("new song "+ songId + title + artist + category + duration);
       System.out.println("Song Created"); //
+      
         return newlyCreatedSong;
+        
     }
+   
         
     
     
@@ -220,6 +223,7 @@ System.out.println("allSongs size = " + songListSize); //
     public void writeSongListToFile(List<Song> songList) {
         File file = new File(SONG_SOURCE);
         boolean isExistingFile = false;
+        
         
         for (int i = 0; i < songList.size(); i++) {
             Song currentSong = songList.get(i);
