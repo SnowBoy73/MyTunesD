@@ -6,7 +6,10 @@
 package mytunes.gui.controller;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import mytunes.be.Playlist;
 import java.io.IOException;
 import java.net.URL;
@@ -39,6 +42,7 @@ import mytunes.be.Song;
 import mytunes.bll.BllManager;
 import mytunes.dal.MockSongDAO;
 import mytunes.gui.model.playlistmodel;
+
 /**
  * FXML Controller class
  *
@@ -194,8 +198,12 @@ public class MyTunesController implements Initializable {
    
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/NewPlaylist.fxml"));
+ 
+        FXMLLoader playlistLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/NewPlaylist.fxml"));
+        Parent root = playlistLoader.load();
+        NewPlaylistController newplaylist = playlistLoader.getController();
+        ObservableList<Playlist> playlist = playlistsview.getItems();
+        newplaylist.setPlaylistNew(playlist);
         Scene scene = new Scene(root);
         
         Stage stage = new Stage();
@@ -204,7 +212,6 @@ public class MyTunesController implements Initializable {
         
         
     }
-    
     @FXML
     private void clickEditPlaylist(ActionEvent event) throws IOException {
     
@@ -216,8 +223,6 @@ public class MyTunesController implements Initializable {
         stage.show();
     
     }
-    
- 
     
     @FXML
     private void clickNewSong(ActionEvent event) throws IOException {
@@ -316,11 +321,11 @@ private void clickDeletePlaylistSong(ActionEvent event) throws IOException {
 
     @FXML
     private void playMyDud(ActionEvent event) {
-        System.out.println("KKK");
         
+      
 MediaPlayer mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));
-mp.setAutoPlay(true);
-mp.setVolume(0.5);
+//mp.setAutoPlay(true);
+//mp.setVolume(1.0);
      mp.play();
     }
 
