@@ -41,6 +41,7 @@ import javafx.util.Duration;
 import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
+import mytunes.dal.MockPlaylist;
 import mytunes.dal.MockSongDAO;
 import mytunes.gui.model.playlistmodel;
 
@@ -310,6 +311,7 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void playMyDud(ActionEvent event) {
+    
 
         //chililove: if song is paused, play from where songs is paused.
         if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
@@ -320,8 +322,16 @@ public class MyTunesController implements Initializable {
             mp.stop();
         } else {
             //Chililove: trying to connect songs to list, to be able to change between songs.
-
+            
             mp = new MediaPlayer(new Media(new File("src/Dennis-Lloyd-Analizing.mp3").toURI().toString()));
+            
+  //Charlies suggestion til filechange   
+  
+  //songPlay = songPlay;
+  //String filePlay = new File(songPlay.getFilePath()).toURI().toString;
+  //Media hit = new Media(filePlay);
+  //mp = new MediaPlayer(hit);
+  //mp.play();
             
             /* chililove: sry I changed the song, but you can easily change it back by outcommenting this 
 
@@ -337,4 +347,5 @@ public class MyTunesController implements Initializable {
 
         }
     }
+    
 }
