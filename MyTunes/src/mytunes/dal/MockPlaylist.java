@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.media.MediaPlayer;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 
@@ -26,12 +27,13 @@ public class MockPlaylist {
     public MockPlaylist() {
         
         Playlist playlist = new Playlist(0, "Chilli", songList);
-        Song songToAdd1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0, "Khul.mp3");
+        Song songToAdd1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0, "Dennis-Lloyd-Analizing.mp3");
         Song songToAdd2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0, "Khul.mp3");
 
         playlist.addSongToList (songToAdd1);
 
         playlist.addSongToList (songToAdd2);
+        
 
     }
      public List<Playlist> getAllPlaylists(){

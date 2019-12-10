@@ -26,9 +26,9 @@ public class playlistmodel {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         List<Song>songList = new ArrayList<>();
         Playlist playlist = new Playlist(0, "Chilli",songList);
-        Playlist playlist2 = new Playlist(0, "Test",songList);
-        Song songToAdd1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0,"Belshazzar.mp3");
-        Song songToAdd2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0,"Belshazzar.mp3");
+       Playlist playlist2 = new Playlist(0, "Test",songList);
+        Song songToAdd1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0,"src/Dennis-Lloyd-Analizing.mp3");
+        Song songToAdd2 = new Song(0, "AlansSong", "ChiliBand", "Country", 0,"src/Khul.mp3");
         
         playlist.addSongToList(songToAdd1);
         playlist.addSongToList(songToAdd2);
