@@ -11,7 +11,7 @@ import mytunes.be.Playlist;
 import mytunes.be.Song;
 import static mytunes.dal.DalMethodTester.songDao;
 import mytunes.dal.MockPlaylist;
-import mytunes.dal.MockSongDAO;
+//import mytunes.dal.MockSongDAO;
 import mytunes.dal.SongDBDAO;
 
 /**
@@ -20,17 +20,17 @@ import mytunes.dal.SongDBDAO;
  */
 public class BllManager {
 
-    private SongDBDAO songDAO = new SongDBDAO();
+    private SongDBDAO songDBDao = new SongDBDAO();
 
     public List<Song> getAllSongs() {
 
-        return songDAO.getAllSongs();
+        return songDBDao.getAllSongs();
 
     }
 
     public void saveSong(Song song) {
         
-        songDAO.addSong(song);
+        songDBDao.addSong(song);
 
     }
 
@@ -56,7 +56,7 @@ public class BllManager {
 
     public void deleteSong(Song song) {
 
-        songDAO.removeSongFromDB(song);
+        songDBDao.removeSongFromDB(song);
 
     }
 
