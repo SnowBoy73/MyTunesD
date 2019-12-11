@@ -115,14 +115,8 @@ public class MyTunesController implements Initializable {
 
     private MediaPlayer mp;
     private MediaPlayer mediaPlayer;
+BllManager bll = new BllManager();
 
-    /**
-     * Initializes the controller class.
-     */
-    public MyTunesController() {
-        BllManager bll = new BllManager();
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -148,7 +142,7 @@ public class MyTunesController implements Initializable {
 //To change body of generated lambdas, choose Tools | Templates.
         });
 
-        BllManager bll = new BllManager();
+        
 
         /* Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0,"music/Belshazzar.mp3");
         Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0,"music/Belshazzar.mp3");
@@ -273,6 +267,8 @@ public class MyTunesController implements Initializable {
         Scene scene = new Scene(root);
         songTable.selectionModelProperty().getValue().getSelectedItem();
         songTable.getItems().remove(song);
+        bll.deleteSong(song);
+       
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -312,18 +308,18 @@ public class MyTunesController implements Initializable {
     @FXML
     private void playMyDud(ActionEvent event) {
     
-
+        
         //chililove: if song is paused, play from where songs is paused.
         if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
             mp.play();
 
         } //chililove: f you click stop when the songs is playing it stops the song.
         else if (mp != null && mp.getStatus() == MediaPlayer.Status.PLAYING) {
-            mp.stop();
+            mp.pause();
         } else {
             //Chililove: trying to connect songs to list, to be able to change between songs.
-            
-            mp = new MediaPlayer(new Media(new File("src/Dennis-Lloyd-Analizing.mp3").toURI().toString()));
+            Song song = songTable.getSelectionModel().getSelectedItem();
+            mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString()));
             
   //Charlies suggestion til filechange   
   
