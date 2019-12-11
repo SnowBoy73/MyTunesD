@@ -6,6 +6,7 @@
 package mytunes.gui.controller;
 
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
@@ -14,11 +15,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
-
+import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
@@ -37,6 +40,8 @@ public class NewSongController implements Initializable {
     @FXML
     private Spinner<String> categoryField;
     private ObservableList<Song>songTable;
+    @FXML
+    private Button ChooseSong;
 
     /**
      * Initializes the controller class.
@@ -71,5 +76,16 @@ public class NewSongController implements Initializable {
     
     void setSongNew(ObservableList<Song>songtable){
         this.songTable=songtable;
+    }
+
+    @FXML
+    private void clickChooseSong(ActionEvent event) {
+        
+        FileChooser fileChooser=new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File file = fileChooser.showOpenDialog(null); //This Works for MAC
+        if(file!=null){
+           //Martin HELP!!Need Database con
+        }
     }
 }
