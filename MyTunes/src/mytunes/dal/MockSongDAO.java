@@ -13,7 +13,7 @@ import mytunes.be.Song;
  *
  * @author mega_
  */
-public class MockSongDAO {
+/*public class MockSongDAO {
 
     List<Song> songs = new ArrayList();
 
@@ -42,4 +42,4 @@ public class MockSongDAO {
 
         songs.remove(song);
 
-}}
+}}*/
