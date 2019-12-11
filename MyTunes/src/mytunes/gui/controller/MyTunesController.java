@@ -45,6 +45,8 @@ import mytunes.dal.MockPlaylist;
 // import mytunes.dal.MockSongDAO;
 import mytunes.gui.model.playlistmodel;
 
+ 
+
 /**
  * FXML Controller class
  *
@@ -116,6 +118,7 @@ public class MyTunesController implements Initializable {
     private MediaPlayer mp;
     private MediaPlayer mediaPlayer;
 BllManager bll = new BllManager();
+
 
 
     @Override
@@ -220,6 +223,7 @@ BllManager bll = new BllManager();
         stage.show();
 
     }
+    
 
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException {
@@ -320,7 +324,7 @@ BllManager bll = new BllManager();
             //Chililove: trying to connect songs to list, to be able to change between songs.
             Song song = songTable.getSelectionModel().getSelectedItem();
             mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString()));
-            
+      //Not working with Mac       
   //Charlies suggestion til filechange   
   
   //songPlay = songPlay;
@@ -343,5 +347,6 @@ BllManager bll = new BllManager();
 
         }
     }
+    
     
 }

@@ -5,6 +5,7 @@
  */
 package mytunes.gui.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.EventObject;
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -31,6 +33,9 @@ public class EditSongController implements Initializable {
 
     @FXML
     private void ChooseSong(ActionEvent event) {
+        FileChooser fileChooser=new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File file = fileChooser.showOpenDialog(null);
     }
 
     @FXML
