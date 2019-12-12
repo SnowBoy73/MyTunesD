@@ -81,11 +81,15 @@ public class NewSongController implements Initializable {
     @FXML
     private void clickChooseSong(ActionEvent event) {
         
+        
         FileChooser fileChooser=new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(null); //This Works for MAC
         if(file!=null){ 
+            file.getPath();
            //Martin HELP!!Need Database con
+           
         }
+        
     }
 }

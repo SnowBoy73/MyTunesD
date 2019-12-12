@@ -325,7 +325,7 @@ BllManager bll = new BllManager();
         } else {
             //Chililove: trying to connect songs to list, to be able to change between songs.
             Song song = songTable.getSelectionModel().getSelectedItem();
-            mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString()));
+            mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString())); //This line is giving me problems xxx
       //Not working with Mac       
   //Charlies suggestion til filechange   
   
@@ -360,7 +360,7 @@ BllManager bll = new BllManager();
     @FXML
     private void clickNextbtn(ActionEvent event) {
         
-       
+           
         }
 
 
