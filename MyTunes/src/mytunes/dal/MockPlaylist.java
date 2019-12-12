@@ -19,7 +19,7 @@ import mytunes.be.Song;
  */
 public class MockPlaylist {
 
-    public MockSongDAO PlaylistDAO = new MockSongDAO();
+    public SongDBDAO PlaylistDAO = new SongDBDAO();
 
     List<Playlist> Playlists = new ArrayList();
     List<Song> songList = new ArrayList();
