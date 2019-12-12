@@ -16,8 +16,8 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import mytunes.gui.controller.AskDeletePlaylistController;
 import mytunes.bll.BllManager;
-import mytunes.dal.MockPlaylist;
-import mytunes.dal.PlaylistDAO;
+import mytunes.dal.mock.MockPlaylist;
+import mytunes.obsolete.file.PlaylistDAO;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
 

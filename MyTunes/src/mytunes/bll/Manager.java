@@ -12,10 +12,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
-import mytunes.dal.DalManager;
-import mytunes.dal.IDalManager;
-import mytunes.dal.PlaylistDAO;
-import mytunes.dal.SongDAO;
+import mytunes.obsolete.DalManager;
+import mytunes.obsolete.interfaces.IDalManager;
+import mytunes.obsolete.file.PlaylistDAO;
+import mytunes.obsolete.file.SongDAO;
 
 /**
  *

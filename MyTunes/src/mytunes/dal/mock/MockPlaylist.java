@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.dal;
+package mytunes.dal.mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,6 @@ import mytunes.be.Song;
  * @author mega_
  */
 public class MockPlaylist {
-
-    public SongDBDAO PlaylistDAO = new SongDBDAO();
-
     List<Playlist> Playlists = new ArrayList();
     List<Song> songList = new ArrayList();
 

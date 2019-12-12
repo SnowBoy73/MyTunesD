@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.dal;
+package mytunes.obsolete;
 
+import mytunes.dal.db.PlaylistDBDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import mytunes.dal.SongDAO;
-import mytunes.dal.PlaylistDAO;
+import mytunes.obsolete.file.SongDAO;
+import mytunes.obsolete.file.PlaylistDAO;
 import mytunes.be.Song; 
 import mytunes.be.Playlist; 
 

@@ -1,4 +1,4 @@
-package mytunes.dal;
+package mytunes.obsolete.interfaces;
 
 import java.util.List;
 import mytunes.be.Playlist;

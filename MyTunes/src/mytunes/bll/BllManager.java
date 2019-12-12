@@ -9,10 +9,9 @@ package mytunes.bll;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
-import static mytunes.dal.DalMethodTester.songDao;
-import mytunes.dal.MockPlaylist;
-//import mytunes.dal.MockSongDAO;
-import mytunes.dal.SongDBDAO;
+import mytunes.dal.db.PlaylistDBDAO;
+import mytunes.dal.db.SongDBDAO;
+import mytunes.dal.mock.*;
 
 /**
  *
@@ -34,7 +33,7 @@ public class BllManager {
 
     }
 
-    private MockPlaylist playlistDAO = new MockPlaylist();
+    private PlaylistDBDAO playlistDAO = new PlaylistDBDAO();
 
     public List<Playlist> getAllPlaylist() {
 
@@ -56,7 +55,7 @@ public class BllManager {
 
     public void deleteSong(Song song) {
 
-        songDBDao.removeSongFromDB(song);
+        //songDBDao.removeSongFromDB(song);
 
     }
 

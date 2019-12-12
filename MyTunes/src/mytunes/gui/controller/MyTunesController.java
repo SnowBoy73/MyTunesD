@@ -44,7 +44,7 @@ import javafx.util.Duration;
 import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
-import mytunes.dal.MockPlaylist;
+import mytunes.dal.mock.MockPlaylist;
 import mytunes.gui.model.playlistmodel;
 
  
@@ -148,12 +148,6 @@ BllManager bll = new BllManager();
         });
 
         
-
-        /* Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0,"music/Belshazzar.mp3");
-        Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0,"music/Belshazzar.mp3");
-        List<Song> songs = new ArrayList();
-        songs.add(song);
-        songs.add(song1);*/
         songTable.getItems().clear();
         songTable.getItems().addAll(bll.getAllSongs());
 
@@ -168,20 +162,11 @@ BllManager bll = new BllManager();
 //To change body of generated lambdas, choose Tools | Templates.
         });
         // TODO
-
-        // ListView
-        playlistmodel playlistmodel = new playlistmodel();
-
-        playlistsview.setItems(playlistmodel.getAllPlaylist());
+        playlistsview.getItems().clear();
+        playlistsview.getItems().addAll(bll.getAllPlaylist());
 
     }
 
-    /*   SearchSong something method that needs to be done 
-   @FXML 
-   private void searchSongs(KeyEvent evt){
-  
-   }
-     */
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
 

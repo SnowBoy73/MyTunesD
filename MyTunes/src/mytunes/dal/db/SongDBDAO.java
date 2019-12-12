@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.dal;
+package mytunes.dal.db;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Statement;
@@ -73,21 +73,6 @@ public class SongDBDAO {
 
     }
 
-    public void addSongToDB(String title, String artist, String category, int duration, String path) {
-        String stat = "INSERT INTO Song VALUES (?,?,?,?,?)";
-        try (Connection xd = cp.getConnection()) {
-            PreparedStatement stmt = xd.prepareStatement(stat);
-            stmt.setString(1, title);
-            stmt.setString(2, artist);
-            stmt.setString(3, category);
-            stmt.setInt(4, duration);
-            stmt.setString(5, path);
-            stmt.execute();
-        } catch (SQLException ex) {
-            System.out.println("Exception " + ex);
-        }
-
-    }
 
     public void removeSongFromDB(Song song) {
         String stat = "DELETE FROM song WHERE ID=?";

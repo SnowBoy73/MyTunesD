@@ -1,5 +1,7 @@
- package mytunes.dal;
+ package mytunes.obsolete;
 
+import mytunes.obsolete.interfaces.IDalManager;
+import mytunes.obsolete.file.PlaylistDAO;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;

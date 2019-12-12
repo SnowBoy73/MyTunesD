@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.dal;
+package mytunes.obsolete;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,8 +16,8 @@ import java.util.List;
         
 import mytunes.be.Playlist;
 import mytunes.be.Song;
-import  mytunes.dal.SongDBDAO;
-import mytunes.dal.SongDBDAO;
+import  mytunes.dal.db.SongDBDAO;
+import mytunes.dal.db.SongDBDAO;
 
 
 /**
