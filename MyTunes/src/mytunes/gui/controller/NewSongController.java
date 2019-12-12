@@ -84,7 +84,7 @@ public class NewSongController implements Initializable {
         FileChooser fileChooser=new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(null); //This Works for MAC
-        if(file!=null){
+        if(file!=null){ 
            //Martin HELP!!Need Database con
         }
     }

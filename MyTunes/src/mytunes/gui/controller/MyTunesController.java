@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -34,6 +36,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -42,7 +45,6 @@ import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
 import mytunes.dal.MockPlaylist;
-import mytunes.dal.MockSongDAO;
 import mytunes.gui.model.playlistmodel;
 
  
@@ -66,10 +68,6 @@ public class MyTunesController implements Initializable {
     private Label Playlistsongslabel;
     @FXML
     private Button playbutton;
-    @FXML
-    private Button backbutton;
-    @FXML
-    private Button nextbutton;
     @FXML
     private Button upbutton;
     @FXML
@@ -118,6 +116,10 @@ public class MyTunesController implements Initializable {
     private MediaPlayer mp;
     private MediaPlayer mediaPlayer;
 BllManager bll = new BllManager();
+    @FXML
+    private Button backbutton;
+    @FXML
+    private Button nextbutton;
 
 
 
@@ -348,5 +350,35 @@ BllManager bll = new BllManager();
         }
     }
     
+    @FXML
+    private void clickBackbtn(ActionEvent event) {
+        
+        
+        
+    }
+
+    @FXML
+    private void clickNextbtn(ActionEvent event) {
+        
+       
+        }
+
+
     
+    @FXML
+    private void volSlider(MouseEvent event) {
+        
+        
+        Slider vol = new Slider();
+        voliumslider.valueProperty().addListener(new InvalidationListener() { 
+        
+         public void invalidated(Observable ov) 
+                { 
+                    if (vol.isPressed()) { 
+                        mp.setVolume(vol.getValue() / 100);
+                    } 
+                } 
+        });
+     }
 }
+
