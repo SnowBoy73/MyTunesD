@@ -45,8 +45,9 @@ import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
 import mytunes.dal.MockPlaylist;
+import mytunes.dal.SongDBDAO;
 import mytunes.gui.model.playlistmodel;
-
+import mytunes.be.Song;
  
 
 /**
@@ -355,12 +356,20 @@ BllManager bll = new BllManager();
         
         
         
+        if(backbutton!=null){
+           
+           backbutton.getId();
+           songTable.idProperty().isNotNull();
+           mp.play();   
+        } 
+        
+        
     }
 
     @FXML
     private void clickNextbtn(ActionEvent event) {
         
-           
+          // nextbutton =findViewById(clickNextbtn(event));
         }
 
 

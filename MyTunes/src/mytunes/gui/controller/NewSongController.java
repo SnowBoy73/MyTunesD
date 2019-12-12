@@ -22,6 +22,11 @@ import javafx.stage.Stage;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import mytunes.gui.controller.MyTunesController;
+import javafx.scene.media.MediaPlayer;
+
 /**
  * FXML Controller class
  *
@@ -43,6 +48,9 @@ public class NewSongController implements Initializable {
     @FXML
     private Button ChooseSong;
 
+    private MediaPlayer mp;
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -81,12 +89,16 @@ public class NewSongController implements Initializable {
     @FXML
     private void clickChooseSong(ActionEvent event) {
         
-        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("MP3 Files","mp3","mpeg3");
         FileChooser fileChooser=new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(null); //This Works for MAC
         if(file!=null){ 
-            file.getPath();
+            Song song = new Song(0, titleField.getText(), artistField.getText(), categoryField.getValue(), Integer.parseInt(timeField.getText()), fileField.getText());
+            songTable.add(song);
+            fileChooser.getInitialFileName();
+            mp.setStartTime(new Duration(0));
+            mp.play();
            //Martin HELP!!Need Database con
            
         }
