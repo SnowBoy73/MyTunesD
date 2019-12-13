@@ -44,12 +44,11 @@ import javafx.util.Duration;
 import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
-<<<<<<< HEAD
+
 import mytunes.dal.mock.MockPlaylist;
-=======
-import mytunes.dal.MockPlaylist;
-import mytunes.dal.SongDBDAO;
->>>>>>> 3079efbde3fed38241f9cfa4ac2f65f3e873a3d8
+
+import mytunes.dal.mock.MockPlaylist;
+
 import mytunes.gui.model.playlistmodel;
 import mytunes.be.Song;
  
