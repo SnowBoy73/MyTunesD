@@ -53,7 +53,7 @@
       <Button fx:id="searchbutton" layoutX="758.0" layoutY="24.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" />
       <Button fx:id="editsongsbutton" layoutX="461.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickEditSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Edit" />
       <Button fx:id="deletesongsbutton" layoutX="734.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickDeleteSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
-      <Button fx:id="addsongstoplaylistbutton" layoutX="510.0" layoutY="320.0" mnemonicParsing="false" style="-fx-background-color: #83a6d1#83a6d1;" text="Add song to playlist" />
+      <Button layoutX="510.0" layoutY="320.0" mnemonicParsing="false" onAction="#addsongstoplaylistbutton" style="-fx-background-color: #83a6d1#83a6d1;" text="Add song to playlist" />
       <Label fx:id="AllSongslabel" layoutX="408.0" layoutY="51.0" prefHeight="22.0" prefWidth="84.0" text="All Songs" textFill="#83a6d1">
          <font>
             <Font name="Comic Sans MS" size="15.0" />

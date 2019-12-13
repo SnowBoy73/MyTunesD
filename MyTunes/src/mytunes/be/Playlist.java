@@ -61,7 +61,7 @@ public class Playlist {
 
    
     
-    public void setId() { // may not need this. If not set id variable to final
+    public void setId(int id) { // may not need this. If not set id variable to final
         this.id = id;
     }
 

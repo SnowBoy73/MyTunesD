@@ -89,8 +89,6 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button deletesongsbutton;
     @FXML
-    private Button addsongstoplaylistbutton;
-    @FXML
     private Label AllSongslabel;
     @FXML
     private Label songplayerlabel;
@@ -119,12 +117,11 @@ public class MyTunesController implements Initializable {
 
     private MediaPlayer mp;
     private MediaPlayer mediaPlayer;
-BllManager bll = new BllManager();
     @FXML
     private Button backbutton;
     @FXML
     private Button nextbutton;
-
+BllManager bll = new BllManager();
 
 
     @Override
@@ -243,10 +240,13 @@ BllManager bll = new BllManager();
     }
 
     void DeletePlaylistReal() {
-        int i = playlistsview.getSelectionModel().getSelectedIndex();
+        Playlist playlist = playlistsview.getSelectionModel().getSelectedItem();
 
         //playlistModel.deletePlaylist(Playlist);
-        playlistsview.getItems().remove(i);
+        bll.deletePlaylist(playlist);
+        playlistsview.getItems().remove(playlist);
+        
+        
 
     }
 
@@ -377,5 +377,18 @@ BllManager bll = new BllManager();
                 } 
         });
      }
+
+    @FXML
+    private void addsongstoplaylistbutton(ActionEvent event) {
+        
+        Playlist playlist = playlistsview.getSelectionModel().getSelectedItem();
+        Song song = songTable.getSelectionModel().getSelectedItem();
+        bll.addSongToPlaylist(playlist, song);
+        playlist.addSongToList(song);
+        playlistSongsView.getItems().add(song);
+        
+        
+        
+    }
 }
 
