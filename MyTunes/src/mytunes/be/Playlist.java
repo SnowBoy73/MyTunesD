@@ -27,6 +27,7 @@ public class Playlist {
      public Playlist(int id, String name) {
         this.id = id;
         this.name = name;
+        this.songList = songList;
     }
 
     @Override

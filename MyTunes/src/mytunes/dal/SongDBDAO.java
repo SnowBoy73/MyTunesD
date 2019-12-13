@@ -6,6 +6,7 @@
 package mytunes.dal;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import java.io.IOException;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -89,7 +90,7 @@ public class SongDBDAO {
 
     }
 
-    public void removeSongFromDB(Song song) {
+    public void deleteSongFromDB(Song song) {
         String stat = "DELETE FROM song WHERE ID=?";
         try (Connection xd = cp.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(stat);
@@ -100,6 +101,26 @@ public class SongDBDAO {
         }
     }
 
+    public void updateSongInDB(Song song){
+    String stat = "UPDATE song/n" +
+            "SET title='?', artist='?', category='?', duration='?', path='?'/n" +
+            "WHERE ID=?";
+    try(Connection xd = cp.getConnection()){
+    PreparedStatement stmt = con.prepareStatement(stat);
+    stmt.setString(1, song.getTitle());
+    stmt.setString(2, song.getArtist());
+    stmt.setString(3, song.getCategory());
+    stmt.setInt(4, song.getDuration());
+    stmt.setString(5, song.getPath());
+    stmt.setInt(6, song.getId());
+    stmt.execute();
+    }   catch (SQLServerException ex) {
+            System.out.println("Exception " +ex);
+        } catch (SQLException ex) {
+            System.out.println("Exception " +ex);
+        }
+    
+    }
     public SongDBDAO() {
         DBConnectionProvider cp = new DBConnectionProvider();
         try {
@@ -115,6 +136,19 @@ public class SongDBDAO {
     }
     private Connection con;
 
+    public Song getSong(int id) throws IOException {
+        List<Song> allSongs = new ArrayList<>();
+        allSongs = getAllSongs();
+        for (int i = 0; i < allSongs.size(); i++) {
+            Song testSong = allSongs.get(i);
+            int foundId = testSong.getId();
+            if (foundId == id)  {
+            
+            return testSong;
+            }
+        }
+        return null;
+    }
     /* 
     ALAN'S CODE
     
