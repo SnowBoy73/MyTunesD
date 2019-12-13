@@ -65,7 +65,7 @@ public class PlaylistDBDAO {
         }
     }
     
-    public void deletePlaylistFromDB(Playlist playlist){
+    public void deletePlaylist(Playlist playlist){
     String stat = "DELETE FROM playlist WHERE id=?";
     try (Connection con = cp.getConnection()){
     PreparedStatement stmt = con.prepareStatement(stat);
