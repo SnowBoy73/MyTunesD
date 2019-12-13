@@ -46,7 +46,7 @@ public class BllManager {
     }
 
     public void savePlaylist(Playlist playlist) {
-        playlistDAO.createPlaylist(playlist.getName());
+        playlistDAO.createPlaylistInDB(playlist.getName());
 
     }
 
