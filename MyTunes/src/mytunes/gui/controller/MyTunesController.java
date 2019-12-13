@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -34,6 +36,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -41,9 +44,14 @@ import javafx.util.Duration;
 import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
-import mytunes.dal.MockPlaylist;
-import mytunes.dal.MockSongDAO;
+
+import mytunes.dal.mock.MockPlaylist;
+
+import mytunes.dal.mock.MockPlaylist;
+
 import mytunes.gui.model.playlistmodel;
+import mytunes.be.Song;
+ 
 
 /**
  * FXML Controller class
@@ -64,10 +72,6 @@ public class MyTunesController implements Initializable {
     private Label Playlistsongslabel;
     @FXML
     private Button playbutton;
-    @FXML
-    private Button backbutton;
-    @FXML
-    private Button nextbutton;
     @FXML
     private Button upbutton;
     @FXML
@@ -116,6 +120,11 @@ public class MyTunesController implements Initializable {
     private MediaPlayer mp;
     private MediaPlayer mediaPlayer;
 BllManager bll = new BllManager();
+    @FXML
+    private Button backbutton;
+    @FXML
+    private Button nextbutton;
+
 
 
     @Override
@@ -143,12 +152,6 @@ BllManager bll = new BllManager();
         });
 
         
-
-        /* Song song = new Song(0, "JeppesSOng", "ChiliBAnd", "Rock", 0,"music/Belshazzar.mp3");
-        Song song1 = new Song(0, "NadiasSong", "ChiliBAnds", "Pop", 0,"music/Belshazzar.mp3");
-        List<Song> songs = new ArrayList();
-        songs.add(song);
-        songs.add(song1);*/
         songTable.getItems().clear();
         songTable.getItems().addAll(bll.getAllSongs());
 
@@ -163,20 +166,11 @@ BllManager bll = new BllManager();
 //To change body of generated lambdas, choose Tools | Templates.
         });
         // TODO
-
-        // ListView
-        playlistmodel playlistmodel = new playlistmodel();
-
-        playlistsview.setItems(playlistmodel.getAllPlaylist());
+        playlistsview.getItems().clear();
+        playlistsview.getItems().addAll(bll.getAllPlaylist());
 
     }
 
-    /*   SearchSong something method that needs to be done 
-   @FXML 
-   private void searchSongs(KeyEvent evt){
-  
-   }
-     */
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException {
 
@@ -220,6 +214,7 @@ BllManager bll = new BllManager();
         stage.show();
 
     }
+    
 
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException {
@@ -319,8 +314,8 @@ BllManager bll = new BllManager();
         } else {
             //Chililove: trying to connect songs to list, to be able to change between songs.
             Song song = songTable.getSelectionModel().getSelectedItem();
-            mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString()));
-            
+            mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString())); //This line is giving me problems xxx
+      //Not working with Mac       
   //Charlies suggestion til filechange   
   
   //songPlay = songPlay;
@@ -344,4 +339,43 @@ BllManager bll = new BllManager();
         }
     }
     
+    @FXML
+    private void clickBackbtn(ActionEvent event) {
+        
+        
+        
+        if(backbutton!=null){
+           
+           backbutton.getId();
+           songTable.idProperty().isNotNull();
+           mp.play();   
+        } 
+        
+        
+    }
+
+    @FXML
+    private void clickNextbtn(ActionEvent event) {
+        
+          // nextbutton =findViewById(clickNextbtn(event));
+        }
+
+
+    
+    @FXML
+    private void volSlider(MouseEvent event) {
+        
+        
+        Slider vol = new Slider();
+        voliumslider.valueProperty().addListener(new InvalidationListener() { 
+        
+         public void invalidated(Observable ov) 
+                { 
+                    if (vol.isPressed()) { 
+                        mp.setVolume(vol.getValue() / 100);
+                    } 
+                } 
+        });
+     }
 }
+

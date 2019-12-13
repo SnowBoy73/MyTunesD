@@ -9,9 +9,12 @@ package mytunes.bll;
 import java.util.List;
 import mytunes.be.Playlist;
 import mytunes.be.Song;
-import mytunes.dal.MockPlaylist;
-import mytunes.dal.MockSongDAO;
-import mytunes.dal.SongDBDAO;
+import mytunes.dal.mock.MockPlaylist;
+import mytunes.dal.mock.MockSongDAO;
+import mytunes.dal.db.SongDBDAO;
+import mytunes.dal.db.PlaylistDBDAO;
+import mytunes.dal.db.SongDBDAO;
+import mytunes.dal.mock.*;
 
 /**
  *
@@ -19,19 +22,23 @@ import mytunes.dal.SongDBDAO;
  */
 public class BllManager {
 
-    private SongDBDAO songDAO = new SongDBDAO();
+    private SongDBDAO songDBDao = new SongDBDAO();
 
     public List<Song> getAllSongs() {
-        return songDAO.getAllSongs();
+
+        return songDBDao.getAllSongs();
+
 
     }
 
     public void saveSong(Song song) {
-        songDAO.addSong(song);
+    
+        songDBDao.addSong(song);
+
 
     }
 
-    private MockPlaylist playlistDAO = new MockPlaylist();
+    private PlaylistDBDAO playlistDAO = new PlaylistDBDAO();
 
     public List<Playlist> getAllPlaylist() {
         return playlistDAO.getAllPlaylists();
@@ -39,7 +46,7 @@ public class BllManager {
     }
 
     public void savePlaylist(Playlist playlist) {
-        playlistDAO.savePlaylist(playlist);
+        playlistDAO.createPlaylist(playlist.getName());
 
     }
 
@@ -49,7 +56,8 @@ public class BllManager {
     }
 
     public void deleteSong(Song song) {
-        songDAO.deleteSongFromDB(song);
+
+        songDBDao.deleteSongFromDB(song);
 
     }
 

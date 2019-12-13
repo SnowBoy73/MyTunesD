@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.dal;
+package mytunes.dal.db;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
@@ -74,25 +74,10 @@ public class SongDBDAO {
 
     }
 
-    public void addSongToDB(String title, String artist, String category, int duration, String path) {
-        String stat = "INSERT INTO Song VALUES (?,?,?,?,?)";
-        try (Connection xd = cp.getConnection()) {
-            PreparedStatement stmt = xd.prepareStatement(stat);
-            stmt.setString(1, title);
-            stmt.setString(2, artist);
-            stmt.setString(3, category);
-            stmt.setInt(4, duration);
-            stmt.setString(5, path);
-            stmt.execute();
-        } catch (SQLException ex) {
-            System.out.println("Exception " + ex);
-        }
-
-    }
 
     public void deleteSongFromDB(Song song) {
         String stat = "DELETE FROM song WHERE ID=?";
-        try (Connection xd = cp.getConnection()) {
+        try (Connection con = cp.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(stat);
             stmt.setInt(1, song.getId());
             stmt.execute();
@@ -105,7 +90,7 @@ public class SongDBDAO {
     String stat = "UPDATE song/n" +
             "SET title='?', artist='?', category='?', duration='?', path='?'/n" +
             "WHERE ID=?";
-    try(Connection xd = cp.getConnection()){
+    try(Connection con = cp.getConnection()){
     PreparedStatement stmt = con.prepareStatement(stat);
     stmt.setString(1, song.getTitle());
     stmt.setString(2, song.getArtist());
@@ -121,20 +106,8 @@ public class SongDBDAO {
         }
     
     }
-    public SongDBDAO() {
-        DBConnectionProvider cp = new DBConnectionProvider();
-        try {
-            this.con = cp.getConnection();
-        } catch (SQLServerException ex) {
-            Logger.getLogger(SongDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-    }
-
-    public SongDBDAO(Connection con) {
-        this.con = con;
-    }
-    private Connection con;
+    
 
     public Song getSong(int id) throws IOException {
         List<Song> allSongs = new ArrayList<>();

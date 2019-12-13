@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.dal;
+package mytunes.obsolete;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.BufferedReader;
@@ -25,7 +25,9 @@ import java.util.logging.Logger;
 
 import mytunes.be.Playlist;
 import mytunes.be.Song;
-import mytunes.dal.SongDBDAO;
+import mytunes.dal.db.DBConnectionProvider;
+import mytunes.dal.db.SongDBDAO;
+import mytunes.dal.db.SongDBDAO;
 
 /**
  *
@@ -39,25 +41,16 @@ public class PlaylistDBDAO {
     boolean isNewPlaylist = true;
     int oldPlaylistId = 20;
     private Connection con;
-    private SongDBDAO songDBDao = new SongDBDAO(con);
     private Playlist playlist;
     private Song song;
+    DBConnectionProvider cp = new DBConnectionProvider();
     
-    
-    public PlaylistDBDAO() {
-        DBConnectionProvider cp = new DBConnectionProvider();
-        try {
-            this.con = cp.getConnection();
-        } catch (SQLServerException ex) {
-            Logger.getLogger(SongDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
     public void updatePlaylistNameInDB(Playlist playlist){
     String stat = "UPDATE playlist/n" +
                   "SET name= '?' /n" +
                   "WHERE id=?";
-    try (Connection xd = con){
+    try (Connection con = cp.getConnection()){
     PreparedStatement stmt = con.prepareStatement(stat);
     stmt.setString(1,playlist.getName());
     stmt.setInt(2,playlist.getId());
@@ -69,7 +62,7 @@ public class PlaylistDBDAO {
     
     public void deletePlaylistFromDB(Playlist playlist){
     String stat = "DELETE FROM playlist WHERE id=?";
-    try (Connection xd = con){
+    try (Connection con = cp.getConnection()){
     PreparedStatement stmt = con.prepareStatement(stat);
     stmt.setInt(1, playlist.getId());
     stmt.execute();
@@ -81,8 +74,8 @@ public class PlaylistDBDAO {
     public void addSongToPlaylistInDB(Playlist playlist, Song song){
     String stat = "INSERT INTO songInPlaylist /n"+
                   "VALUES ('?','?')";
-    try (Connection xd = con){
-        PreparedStatement stmt=xd.prepareStatement(stat);
+    try (Connection con = cp.getConnection()){
+        PreparedStatement stmt=con.prepareStatement(stat);
         stmt.setInt(1, song.getId());
         stmt.setInt(2, playlist.getId());
         stmt.execute();
@@ -97,9 +90,27 @@ public class PlaylistDBDAO {
                   "JOIN playlist on idPlaylist = playlist.id\n" +
                   "JOIN song on idSong = song.id\n" +
                   "ORDER BY playlist.id";
-    try ( Connection xd = con) {
-            Statement statement = xd.createStatement();
+    try (Connection con = cp.getConnection()){
+            Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(stat);
+            int playlistId =-1;
+            Playlist pl = null;
+            while(rs.next()){
+                if(playlistId!=rs.getInt("playlist.id")){
+                    pl = new Playlist(rs.getInt("playlist.id"),rs.getString("playlist.name"));
+                    playlistId=pl.getId();
+                }
+                
+                Song s = new Song(
+                    rs.getInt("song.id"),
+                    rs.getString("song.title"),
+                    rs.getString("song.artist"),
+                    rs.getString("song.category"),
+                    rs.getInt("song.duration"),
+                    rs.getString("song.path"));
+                pl.addSongToList(song);
+                
+            }
             
         } catch (SQLException ex) {
             System.out.println("Exception " + ex);
@@ -109,15 +120,15 @@ public class PlaylistDBDAO {
     
     public void createPlaylistInDB(String name){
     String stat = "INSERT INTO playlist VALUES (?)";
-    try (Connection xd = con){
-    PreparedStatement stmt=xd.prepareStatement(stat);
+    try (Connection con = cp.getConnection()){
+    PreparedStatement stmt=con.prepareStatement(stat);
     stmt.setString(1, name);
     stmt.execute();
     }   catch (SQLException ex) {
             System.out.println("Exception " + ex);
         }
     }
-    
+    /*
     public Playlist createPlaylist(String name, List<Song> songsInNewPlaylist) throws IOException {
         int playlistId;
         if (isNewPlaylist) {
@@ -299,5 +310,5 @@ public class PlaylistDBDAO {
     }
 
     
-
+*/
 }

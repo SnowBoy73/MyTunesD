@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mytunes.dal;
+package mytunes.dal.mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,10 @@ public class MockSongDAO {
 
     }
 
+    public void addSong(Song song){
+        songs.add(song);
+    }
+    
     public List<Song> getAllSongs() {
 
         return songs;

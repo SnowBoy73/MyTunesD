@@ -52,14 +52,17 @@ TableView<Song> table = new TableView<>();
     @FXML
     private void DeleteDeleteSong(ActionEvent event) {
         
-    table.selectionModelProperty().getValue().getSelectedItem();
-    table.getItems().remove(song);
+  
 
       //  this.song.(song);
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.close();
         //bll.deleteSongFromPlaylist(song);
+        
+          table.selectionModelProperty().getValue().getSelectedItem();
+          table.getItems().remove(song);
         };
+    
     public void setSongToDelete(ObservableList<Song> playlist, Song song){
         this.song= song;
         this.table = table;
