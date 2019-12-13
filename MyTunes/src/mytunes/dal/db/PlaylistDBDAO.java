@@ -17,14 +17,14 @@ import mytunes.be.Song;
 /**
  *
  * @author mega_
- * 
+ *
  * /*
- * SELECT * FROM songInPlaylist 
-   JOIN playlist ON playlist.id=songInPlaylist.idPlaylist
-    JOIN song ON song.id=songInPlaylist.idSong
-    ORDER BY idPlaylist
+ * SELECT * FROM songInPlaylist JOIN playlist ON
+ * playlist.id=songInPlaylist.idPlaylist JOIN song ON
+ * song.id=songInPlaylist.idSong ORDER BY idPlaylist
  */
 public class PlaylistDBDAO {
+
     DBConnectionProvider cp = new DBConnectionProvider();
 
     public List<Playlist> getAllPlaylists() {
@@ -42,7 +42,7 @@ public class PlaylistDBDAO {
         } catch (SQLException ex) {
             System.out.println("Exception " + ex);
             return null;
-        }   
+        }
     }
 
     public void savePlaylist(Playlist playlist) {
@@ -52,7 +52,5 @@ public class PlaylistDBDAO {
     public void deletePlaylist(Playlist playlist) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
 }
