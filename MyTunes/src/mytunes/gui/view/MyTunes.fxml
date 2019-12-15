@@ -50,10 +50,10 @@
       <Button fx:id="newplaylistbutton" layoutX="24.0" layoutY="205.0" mnemonicParsing="false" onAction="#clickNewPlaylist" prefHeight="22.0" prefWidth="46.0" style="-fx-background-color: #83a6d1#83a6d1;" text="New" />
       <Button fx:id="editplaylistbutton" layoutX="85.0" layoutY="205.0" mnemonicParsing="false" onAction="#clickEditPlaylist" prefHeight="22.0" prefWidth="42.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Edit" />
       <Button fx:id="deleteplaylistbutton" layoutX="285.0" layoutY="205.0" mnemonicParsing="false" onAction="#clickDeletePlaylist" prefHeight="22.0" prefWidth="58.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
-      <Button fx:id="searchbutton" layoutX="758.0" layoutY="24.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" />
+      <Button fx:id="searchButton" layoutX="758.0" layoutY="24.0" mnemonicParsing="false" onAction="#searchbutton" prefHeight="27.0" prefWidth="27.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" />
       <Button fx:id="editsongsbutton" layoutX="461.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickEditSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Edit" />
       <Button fx:id="deletesongsbutton" layoutX="734.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickDeleteSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
-      <Button layoutX="510.0" layoutY="320.0" mnemonicParsing="false" onAction="#addsongstoplaylistbutton" style="-fx-background-color: #83a6d1#83a6d1;" text="Add song to playlist" />
+      <Button fx:id="addSongToPlaylist" layoutX="510.0" layoutY="320.0" mnemonicParsing="false" onAction="#addsongstoplaylistbutton" style="-fx-background-color: #83a6d1#83a6d1;" text="Add song to playlist" />
       <Label fx:id="AllSongslabel" layoutX="408.0" layoutY="51.0" prefHeight="22.0" prefWidth="84.0" text="All Songs" textFill="#83a6d1">
          <font>
             <Font name="Comic Sans MS" size="15.0" />
@@ -65,7 +65,7 @@
             <Image url="@../../../../../../../Desktop/79126260_429663361043985_6083665104262397952_n.png" />
          </image>
       </ImageView>
-      <TextField fx:id="searchbar" layoutX="590.0" layoutY="24.0" />
+      <TextField fx:id="searchbarField" layoutX="590.0" layoutY="24.0" onAction="#searchbarfield" />
       <Button fx:id="newsongbutton" layoutX="408.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickNewSong" style="-fx-background-color: #83a6d1#83a6d1;" text="New" />
       <Button fx:id="pausebutton" layoutX="346.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickPause" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Pause" />
       <Button fx:id="stopbutton" layoutX="468.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickStop" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Stop" />

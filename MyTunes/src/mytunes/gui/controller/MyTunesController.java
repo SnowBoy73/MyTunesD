@@ -93,8 +93,6 @@ public class MyTunesController implements Initializable {
     @FXML
     private Label songplayerlabel;
     @FXML
-    private TextField searchbar;
-    @FXML
     private Slider voliumslider;
     @FXML
     private TableView<Song> songTable;
@@ -106,8 +104,6 @@ public class MyTunesController implements Initializable {
     private TableColumn<Song, String> allSongsCategory;
     @FXML
     private TableColumn<Song, Integer> allSongsTime;
-    @FXML
-    private Button searchbutton;
     @FXML
     private Button newsongbutton;
     @FXML
@@ -122,6 +118,12 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button nextbutton;
 BllManager bll = new BllManager();
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button addSongToPlaylist;
+    @FXML
+    private TextField searchbarField;
 
 
     @Override
@@ -189,6 +191,7 @@ BllManager bll = new BllManager();
 
         Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/EditPlaylist.fxml"));
         Scene scene = new Scene(root);
+        
 
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -389,6 +392,14 @@ BllManager bll = new BllManager();
         
         
         
+    }
+
+    @FXML
+    private void searchbutton(ActionEvent event) {
+    }
+
+    @FXML
+    private void searchbarfield(ActionEvent event) {
     }
 }
 
