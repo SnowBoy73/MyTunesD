@@ -51,7 +51,9 @@ import mytunes.dal.mock.MockPlaylist;
 
 import mytunes.gui.model.playlistmodel;
 import mytunes.be.Song;
- 
+import mytunes.dal.db.SongDBDAO;
+import mytunes.gui.model.Songmodel;
+import mytunes.obsolete.file.SongDAO;
 
 /**
  * FXML Controller class
@@ -115,7 +117,7 @@ public class MyTunesController implements Initializable {
     private Button backbutton;
     @FXML
     private Button nextbutton;
-BllManager bll = new BllManager();
+    BllManager bll = new BllManager();
     @FXML
     private Button searchButton;
     @FXML
@@ -124,7 +126,6 @@ BllManager bll = new BllManager();
     private TextField searchbarField;
     @FXML
     private Label showsongplayed;
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -150,7 +151,6 @@ BllManager bll = new BllManager();
 //To change body of generated lambdas, choose Tools | Templates.
         });
 
-        
         songTable.getItems().clear();
         songTable.getItems().addAll(bll.getAllSongs());
 
@@ -191,7 +191,6 @@ BllManager bll = new BllManager();
 
         Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/EditPlaylist.fxml"));
         Scene scene = new Scene(root);
-        
 
         Stage stage = new Stage();
         stage.setScene(scene);
@@ -214,7 +213,6 @@ BllManager bll = new BllManager();
         stage.show();
 
     }
-    
 
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException {
@@ -248,8 +246,6 @@ BllManager bll = new BllManager();
         //playlistModel.deletePlaylist(Playlist);
         bll.deletePlaylist(playlist);
         playlistsview.getItems().remove(playlist);
-        
-        
 
     }
 
@@ -266,7 +262,7 @@ BllManager bll = new BllManager();
         songTable.selectionModelProperty().getValue().getSelectedItem();
         songTable.getItems().remove(song);
         bll.deleteSong(song);
-       
+
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -305,8 +301,7 @@ BllManager bll = new BllManager();
 
     @FXML
     private void playMyDud(ActionEvent event) {
-    
-        
+
         //chililove: if song is paused, play from where songs is paused.
         if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
             mp.play();
@@ -318,19 +313,17 @@ BllManager bll = new BllManager();
             //Chililove: trying to connect songs to list, to be able to change between songs.
             Song song = songTable.getSelectionModel().getSelectedItem();
             mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString())); //This line is giving me problems xxx
-      //Not working with Mac       
-  //Charlies suggestion til filechange   
-  
-  //songPlay = songPlay;
-  //String filePlay = new File(songPlay.getFilePath()).toURI().toString;
-  //Media hit = new Media(filePlay);
-  //mp = new MediaPlayer(hit);
-  //mp.play();
-            
+            //Not working with Mac       
+            //Charlies suggestion til filechange   
+
+            //songPlay = songPlay;
+            //String filePlay = new File(songPlay.getFilePath()).toURI().toString;
+            //Media hit = new Media(filePlay);
+            //mp = new MediaPlayer(hit);
+            //mp.play();
             /* chililove: sry I changed the song, but you can easily change it back by outcommenting this 
 
             mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));*/
-
             {
 
                 // mp.setAutoPlay(true);
@@ -341,67 +334,64 @@ BllManager bll = new BllManager();
 
         }
     }
-    
+
     @FXML
     private void clickBackbtn(ActionEvent event) {
-        
         songTable.getSelectionModel().selectPrevious();
-        
-        /*if(backbutton!=null){
-           
+
+        /*  if(backbutton!=null){
+  
            backbutton.getId();
-           songTable.idProperty().isNotNull();
+           
+          // songTable.idProperty().isNotNull();
            mp.play();   
-        } */
-        
-        
+        } 
+         */
     }
 
     @FXML
-    private void clickNextbtn(ActionEvent event) {
+    private void clickNextbtn()  {
         
-       songTable.getSelectionModel().selectNext();
-        
-           // clickNextbtn(songTable.getSelectionModel().getSelectedItems().addListener(mediaPlayer));
-           /*
-             if(nextbutton!=null){
-           
-           nextbutton.getId();
-           songTable.idProperty().isNotNull();
-           mp.play();   */
-        
-          // nextbutton =findViewById(clickNextbtn(event));
-        }
-    
+                songTable.getSelectionModel().selectNext();
 
-    
+           // mediaPlayer.stop();
+
+        // clickNextbtn(songTable.getSelectionModel().getSelectedItems().addListener(mediaPlayer));
+       /* if (nextbutton != null) {
+            songTable.getSelectionModel().selectNext();
+
+            nextbutton.getId();
+
+            // songTable.idProperty().isNotNull();
+            mp.play();
+
+            // nextbutton =findViewById(clickNextbtn(event));
+        }*/
+    }
+
     @FXML
     private void volSlider(MouseEvent event) {
-        
-        
+
         Slider vol = new Slider();
-        voliumslider.valueProperty().addListener(new InvalidationListener() { 
-        
-         public void invalidated(Observable ov) 
-                { 
-                    if (vol.isPressed()) { 
-                        mp.setVolume(vol.getValue() / 100);
-                    } 
-                } 
+        voliumslider.valueProperty().addListener(new InvalidationListener() {
+
+            public void invalidated(Observable ov) {
+                if (vol.isPressed()) {
+                    mp.setVolume(vol.getValue() / 100);
+                }
+            }
         });
-     }
+    }
 
     @FXML
     private void addsongstoplaylistbutton(ActionEvent event) {
-        
+
         Playlist playlist = playlistsview.getSelectionModel().getSelectedItem();
         Song song = songTable.getSelectionModel().getSelectedItem();
         bll.addSongToPlaylist(playlist, song);
         playlist.addSongToList(song);
         playlistSongsView.getItems().add(song);
-        
-        
-        
+
     }
 
     @FXML
@@ -414,12 +404,7 @@ BllManager bll = new BllManager();
 
     @FXML
     private void showSongPlayed(MouseEvent event) {
-        
- 
-        
-        
-    }
-    
-    
-}
 
+    }
+
+}
