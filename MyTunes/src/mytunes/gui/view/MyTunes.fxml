@@ -59,7 +59,7 @@
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="songplayerlabel" cache="true" layoutX="241.0" layoutY="379.0" prefHeight="27.0" prefWidth="538.0" text="Now Playing SongTeamD fejwoghw lalalalalalallalaaaaallalalalalalaChiliNadiaSINGINGG" textFill="#4a5bbf" />
+      <Label fx:id="showsongplayed" cache="true" layoutX="241.0" layoutY="379.0" onDragDetected="#showSongPlayed" prefHeight="27.0" prefWidth="538.0" text="Now Playing SongTeamD fejwoghw lalalalalalallalaaaaallalalalalalaChiliNadiaSINGINGG" textFill="#4a5bbf" />
       <ImageView fitHeight="27.0" fitWidth="33.0" layoutX="510.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../../../Desktop/79126260_429663361043985_6083665104262397952_n.png" />

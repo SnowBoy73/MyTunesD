@@ -91,8 +91,6 @@ public class MyTunesController implements Initializable {
     @FXML
     private Label AllSongslabel;
     @FXML
-    private Label songplayerlabel;
-    @FXML
     private Slider voliumslider;
     @FXML
     private TableView<Song> songTable;
@@ -124,6 +122,8 @@ BllManager bll = new BllManager();
     private Button addSongToPlaylist;
     @FXML
     private TextField searchbarField;
+    @FXML
+    private Label showsongplayed;
 
 
     @Override
@@ -360,9 +360,16 @@ BllManager bll = new BllManager();
     @FXML
     private void clickNextbtn(ActionEvent event) {
         
+           // clickNextbtn(songTable.getSelectionModel().getSelectedItems().addListener(mediaPlayer));
+             if(nextbutton!=null){
+           
+           nextbutton.getId();
+           songTable.idProperty().isNotNull();
+           mp.play();   
+        
           // nextbutton =findViewById(clickNextbtn(event));
         }
-
+    
 
     
     @FXML
@@ -401,5 +408,15 @@ BllManager bll = new BllManager();
     @FXML
     private void searchbarfield(ActionEvent event) {
     }
+
+    @FXML
+    private void showSongPlayed(MouseEvent event) {
+        
+ 
+        
+        
+    }
+    
+    
 }
 
