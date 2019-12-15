@@ -345,14 +345,14 @@ BllManager bll = new BllManager();
     @FXML
     private void clickBackbtn(ActionEvent event) {
         
+        songTable.getSelectionModel().selectPrevious();
         
-        
-        if(backbutton!=null){
+        /*if(backbutton!=null){
            
            backbutton.getId();
            songTable.idProperty().isNotNull();
            mp.play();   
-        } 
+        } */
         
         
     }
@@ -360,12 +360,15 @@ BllManager bll = new BllManager();
     @FXML
     private void clickNextbtn(ActionEvent event) {
         
+       songTable.getSelectionModel().selectNext();
+        
            // clickNextbtn(songTable.getSelectionModel().getSelectedItems().addListener(mediaPlayer));
+           /*
              if(nextbutton!=null){
            
            nextbutton.getId();
            songTable.idProperty().isNotNull();
-           mp.play();   
+           mp.play();   */
         
           // nextbutton =findViewById(clickNextbtn(event));
         }
