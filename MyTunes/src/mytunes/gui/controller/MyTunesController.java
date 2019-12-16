@@ -121,8 +121,6 @@ public class MyTunesController implements Initializable {
     private Button nextbutton;
     BllManager bll = new BllManager();
     @FXML
-    private Button searchButton;
-    @FXML
     private Button addSongToPlaylist;
     @FXML
     private TextField searchbarField;
@@ -130,6 +128,8 @@ public class MyTunesController implements Initializable {
     private Label showsongplayed;
     
     private SelectionModel<Song> currentListSelection;
+    @FXML
+    private Slider playerslider;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -185,6 +185,8 @@ public class MyTunesController implements Initializable {
            songTable.getItems().addAll(bll.getAllSongsWithFilter(newVal));
         });
 
+       
+        
     }
 
     @FXML
@@ -331,7 +333,7 @@ public class MyTunesController implements Initializable {
         //chililove: if song is paused, play from where songs is paused.
         if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
             mp.play();
-
+            
         } //chililove: f you click stop when the songs is playing it stops the song.
         else if (mp != null && mp.getStatus() == MediaPlayer.Status.PLAYING) {
             mp.pause();
@@ -344,6 +346,7 @@ public class MyTunesController implements Initializable {
             mp.setStartTime(new Duration(0));
             mp.play();
             showsongplayed.setText(song.toString());
+            mp.setVolume(voliumslider.getValue());
             
 
         }
@@ -370,82 +373,13 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void volSlider(MouseEvent event) {
-       
-        Double time = mp.getTotalDuration().toSeconds();
-
-    mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
-        voliumslider.setValue(newValue.toSeconds());
-    });
-     voliumslider.maxProperty().bind(Bindings.createDoubleBinding(
-    () -> mp.getTotalDuration().toSeconds(),
-    mp.totalDurationProperty()));
-     
-    voliumslider.setOnMouseClicked((MouseEvent mouseEvent) -> {
-        mp.seek(Duration.seconds(voliumslider.getValue()));
-    });
-        
-/* MAIN
-        Slider vol = new Slider();
-        
-        voliumslider.valueProperty().addListener(new InvalidationListener() {
-
-            public void invalidated(Observable ov) {
-                if (vol.isPressed()) {
-                    mp.setVolume(vol.getValue() / 100);
-                }
-            }
-        });
-        */
-
-        /*TRYOUT 2 NOT WORKING MISSING SOMETHING
-        voliumslider.setValue(songTable.toString().getVolume()*100);
-        voliumslider.valueProperty().addListener(new InvalidationListener(){
-        public void Invalidated(Observable observable){
-             if(vol.isPressed()){
-             mp.setVolume(voliumslider.getValue()/100);
-             }
-        
-        }
-
-            @Override
-            public void invalidated(Observable observable) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-       }); */
-       
-        
-        /* TRYOUT 3 NOT WORKING
-        mp.setVolume(1.0);
-        Slider slider = new Slider();
-        voliumslider.valueProperty().addListener(new ChangeListener<Number>()){
-          public void changed(ObservableValue<?)extends Number>ov,Number old_val,
-          EventQueue.invokeLater(new Runnable()){
-          
-              @Override
-              public void run(){
-          mp.setVolume(voliumslider.getValue());
-          }
-          });
+    
+    if(mp!=null){
+     System.out.println(voliumslider.getValue());
+     mp.setVolume(voliumslider.getValue()*100);
+     mp.setVolume(voliumslider.getValue()/100);
     }
-});
- double count= 1; 
- while(count!=101){
-  for (int i=0;i<100000000;i++){
-
-}
-   voliumslider.setValue(count/100);
-   count ++;
-   System.out.println(mp.getVolume());
-}
-}
-}
-
-*/
-
     }   
-
-
-
 
     @FXML
     private void addsongstoplaylistbutton(ActionEvent event) {
@@ -458,9 +392,6 @@ public class MyTunesController implements Initializable {
 
     }
 
-    @FXML
-    private void searchbutton(ActionEvent event) {
-    }
 
     @FXML
     private void searchbarfield(ActionEvent event) {
@@ -469,6 +400,42 @@ public class MyTunesController implements Initializable {
     @FXML
     private void showSongPlayed(MouseEvent event) {
 
+    }
+
+    @FXML
+    private void clickUp(ActionEvent event) {
+        
+       int index = playlistSongsView.getSelectionModel().getSelectedIndex();
+         if(index !=0){
+           playlistSongsView.getItems().add(index- 1,playlistSongsView.getItems().remove(index));
+           
+           playlistSongsView.getSelectionModel().clearAndSelect(index - 1);
+         }
+        
+    }
+
+    @FXML
+    private void clickDown(ActionEvent event) {
+        
+        
+    }
+
+    @FXML
+    private void clickplayerSlider(MouseEvent event) {
+        
+       // This Code can be used to make a Song Slider 
+        Double time = mp.getTotalDuration().toSeconds();
+
+    mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
+        playerslider.setValue(newValue.toSeconds());
+    });
+     playerslider.maxProperty().bind(Bindings.createDoubleBinding(
+    () -> mp.getTotalDuration().toSeconds(),
+    mp.totalDurationProperty()));
+     
+    playerslider.setOnMouseClicked((MouseEvent mouseEvent) -> {
+        mp.seek(Duration.seconds(playerslider.getValue()));
+    });
     }
 
 }
