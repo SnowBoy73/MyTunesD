@@ -416,7 +416,11 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickDown(ActionEvent event) {
-        
+         int index = playlistSongsView.getSelectionModel().getSelectedIndex();
+         if(index!=0){
+          playlistSongsView.getItems().add(index+ 1,playlistSongsView.getItems().remove(index));
+          playlistSongsView.getSelectionModel().clearAndSelect(index + 1);
+         }
         
     }
 
