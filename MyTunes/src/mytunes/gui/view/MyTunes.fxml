@@ -8,8 +8,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -42,30 +40,24 @@
       </TableView>
       <Button fx:id="playbutton" layoutX="404.0" layoutY="422.0" mnemonicParsing="false" onAction="#playMyDud" prefHeight="54.0" prefWidth="64.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Play" />
       <Slider fx:id="voliumslider" layoutX="636.0" layoutY="450.0" onDragDetected="#volSlider" prefHeight="16.0" prefWidth="121.0" />
-      <Button fx:id="backbutton" layoutX="288.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickBackbtn" prefHeight="16.0" prefWidth="58.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Back" />
-      <Button fx:id="nextbutton" layoutX="527.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickNextbtn" style="-fx-background-color: #83a6d1#83a6d1;" text="Next" />
+      <Button fx:id="backbutton" layoutX="288.0" layoutY="445.0" mnemonicParsing="false" onAction="#clickBackbtn" prefHeight="16.0" prefWidth="58.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Back" />
+      <Button fx:id="nextbutton" layoutX="526.0" layoutY="445.0" mnemonicParsing="false" onAction="#clickNextbtn" style="-fx-background-color: #83a6d1#83a6d1;" text="Next" />
       <Button fx:id="upbutton" layoutX="218.0" layoutY="268.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="40.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Up" />
       <Button fx:id="downbutton" layoutX="218.0" layoutY="306.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Down" />
       <Button fx:id="deletebutton" layoutX="218.0" layoutY="338.0" mnemonicParsing="false" onAction="#clickDeletePlaylistSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
       <Button fx:id="newplaylistbutton" layoutX="24.0" layoutY="205.0" mnemonicParsing="false" onAction="#clickNewPlaylist" prefHeight="22.0" prefWidth="46.0" style="-fx-background-color: #83a6d1#83a6d1;" text="New" />
       <Button fx:id="editplaylistbutton" layoutX="85.0" layoutY="205.0" mnemonicParsing="false" onAction="#clickEditPlaylist" prefHeight="22.0" prefWidth="42.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Edit" />
       <Button fx:id="deleteplaylistbutton" layoutX="285.0" layoutY="205.0" mnemonicParsing="false" onAction="#clickDeletePlaylist" prefHeight="22.0" prefWidth="58.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
-      <Button fx:id="searchbutton" layoutX="758.0" layoutY="24.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" />
       <Button fx:id="editsongsbutton" layoutX="461.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickEditSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Edit" />
       <Button fx:id="deletesongsbutton" layoutX="734.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickDeleteSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
-      <Button fx:id="addsongstoplaylistbutton" layoutX="510.0" layoutY="320.0" mnemonicParsing="false" style="-fx-background-color: #83a6d1#83a6d1;" text="Add song to playlist" />
+      <Button fx:id="addSongToPlaylist" layoutX="510.0" layoutY="320.0" mnemonicParsing="false" onAction="#addsongstoplaylistbutton" style="-fx-background-color: #83a6d1#83a6d1;" text="Add song to playlist" />
       <Label fx:id="AllSongslabel" layoutX="408.0" layoutY="51.0" prefHeight="22.0" prefWidth="84.0" text="All Songs" textFill="#83a6d1">
          <font>
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="songplayerlabel" cache="true" layoutX="241.0" layoutY="379.0" prefHeight="27.0" prefWidth="538.0" text="Now Playing SongTeamD fejwoghw lalalalalalallalaaaaallalalalalalaChiliNadiaSINGINGG" textFill="#4a5bbf" />
-      <ImageView fitHeight="27.0" fitWidth="33.0" layoutX="510.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../Desktop/79126260_429663361043985_6083665104262397952_n.png" />
-         </image>
-      </ImageView>
-      <TextField fx:id="searchbar" layoutX="590.0" layoutY="24.0" />
+      <Label fx:id="showsongplayed" cache="true" layoutX="241.0" layoutY="379.0" onDragDetected="#showSongPlayed" prefHeight="27.0" prefWidth="538.0" textFill="#4a5bbf" />
+      <TextField fx:id="searchbarField" layoutX="636.0" layoutY="25.0" onAction="#searchbarfield" />
       <Button fx:id="newsongbutton" layoutX="408.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickNewSong" style="-fx-background-color: #83a6d1#83a6d1;" text="New" />
       <Button fx:id="pausebutton" layoutX="346.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickPause" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Pause" />
       <Button fx:id="stopbutton" layoutX="468.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickStop" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Stop" />

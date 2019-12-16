@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -32,6 +33,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,6 +43,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.event.ChangeListener;
 import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
@@ -51,7 +54,9 @@ import mytunes.dal.mock.MockPlaylist;
 
 import mytunes.gui.model.playlistmodel;
 import mytunes.be.Song;
- 
+import mytunes.dal.db.SongDBDAO;
+import mytunes.gui.model.Songmodel;
+import mytunes.obsolete.file.SongDAO;
 
 /**
  * FXML Controller class
@@ -89,13 +94,7 @@ public class MyTunesController implements Initializable {
     @FXML
     private Button deletesongsbutton;
     @FXML
-    private Button addsongstoplaylistbutton;
-    @FXML
     private Label AllSongslabel;
-    @FXML
-    private Label songplayerlabel;
-    @FXML
-    private TextField searchbar;
     @FXML
     private Slider voliumslider;
     @FXML
@@ -109,8 +108,6 @@ public class MyTunesController implements Initializable {
     @FXML
     private TableColumn<Song, Integer> allSongsTime;
     @FXML
-    private Button searchbutton;
-    @FXML
     private Button newsongbutton;
     @FXML
     private Button pausebutton;
@@ -118,14 +115,21 @@ public class MyTunesController implements Initializable {
     private Button stopbutton;
 
     private MediaPlayer mp;
-    private MediaPlayer mediaPlayer;
-BllManager bll = new BllManager();
     @FXML
     private Button backbutton;
     @FXML
     private Button nextbutton;
-
-
+    BllManager bll = new BllManager();
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button addSongToPlaylist;
+    @FXML
+    private TextField searchbarField;
+    @FXML
+    private Label showsongplayed;
+    
+    private SelectionModel<Song> currentListSelection;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -135,8 +139,16 @@ BllManager bll = new BllManager();
 
             playlistSongsView.getItems().clear();
             playlistSongsView.getItems().addAll(p.getSonglist());
-
         });
+        
+        playlistSongsView.getSelectionModel().selectedItemProperty().addListener((observable) -> {
+            currentListSelection = playlistSongsView.getSelectionModel();
+        });
+        
+        songTable.getSelectionModel().selectedItemProperty().addListener((observable) -> {
+            currentListSelection = songTable.getSelectionModel();
+        });
+        
 
         allSongsTitle.setCellValueFactory((param) -> {
 
@@ -151,7 +163,6 @@ BllManager bll = new BllManager();
 //To change body of generated lambdas, choose Tools | Templates.
         });
 
-        
         songTable.getItems().clear();
         songTable.getItems().addAll(bll.getAllSongs());
 
@@ -168,6 +179,11 @@ BllManager bll = new BllManager();
         // TODO
         playlistsview.getItems().clear();
         playlistsview.getItems().addAll(bll.getAllPlaylist());
+        
+        searchbarField.textProperty().addListener((observable, oldVal, newVal) -> {
+           songTable.getItems().clear();
+           songTable.getItems().addAll(bll.getAllSongsWithFilter(newVal));
+        });
 
     }
 
@@ -214,17 +230,22 @@ BllManager bll = new BllManager();
         stage.show();
 
     }
-    
 
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/EditSong.fxml"));
+        FXMLLoader songLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSong.fxml"));
+        Parent root = songLoader.load();
+        EditSongController editsong = songLoader.getController();
+        editsong.setSongNew(songTable.getSelectionModel().getSelectedItem()); 
+        editsong.setTable(songTable);
+        
         Scene scene = new Scene(root);
 
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
+        
     }
 
     @FXML
@@ -243,10 +264,11 @@ BllManager bll = new BllManager();
     }
 
     void DeletePlaylistReal() {
-        int i = playlistsview.getSelectionModel().getSelectedIndex();
+        Playlist playlist = playlistsview.getSelectionModel().getSelectedItem();
 
         //playlistModel.deletePlaylist(Playlist);
-        playlistsview.getItems().remove(i);
+        bll.deletePlaylist(playlist);
+        playlistsview.getItems().remove(playlist);
 
     }
 
@@ -263,7 +285,7 @@ BllManager bll = new BllManager();
         songTable.selectionModelProperty().getValue().getSelectedItem();
         songTable.getItems().remove(song);
         bll.deleteSong(song);
-       
+
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
@@ -295,15 +317,17 @@ BllManager bll = new BllManager();
 
     @FXML
     private void clickStop(ActionEvent event) {
-
-        mp.stop();
-        mp.dispose();
+        if (mp != null && mp.getStatus() != MediaPlayer.Status.STOPPED) {
+            mp.stop();
+            showsongplayed.setText("");
+            mp.dispose(); 
+        }
+        
     }
 
     @FXML
     private void playMyDud(ActionEvent event) {
-    
-        
+
         //chililove: if song is paused, play from where songs is paused.
         if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
             mp.play();
@@ -313,69 +337,138 @@ BllManager bll = new BllManager();
             mp.pause();
         } else {
             //Chililove: trying to connect songs to list, to be able to change between songs.
-            Song song = songTable.getSelectionModel().getSelectedItem();
+            Song song = currentListSelection.getSelectedItem();
             mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString())); //This line is giving me problems xxx
-      //Not working with Mac       
-  //Charlies suggestion til filechange   
-  
-  //songPlay = songPlay;
-  //String filePlay = new File(songPlay.getFilePath()).toURI().toString;
-  //Media hit = new Media(filePlay);
-  //mp = new MediaPlayer(hit);
-  //mp.play();
+
+            //Not working with Mac       
+            mp.setStartTime(new Duration(0));
+            mp.play();
+            showsongplayed.setText(song.toString());
             
-            /* chililove: sry I changed the song, but you can easily change it back by outcommenting this 
-
-            mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));*/
-
-            {
-
-                // mp.setAutoPlay(true);
-                // mp.setVolume(1.0);
-                mp.setStartTime(new Duration(0));
-                mp.play();
-            }
 
         }
     }
-    
+
     @FXML
     private void clickBackbtn(ActionEvent event) {
-        
-        
-        
-        if(backbutton!=null){
-           
-           backbutton.getId();
-           songTable.idProperty().isNotNull();
-           mp.play();   
-        } 
-        
-        
+        currentListSelection.selectPrevious();
+
+        clickStop(event);
+        playMyDud(event);
+
     }
 
     @FXML
     private void clickNextbtn(ActionEvent event) {
-        
-          // nextbutton =findViewById(clickNextbtn(event));
-        }
 
+        currentListSelection.selectNext();
 
-    
+        clickStop(event);
+        playMyDud(event);
+
+    }
+
     @FXML
     private void volSlider(MouseEvent event) {
+       
+        Double time = mp.getTotalDuration().toSeconds();
+
+    mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
+        voliumslider.setValue(newValue.toSeconds());
+    });
+     voliumslider.maxProperty().bind(Bindings.createDoubleBinding(
+    () -> mp.getTotalDuration().toSeconds(),
+    mp.totalDurationProperty()));
+     
+    voliumslider.setOnMouseClicked((MouseEvent mouseEvent) -> {
+        mp.seek(Duration.seconds(voliumslider.getValue()));
+    });
         
-        
+/* MAIN
         Slider vol = new Slider();
-        voliumslider.valueProperty().addListener(new InvalidationListener() { 
         
-         public void invalidated(Observable ov) 
-                { 
-                    if (vol.isPressed()) { 
-                        mp.setVolume(vol.getValue() / 100);
-                    } 
-                } 
+        voliumslider.valueProperty().addListener(new InvalidationListener() {
+
+            public void invalidated(Observable ov) {
+                if (vol.isPressed()) {
+                    mp.setVolume(vol.getValue() / 100);
+                }
+            }
         });
-     }
+        */
+
+        /*TRYOUT 2 NOT WORKING MISSING SOMETHING
+        voliumslider.setValue(songTable.toString().getVolume()*100);
+        voliumslider.valueProperty().addListener(new InvalidationListener(){
+        public void Invalidated(Observable observable){
+             if(vol.isPressed()){
+             mp.setVolume(voliumslider.getValue()/100);
+             }
+        
+        }
+
+            @Override
+            public void invalidated(Observable observable) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+       }); */
+       
+        
+        /* TRYOUT 3 NOT WORKING
+        mp.setVolume(1.0);
+        Slider slider = new Slider();
+        voliumslider.valueProperty().addListener(new ChangeListener<Number>()){
+          public void changed(ObservableValue<?)extends Number>ov,Number old_val,
+          EventQueue.invokeLater(new Runnable()){
+          
+              @Override
+              public void run(){
+          mp.setVolume(voliumslider.getValue());
+          }
+          });
+    }
+});
+ double count= 1; 
+ while(count!=101){
+  for (int i=0;i<100000000;i++){
+
+}
+   voliumslider.setValue(count/100);
+   count ++;
+   System.out.println(mp.getVolume());
+}
+}
 }
 
+*/
+
+    }   
+
+
+
+
+    @FXML
+    private void addsongstoplaylistbutton(ActionEvent event) {
+
+        Playlist playlist = playlistsview.getSelectionModel().getSelectedItem();
+        Song song = songTable.getSelectionModel().getSelectedItem();
+        bll.addSongToPlaylist(playlist, song);
+        playlist.addSongToList(song);
+        playlistSongsView.getItems().add(song);
+
+    }
+
+    @FXML
+    private void searchbutton(ActionEvent event) {
+    }
+
+    @FXML
+    private void searchbarfield(ActionEvent event) {
+    }
+
+    @FXML
+    private void showSongPlayed(MouseEvent event) {
+
+    }
+
+}

@@ -65,8 +65,8 @@ public class NewSongController implements Initializable {
         
         //use this for save playlists.
         Song song = new Song(0, titleField.getText(), artistField.getText(), categoryField.getValue(), Integer.parseInt(timeField.getText()), fileField.getText());
-         bll.saveSong(song);
-         songTable.add(song);
+        bll.editSong(song);
+        songTable.add(song);
          
          // Close savesong window after saved the song
          Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
