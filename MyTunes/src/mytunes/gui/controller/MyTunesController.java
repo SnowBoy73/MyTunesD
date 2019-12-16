@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -42,6 +43,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.event.ChangeListener;
 import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
@@ -119,8 +121,6 @@ public class MyTunesController implements Initializable {
     private Button nextbutton;
     BllManager bll = new BllManager();
     @FXML
-    private Button searchButton;
-    @FXML
     private Button addSongToPlaylist;
     @FXML
     private TextField searchbarField;
@@ -128,6 +128,8 @@ public class MyTunesController implements Initializable {
     private Label showsongplayed;
     
     private SelectionModel<Song> currentListSelection;
+    @FXML
+    private Slider playerslider;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -183,6 +185,8 @@ public class MyTunesController implements Initializable {
            songTable.getItems().addAll(bll.getAllSongsWithFilter(newVal));
         });
 
+       
+        
     }
 
     @FXML
@@ -329,7 +333,7 @@ public class MyTunesController implements Initializable {
         //chililove: if song is paused, play from where songs is paused.
         if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
             mp.play();
-
+            
         } //chililove: f you click stop when the songs is playing it stops the song.
         else if (mp != null && mp.getStatus() == MediaPlayer.Status.PLAYING) {
             mp.pause();
@@ -342,6 +346,7 @@ public class MyTunesController implements Initializable {
             mp.setStartTime(new Duration(0));
             mp.play();
             showsongplayed.setText(song.toString());
+            mp.setVolume(voliumslider.getValue());
             
 
         }
@@ -368,17 +373,13 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void volSlider(MouseEvent event) {
-
-        Slider vol = new Slider();
-        voliumslider.valueProperty().addListener(new InvalidationListener() {
-
-            public void invalidated(Observable ov) {
-                if (vol.isPressed()) {
-                    mp.setVolume(vol.getValue() / 100);
-                }
-            }
-        });
+    
+    if(mp!=null){
+     System.out.println(voliumslider.getValue());
+     mp.setVolume(voliumslider.getValue()*100);
+     mp.setVolume(voliumslider.getValue()/100);
     }
+    }   
 
     @FXML
     private void addsongstoplaylistbutton(ActionEvent event) {
@@ -391,9 +392,6 @@ public class MyTunesController implements Initializable {
 
     }
 
-    @FXML
-    private void searchbutton(ActionEvent event) {
-    }
 
     @FXML
     private void searchbarfield(ActionEvent event) {
@@ -402,6 +400,46 @@ public class MyTunesController implements Initializable {
     @FXML
     private void showSongPlayed(MouseEvent event) {
 
+    }
+
+    @FXML
+    private void clickUp(ActionEvent event) {
+        
+       int index = playlistSongsView.getSelectionModel().getSelectedIndex();
+         if(index !=0){
+           playlistSongsView.getItems().add(index- 1,playlistSongsView.getItems().remove(index));
+           
+           playlistSongsView.getSelectionModel().clearAndSelect(index - 1);
+         }
+        
+    }
+
+    @FXML
+    private void clickDown(ActionEvent event) {
+         int index = playlistSongsView.getSelectionModel().getSelectedIndex();
+         if(index!=0){
+          playlistSongsView.getItems().add(index+ 1,playlistSongsView.getItems().remove(index));
+          playlistSongsView.getSelectionModel().clearAndSelect(index + 1);
+         }
+        
+    }
+
+    @FXML
+    private void clickplayerSlider(MouseEvent event) {
+        
+       // This Code can be used to make a Song Slider 
+        Double time = mp.getTotalDuration().toSeconds();
+
+    mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
+        playerslider.setValue(newValue.toSeconds());
+    });
+     playerslider.maxProperty().bind(Bindings.createDoubleBinding(
+    () -> mp.getTotalDuration().toSeconds(),
+    mp.totalDurationProperty()));
+     
+    playerslider.setOnMouseClicked((MouseEvent mouseEvent) -> {
+        mp.seek(Duration.seconds(playerslider.getValue()));
+    });
     }
 
 }
