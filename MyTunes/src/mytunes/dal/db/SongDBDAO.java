@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
  * @author admin
  */
 public class SongDBDAO {
+
     DBConnectionProvider cp = new DBConnectionProvider();
 
     public List<Song> getAllSongs() {
@@ -42,8 +43,28 @@ public class SongDBDAO {
             return null;
         }
     }
-    
-    public void addSong(Song song){
+
+    public List<Song> getAllSongsWithFilter(String filterText) {
+        List<Song> allSongs = new ArrayList<>();
+        String stat = "SELECT * FROM Song WHERE Song.title LIKE ? OR Song.artist LIKE ?";
+
+        try (Connection xd = cp.getConnection()) {
+            PreparedStatement statement = xd.prepareStatement(stat);
+            statement.setString(1, "%" + filterText + "%");
+            statement.setString(2, "%" + filterText + "%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Song song = new Song(rs.getInt("id"), rs.getString("title"), rs.getString("artist"), rs.getString("category"), rs.getInt("duration"), rs.getString("path"));
+                allSongs.add(song);
+            }
+            return allSongs;
+        } catch (SQLException ex) {
+            System.out.println("Exception " + ex);
+            return null;
+        }
+    }
+
+    public void addSong(Song song) {
         String stat = "INSERT INTO Song VALUES (?,?,?,?,?)";
         try (Connection xd = cp.getConnection()) {
             PreparedStatement stmt = xd.prepareStatement(stat, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -54,26 +75,24 @@ public class SongDBDAO {
             stmt.setString(5, song.getPath());
             int affectedRows = stmt.executeUpdate();
 
-        if (affectedRows == 0) {
-            throw new SQLException("Creating user failed, no rows affected.");
-        }
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
 
-        try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-            if (generatedKeys.next()) {
-                song.setId((int)generatedKeys.getLong(1));
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    song.setId((int) generatedKeys.getLong(1));
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
             }
-            else {
-                throw new SQLException("Creating user failed, no ID obtained.");
-            }
-        }
         } catch (SQLServerException ex) {
             Logger.getLogger(SongDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(SongDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
 
     }
-
 
     public void deleteSongFromDB(Song song) {
         String stat = "DELETE FROM song WHERE ID=?";
@@ -86,26 +105,32 @@ public class SongDBDAO {
         }
     }
 
-    public void updateSongInDB(Song song){
-    String stat = "UPDATE song/n" +
-            "SET title='?', artist='?', category='?', duration='?', path='?'/n" +
-            "WHERE ID=?";
-    try(Connection con = cp.getConnection()){
-    PreparedStatement stmt = con.prepareStatement(stat);
-    stmt.setString(1, song.getTitle());
-    stmt.setString(2, song.getArtist());
-    stmt.setString(3, song.getCategory());
-    stmt.setInt(4, song.getDuration());
-    stmt.setString(5, song.getPath());
-    stmt.setInt(6, song.getId());
-    stmt.execute();
-    }   catch (SQLServerException ex) {
-            System.out.println("Exception " +ex);
+    public void updateSongInDB(Song song) {
+        String stat = "UPDATE song\n"
+                + "SET title=?, artist=?, category=?, duration=?, path=?\n"
+                + "WHERE ID=?";
+        try (Connection con = cp.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement(stat);
+            stmt.setString(1, song.getTitle());
+            stmt.setString(2, song.getArtist());
+            stmt.setString(3, song.getCategory());
+            stmt.setInt(4, song.getDuration());
+            stmt.setString(5, song.getPath());
+            stmt.setInt(6, song.getId());
+            stmt.execute();
+        } catch (SQLServerException ex) {
+            Logger.getLogger(SongDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            System.out.println("Exception " +ex);
+            Logger.getLogger(SongDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
     }
+    
+
+    
+
+    
+
+    
 
     
 
@@ -115,9 +140,9 @@ public class SongDBDAO {
         for (int i = 0; i < allSongs.size(); i++) {
             Song testSong = allSongs.get(i);
             int foundId = testSong.getId();
-            if (foundId == id)  {
-            
-            return testSong;
+            if (foundId == id) {
+
+                return testSong;
             }
         }
         return null;
@@ -349,4 +374,5 @@ System.out.println("allSongs size = " + songListSize); //
     }
     private Connection con;
      */
+
 }

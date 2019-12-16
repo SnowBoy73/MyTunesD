@@ -32,6 +32,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -112,7 +113,6 @@ public class MyTunesController implements Initializable {
     private Button stopbutton;
 
     private MediaPlayer mp;
-    private MediaPlayer mediaPlayer;
     @FXML
     private Button backbutton;
     @FXML
@@ -126,6 +126,8 @@ public class MyTunesController implements Initializable {
     private TextField searchbarField;
     @FXML
     private Label showsongplayed;
+    
+    private SelectionModel<Song> currentListSelection;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -135,8 +137,16 @@ public class MyTunesController implements Initializable {
 
             playlistSongsView.getItems().clear();
             playlistSongsView.getItems().addAll(p.getSonglist());
-
         });
+        
+        playlistSongsView.getSelectionModel().selectedItemProperty().addListener((observable) -> {
+            currentListSelection = playlistSongsView.getSelectionModel();
+        });
+        
+        songTable.getSelectionModel().selectedItemProperty().addListener((observable) -> {
+            currentListSelection = songTable.getSelectionModel();
+        });
+        
 
         allSongsTitle.setCellValueFactory((param) -> {
 
@@ -167,6 +177,11 @@ public class MyTunesController implements Initializable {
         // TODO
         playlistsview.getItems().clear();
         playlistsview.getItems().addAll(bll.getAllPlaylist());
+        
+        searchbarField.textProperty().addListener((observable, oldVal, newVal) -> {
+           songTable.getItems().clear();
+           songTable.getItems().addAll(bll.getAllSongsWithFilter(newVal));
+        });
 
     }
 
@@ -216,13 +231,19 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickEditSong(ActionEvent event) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/EditSong.fxml"));
+        FXMLLoader songLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSong.fxml"));
+        Parent root = songLoader.load();
+        EditSongController editsong = songLoader.getController();
+        editsong.setSongNew(songTable.getSelectionModel().getSelectedItem()); 
+        editsong.setTable(songTable);
+        
         Scene scene = new Scene(root);
 
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+        
+        
     }
 
     @FXML
@@ -294,9 +315,12 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickStop(ActionEvent event) {
-
-        mp.stop();
-        mp.dispose();
+        if (mp != null && mp.getStatus() != MediaPlayer.Status.STOPPED) {
+            mp.stop();
+            showsongplayed.setText("");
+            mp.dispose(); 
+        }
+        
     }
 
     @FXML
@@ -311,62 +335,35 @@ public class MyTunesController implements Initializable {
             mp.pause();
         } else {
             //Chililove: trying to connect songs to list, to be able to change between songs.
-            Song song = songTable.getSelectionModel().getSelectedItem();
+            Song song = currentListSelection.getSelectedItem();
             mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString())); //This line is giving me problems xxx
+
             //Not working with Mac       
-            //Charlies suggestion til filechange   
-
-            //songPlay = songPlay;
-            //String filePlay = new File(songPlay.getFilePath()).toURI().toString;
-            //Media hit = new Media(filePlay);
-            //mp = new MediaPlayer(hit);
-            //mp.play();
-            /* chililove: sry I changed the song, but you can easily change it back by outcommenting this 
-
-            mp = new MediaPlayer(new Media(new File("src/Khul.mp3").toURI().toString()));*/
-            {
-
-                // mp.setAutoPlay(true);
-                // mp.setVolume(1.0);
-                mp.setStartTime(new Duration(0));
-                mp.play();
-            }
+            mp.setStartTime(new Duration(0));
+            mp.play();
+            showsongplayed.setText(song.toString());
+            
 
         }
     }
 
     @FXML
     private void clickBackbtn(ActionEvent event) {
-        songTable.getSelectionModel().selectPrevious();
+        currentListSelection.selectPrevious();
 
-        /*  if(backbutton!=null){
-  
-           backbutton.getId();
-           
-          // songTable.idProperty().isNotNull();
-           mp.play();   
-        } 
-         */
+        clickStop(event);
+        playMyDud(event);
+
     }
 
     @FXML
-    private void clickNextbtn()  {
-        
-                songTable.getSelectionModel().selectNext();
+    private void clickNextbtn(ActionEvent event) {
 
-           // mediaPlayer.stop();
+        currentListSelection.selectNext();
 
-        // clickNextbtn(songTable.getSelectionModel().getSelectedItems().addListener(mediaPlayer));
-       /* if (nextbutton != null) {
-            songTable.getSelectionModel().selectNext();
+        clickStop(event);
+        playMyDud(event);
 
-            nextbutton.getId();
-
-            // songTable.idProperty().isNotNull();
-            mp.play();
-
-            // nextbutton =findViewById(clickNextbtn(event));
-        }*/
     }
 
     @FXML

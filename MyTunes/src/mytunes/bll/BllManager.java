@@ -30,6 +30,9 @@ public class BllManager {
 
 
     }
+    public List<Song> getAllSongsWithFilter(String filterText){
+        return songDBDao.getAllSongsWithFilter(filterText);
+    }
 
     public void saveSong(Song song) {
     
@@ -63,5 +66,11 @@ public class BllManager {
     public void addSongToPlaylist(Playlist playlist, Song song) {
         playlistDAO.addSongToPlaylist(playlist, song);
     }
+
+    public void editSong(Song song) {
+        songDBDao.updateSongInDB(song);
+    }
+    
+    
 
 }

@@ -57,44 +57,56 @@ public class PlaylistDBDAO {
     }
 
     public void addSongToPlaylist(Playlist playlist, Song song) {
-        String stat = "INSERT INTO songInPlaylist /n"
-                + "VALUES ('?','?')";
+        String stat = "INSERT INTO songInPlaylist \n"
+                + "VALUES (?,?)";
         try (Connection con = cp.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(stat);
             stmt.setInt(1, song.getId());
             stmt.setInt(2, playlist.getId());
             stmt.execute();
+        } catch (SQLServerException ex) {
+            Logger.getLogger(PlaylistDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            System.out.println("Exception " + ex);
+            Logger.getLogger(PlaylistDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public List<Playlist> getAllPlaylists() {
         List<Playlist> allPlaylists = new ArrayList<>();
-        String stat = "SELECT * FROM songInPlaylist\n"
-                + "JOIN playlist on idPlaylist = playlist.id\n"
-                + "JOIN song on idSong = song.id\n"
-                + "ORDER BY playlist.id";
+        String stat ="SELECT playlist.id AS pid, playlist.name, song.*, songInPlaylist.* FROM playlist\n" +
+        "LEFT JOIN songInPlaylist on idPlaylist = playlist.id\n" +
+        "LEFT JOIN song on idSong = song.id\n" +
+        "ORDER BY playlist.id";
+        /*String stat = "SELECT * FROM songInPlaylist\n"
+                + "RIGHT JOIN playlist on idPlaylist = playlist.id\n"
+                + "LEFT JOIN song on idSong = song.id\n"
+                + "ORDER BY playlist.id";*/
         try (Connection con = cp.getConnection()) {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(stat);
             int playlistId = -1;
             Playlist pl = null;
             while (rs.next()) {
-                if (playlistId != rs.getInt("idPlaylist")) {
-                    pl = new Playlist(rs.getInt("idPlaylist"), rs.getString("name"));
-                    playlistId = pl.getId();
-                    allPlaylists.add(pl);
+                if( rs.getInt("idPlaylist")==0){ // No songs on playlist
+                    allPlaylists.add(new Playlist(rs.getInt("pid"), rs.getString("name")));
                 }
+                else
+                {
+                    if (playlistId != rs.getInt("pid")) {
+                        pl = new Playlist(rs.getInt("pid"), rs.getString("name"));
+                        playlistId = pl.getId();
+                        allPlaylists.add(pl);
+                    }
 
-                Song s = new Song(
-                        rs.getInt("idSong"),
-                        rs.getString("title"),
-                        rs.getString("artist"),
-                        rs.getString("category"),
-                        rs.getInt("duration"),
-                        rs.getString("path"));
-                pl.addSongToList(s);
+                    Song s = new Song(
+                            rs.getInt("idSong"),
+                            rs.getString("title"),
+                            rs.getString("artist"),
+                            rs.getString("category"),
+                            rs.getInt("duration"),
+                            rs.getString("path"));
+                    pl.addSongToList(s);
+                }
 
             }
             return allPlaylists;
