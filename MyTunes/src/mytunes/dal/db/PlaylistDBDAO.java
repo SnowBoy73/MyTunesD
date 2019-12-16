@@ -49,7 +49,9 @@ public class PlaylistDBDAO {
         }
     }
 
+    public void removeSongFromPlaylist(){
     
+    }
     
     public void updatePlaylistNameInDB(Playlist playlist){
     String stat = "UPDATE playlist/n" +
