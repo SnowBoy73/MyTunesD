@@ -337,15 +337,11 @@ public class MyTunesController implements Initializable {
             //Chililove: trying to connect songs to list, to be able to change between songs.
             Song song = currentListSelection.getSelectedItem();
             mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString())); //This line is giving me problems xxx
-           
-            
 
             //Not working with Mac       
             mp.setStartTime(new Duration(0));
             mp.play();
             showsongplayed.setText(song.toString());
-            //make the next song play/continue when playing song is done
-            
             
 
         }
