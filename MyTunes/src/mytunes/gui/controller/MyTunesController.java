@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -42,6 +43,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.event.ChangeListener;
 import mytunes.MyTunes;
 import mytunes.be.Song;
 import mytunes.bll.BllManager;
@@ -368,8 +370,23 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void volSlider(MouseEvent event) {
+       
+        Double time = mp.getTotalDuration().toSeconds();
 
+    mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
+        voliumslider.setValue(newValue.toSeconds());
+    });
+     voliumslider.maxProperty().bind(Bindings.createDoubleBinding(
+    () -> mp.getTotalDuration().toSeconds(),
+    mp.totalDurationProperty()));
+     
+    voliumslider.setOnMouseClicked((MouseEvent mouseEvent) -> {
+        mp.seek(Duration.seconds(voliumslider.getValue()));
+    });
+        
+/* MAIN
         Slider vol = new Slider();
+        
         voliumslider.valueProperty().addListener(new InvalidationListener() {
 
             public void invalidated(Observable ov) {
@@ -378,7 +395,57 @@ public class MyTunesController implements Initializable {
                 }
             }
         });
+        */
+
+        /*TRYOUT 2 NOT WORKING MISSING SOMETHING
+        voliumslider.setValue(songTable.toString().getVolume()*100);
+        voliumslider.valueProperty().addListener(new InvalidationListener(){
+        public void Invalidated(Observable observable){
+             if(vol.isPressed()){
+             mp.setVolume(voliumslider.getValue()/100);
+             }
+        
+        }
+
+            @Override
+            public void invalidated(Observable observable) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+       }); */
+       
+        
+        /* TRYOUT 3 NOT WORKING
+        mp.setVolume(1.0);
+        Slider slider = new Slider();
+        voliumslider.valueProperty().addListener(new ChangeListener<Number>()){
+          public void changed(ObservableValue<?)extends Number>ov,Number old_val,
+          EventQueue.invokeLater(new Runnable()){
+          
+              @Override
+              public void run(){
+          mp.setVolume(voliumslider.getValue());
+          }
+          });
     }
+});
+ double count= 1; 
+ while(count!=101){
+  for (int i=0;i<100000000;i++){
+
+}
+   voliumslider.setValue(count/100);
+   count ++;
+   System.out.println(mp.getVolume());
+}
+}
+}
+
+*/
+
+    }   
+
+
+
 
     @FXML
     private void addsongstoplaylistbutton(ActionEvent event) {
