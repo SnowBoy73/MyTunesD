@@ -26,6 +26,9 @@ public class SongDBDAO {
 
     DBConnectionProvider cp = new DBConnectionProvider();
 
+    /*
+    gets all songs from the database and adds them to an arraylist
+    */
     public List<Song> getAllSongs() {
         List<Song> allSongs = new ArrayList<>();
         String stat = "SELECT * FROM Song";
@@ -64,6 +67,9 @@ public class SongDBDAO {
         }
     }
 
+    /*
+    creates a new song in the database using data inputs in the GUI
+    */
     public void addSong(Song song) {
         String stat = "INSERT INTO Song VALUES (?,?,?,?,?)";
         try (Connection xd = cp.getConnection()) {
@@ -94,6 +100,9 @@ public class SongDBDAO {
 
     }
 
+    /*
+    Uses ID to delete song from database
+    */
     public void deleteSongFromDB(Song song) {
         String stat = "DELETE FROM song WHERE ID=?";
         try (Connection con = cp.getConnection()) {
@@ -105,6 +114,9 @@ public class SongDBDAO {
         }
     }
 
+    /*
+    Used to update the song in the database, be it either title, artist or similar
+    */
     public void updateSongInDB(Song song) {
         String stat = "UPDATE song\n"
                 + "SET title=?, artist=?, category=?, duration=?, path=?\n"

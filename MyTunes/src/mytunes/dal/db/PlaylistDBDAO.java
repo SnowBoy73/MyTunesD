@@ -31,6 +31,9 @@ public class PlaylistDBDAO {
 
     private DBConnectionProvider cp = new DBConnectionProvider();
 
+    /*
+    Takes a name string from the GUI level and sends to to the database, changing the name
+    */
     public void updatePlaylistNameInDB(Playlist playlist) {
         String stat = "UPDATE playlist\n"
                 + "SET name=? \n"
@@ -53,7 +56,9 @@ public class PlaylistDBDAO {
     }
     
     
-    
+    /*
+    Deletes playlist from database with help from id, delivered from the GUI layer
+    */
     public void deletePlaylist(Playlist playlist) {
         String stat = "DELETE FROM playlist WHERE id=?";
         try (Connection con = cp.getConnection()) {
@@ -65,6 +70,9 @@ public class PlaylistDBDAO {
         }
     }
 
+    /*
+    Uses an id of a song and of a playlist to combine/connect them in the database
+    */
     public void addSongToPlaylist(Playlist playlist, Song song) {
         String stat = "INSERT INTO songInPlaylist \n"
                 + "VALUES (?,?)";
@@ -80,6 +88,10 @@ public class PlaylistDBDAO {
         }
     }
 
+    /*
+    Gets all playlists that are currently in the database and makes it tangible for java to read and use, 
+    adding it to a list including both the playlists and the songs in said playlist
+    */
     public List<Playlist> getAllPlaylists() {
         List<Playlist> allPlaylists = new ArrayList<>();
         String stat ="SELECT playlist.id AS pid, playlist.name, song.*, songInPlaylist.* FROM playlist\n" +
@@ -126,6 +138,9 @@ public class PlaylistDBDAO {
         return allPlaylists;
     }
 
+    /*
+    Adds a new playlist to the database with name string from GUI layer
+    */
     public void addPlaylist(Playlist playlist) {
         String stat = "INSERT INTO Playlist VALUES (?)";
         try (Connection xd = cp.getConnection()) {
