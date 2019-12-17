@@ -65,6 +65,9 @@
       <Button fx:id="newsongbutton" layoutX="408.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickNewSong" style="-fx-background-color: #83a6d1#83a6d1;" text="New" />
       <Button fx:id="pausebutton" layoutX="347.0" layoutY="427.0" mnemonicParsing="false" onAction="#clickPause" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Pause" />
       <Button fx:id="stopbutton" layoutX="469.0" layoutY="427.0" mnemonicParsing="false" onAction="#clickStop" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Stop" />
-      <Slider fx:id="playerslider" blendMode="DIFFERENCE" cache="true" layoutX="258.0" layoutY="468.0" onMouseDragged="#clickplayerSlider" prefHeight="16.0" prefWidth="364.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="468.0" />
+      <Slider fx:id="playerslider" blendMode="DIFFERENCE" cache="true" layoutX="258.0" layoutY="468.0" onMouseClicked="#clickplayerSlider" onMouseDragged="#clickplayerSlider" prefHeight="16.0" prefWidth="364.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="468.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Slider>
     </children>
 </AnchorPane>
