@@ -16,7 +16,7 @@
       </Label>
       <ImageView fitHeight="83.0" fitWidth="91.0" layoutX="21.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../../../../../Users/mega_/OneDrive/Skrivebord/MyTunesD/MyTunes/49136582_478646272542418_8640700113301274624_n.png" />
+            <Image url="@../../../icons/49136582_478646272542418_8640700113301274624_n.png" />
          </image>
       </ImageView>
       <Button layoutX="364.0" layoutY="88.0" mnemonicParsing="false" onAction="#KeepPlaylistSong" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #da1e1e#da1e1e;" text="Keep" />
