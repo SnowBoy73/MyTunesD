@@ -189,11 +189,11 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickNewPlaylist(ActionEvent event) throws IOException {
-
+    private void clickNewPlaylist(ActionEvent event) throws IOException { //This method creates the new playlist 
+       
         FXMLLoader playlistLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/NewPlaylist.fxml"));
         Parent root = playlistLoader.load();
-        NewPlaylistController newplaylist = playlistLoader.getController();
+        NewPlaylistController newplaylist = playlistLoader.getController(); 
         ObservableList<Playlist> playlist = playlistsview.getItems();
         newplaylist.setPlaylistNew(playlist);
         Scene scene = new Scene(root);
@@ -313,26 +313,26 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickPause(ActionEvent event) {
+    private void clickPause(ActionEvent event) { //This method pauses the musicplayer 
 
         mp.pause();
     }
 
     @FXML
-    private void clickStop(ActionEvent event) {
-        if (mp != null && mp.getStatus() != MediaPlayer.Status.STOPPED) {
+    private void clickStop(ActionEvent event) { //This method stopps the musicplayer
+        if (mp != null && mp.getStatus() != MediaPlayer.Status.STOPPED) {  
             mp.stop();
             showsongplayed.setText("");
             mp.dispose();
         }
-
+//if the musicplayer is equal to null and when we get the status it's on stopped then,the player stops playing music, shows the text ""? and gets disposed..
     }
 
     @FXML
     private void playMyDud(ActionEvent event) {
 
         //chililove: if song is paused, play from where songs is paused.
-        if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
+        if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) { 
             mp.play();
 
         } //chililove: f you click stop when the songs is playing it stops the song.
@@ -343,30 +343,30 @@ public class MyTunesController implements Initializable {
             Song song = currentListSelection.getSelectedItem();
             mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString())); //This line is giving me problems xxx
 
-            //Not working with Mac       
-            mp.setStartTime(new Duration(0));
+               
+            mp.setStartTime(new Duration(0)); //This line of code needs to be written for the player to be functioning on MAC.
             mp.play();
             showsongplayed.setText(song.toString());
-            mp.setVolume(voliumslider.getValue());
+            mp.setVolume(voliumslider.getValue()); //Set up the volume, by getting the volumeslider's value. 
 
         }
     }
 
     @FXML
-    private void clickBackbtn(ActionEvent event) {
-         Song song = currentListSelection.getSelectedItem();
+    private void clickBackbtn(ActionEvent event) {  
+         Song song = currentListSelection.getSelectedItem(); //Gets the song from the list and selects the previous song
         currentListSelection.selectPrevious();
-        if(song==currentListSelection.getSelectedItem()){
+        if(song==currentListSelection.getSelectedItem()){ 
             currentListSelection.selectLast();
         }
 
-        clickStop(event);
+        clickStop(event);   //What are those ? xD 
         playMyDud(event);
 
     }
 
     @FXML
-    private void clickNextbtn(ActionEvent event) {
+    private void clickNextbtn(ActionEvent event) { //Method for the next button function
         Song song = currentListSelection.getSelectedItem();
         currentListSelection.selectNext();
         if(song==currentListSelection.getSelectedItem()){
@@ -379,9 +379,9 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void volSlider(MouseEvent event) {
-
-        if (mp != null) {
+    private void volSlider(MouseEvent event) { 
+     //VolumeSlider-> if the music player doesnt eqaul null aka playing the volumeslider gets the value and sets it so it multiplies and divides with 100.
+        if (mp != null) {  
             System.out.println(voliumslider.getValue());
             mp.setVolume(voliumslider.getValue() * 100);
             mp.setVolume(voliumslider.getValue() / 100);
@@ -389,7 +389,7 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void addsongstoplaylistbutton(ActionEvent event) {
+    private void addsongstoplaylistbutton(ActionEvent event) { 
 
         Playlist playlist = playlistsview.getSelectionModel().getSelectedItem();
         Song song = songTable.getSelectionModel().getSelectedItem();
@@ -409,7 +409,7 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickUp(ActionEvent event) {
+    private void clickUp(ActionEvent event) { //This method gets the button to move songs up in the songs of the Playlist.
 
         int index = playlistSongsView.getSelectionModel().getSelectedIndex();
         if (index != 0) {
@@ -417,34 +417,34 @@ public class MyTunesController implements Initializable {
 
             playlistSongsView.getSelectionModel().clearAndSelect(index - 1);
         }
-
+ //Basically we need the index of the int in the playlistsongsView. index -1 makes the selected item move up.
     }
 
     @FXML
-    private void clickDown(ActionEvent event) {
+    private void clickDown(ActionEvent event) { //This method gets the button to move songs up in the songs of the Playlist.
         int index = playlistSongsView.getSelectionModel().getSelectedIndex();
         if (index != 0) {
             playlistSongsView.getItems().add(index + 1, playlistSongsView.getItems().remove(index));
             playlistSongsView.getSelectionModel().clearAndSelect(index + 1);
         }
-
+     //index +1 because it needs to move the song(item) down.
     }
 
     @FXML
     private void clickplayerSlider(MouseEvent event) {
 
-        // This Code can be used to make a Song Slider 
-        Double time = mp.getTotalDuration().toSeconds();
+        // This Code can be used to make the progression musicplayer bar.
+        Double time = mp.getTotalDuration().toSeconds(); //we get the total duration in seconds.
 
         mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
             playerslider.setValue(newValue.toSeconds());
-        });
-        playerslider.maxProperty().bind(Bindings.createDoubleBinding(
-                () -> mp.getTotalDuration().toSeconds(),
-                mp.totalDurationProperty()));
+        }); //Get the currentTime and add change listner, which will be notified whenever the value of the ObservableValue changes and that we get the new value and set it to the slider 
+        playerslider.maxProperty().bind(Bindings.createDoubleBinding( //We need binding in order for the slider to be bind to the musicplayer(song).
+                () -> mp.getTotalDuration().toSeconds(),          //The media player won't know the total duration of the song before it has read enough info from the song that's why we use binidng.
+                mp.totalDurationProperty()));     
 
-        playerslider.setOnMouseClicked((MouseEvent mouseEvent) -> {
-            mp.seek(Duration.seconds(playerslider.getValue()));
+        playerslider.setOnMouseClicked((MouseEvent mouseEvent) -> { //This Method shows the progress of the progress bar
+            mp.seek(Duration.seconds(playerslider.getValue())); //It seeks the duration in seconds ofc. 
         });
 
     }

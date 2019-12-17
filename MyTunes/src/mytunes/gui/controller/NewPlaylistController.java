@@ -53,13 +53,13 @@ public class NewPlaylistController implements Initializable {
 
     @FXML
     private void CancelPlaylist(ActionEvent event) {
-        
+        //Closes the window if clicked cancel 
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.close();
     }
 
     @FXML
-    private void SavePlaylist(ActionEvent event) {
+    private void SavePlaylist(ActionEvent event) { 
          BllManager bll = new BllManager();
         
         //use this for save playlists.

@@ -52,16 +52,17 @@ public class EditSongController implements Initializable {
     }    
 
     @FXML
-    private void ChooseSong(ActionEvent event) {
+    private void ChooseSong(ActionEvent event) { //This method uses filechooser(chooses files from PC
         FileChooser fileChooser=new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(null);
     }
 
     @FXML
-    private void CancelEditSong(ActionEvent event) {
+    private void CancelEditSong(ActionEvent event) { 
         Stage stage = (Stage)((Node)((EventObject) event).getSource()).getScene().getWindow();
         stage.close();
+        //Gets the window and closes it. 
     }
 
     @FXML
