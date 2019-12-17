@@ -32,17 +32,19 @@ public class PlaylistDBDAO {
     private DBConnectionProvider cp = new DBConnectionProvider();
 
     public void updatePlaylistNameInDB(Playlist playlist) {
-        String stat = "UPDATE playlist/n"
-                + "SET name= '?' /n"
+        String stat = "UPDATE playlist\n"
+                + "SET name=? \n"
                 + "WHERE id=?";
         try (Connection con = cp.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(stat);
             stmt.setString(1, playlist.getName());
             stmt.setInt(2, playlist.getId());
             stmt.execute();
+        } catch (SQLServerException ex) {
+            Logger.getLogger(PlaylistDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            System.out.println("Exception " + ex);
-        }
+            Logger.getLogger(PlaylistDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
 
 

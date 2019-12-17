@@ -70,6 +70,11 @@ public class BllManager {
     public void editSong(Song song) {
         songDBDao.updateSongInDB(song);
     }
+    public void editPlaylist(Playlist playlist){
+    
+        playlistDAO.updatePlaylistNameInDB(playlist);
+        
+    }
     
     
 
