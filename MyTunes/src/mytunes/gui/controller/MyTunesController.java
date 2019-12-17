@@ -39,6 +39,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -126,7 +128,7 @@ public class MyTunesController implements Initializable {
     private TextField searchbarField;
     @FXML
     private Label showsongplayed;
-    
+
     private SelectionModel<Song> currentListSelection;
     @FXML
     private Slider playerslider;
@@ -140,15 +142,14 @@ public class MyTunesController implements Initializable {
             playlistSongsView.getItems().clear();
             playlistSongsView.getItems().addAll(p.getSonglist());
         });
-        
+
         playlistSongsView.getSelectionModel().selectedItemProperty().addListener((observable) -> {
             currentListSelection = playlistSongsView.getSelectionModel();
         });
-        
+
         songTable.getSelectionModel().selectedItemProperty().addListener((observable) -> {
             currentListSelection = songTable.getSelectionModel();
         });
-        
 
         allSongsTitle.setCellValueFactory((param) -> {
 
@@ -179,14 +180,12 @@ public class MyTunesController implements Initializable {
         // TODO
         playlistsview.getItems().clear();
         playlistsview.getItems().addAll(bll.getAllPlaylist());
-        
+
         searchbarField.textProperty().addListener((observable, oldVal, newVal) -> {
-           songTable.getItems().clear();
-           songTable.getItems().addAll(bll.getAllSongsWithFilter(newVal));
+            songTable.getItems().clear();
+            songTable.getItems().addAll(bll.getAllSongsWithFilter(newVal));
         });
 
-       
-        
     }
 
     @FXML
@@ -208,13 +207,16 @@ public class MyTunesController implements Initializable {
     @FXML
     private void clickEditPlaylist(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/mytunes/gui/view/EditPlaylist.fxml"));
-        Scene scene = new Scene(root);
+        FXMLLoader playlistLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditPlaylist.fxml"));
+        Parent root = playlistLoader.load();
+        EditPlaylistController editplaylist = playlistLoader.getController();
+        editplaylist.setList(playlistsview);
+        
 
+        Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-
     }
 
     @FXML
@@ -238,16 +240,15 @@ public class MyTunesController implements Initializable {
         FXMLLoader songLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/EditSong.fxml"));
         Parent root = songLoader.load();
         EditSongController editsong = songLoader.getController();
-        editsong.setSongNew(songTable.getSelectionModel().getSelectedItem()); 
+        editsong.setSongNew(songTable.getSelectionModel().getSelectedItem());
         editsong.setTable(songTable);
-        
+
         Scene scene = new Scene(root);
 
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-        
-        
+
     }
 
     @FXML
@@ -322,9 +323,9 @@ public class MyTunesController implements Initializable {
         if (mp != null && mp.getStatus() != MediaPlayer.Status.STOPPED) {
             mp.stop();
             showsongplayed.setText("");
-            mp.dispose(); 
+            mp.dispose();
         }
-        
+
     }
 
     @FXML
@@ -333,7 +334,7 @@ public class MyTunesController implements Initializable {
         //chililove: if song is paused, play from where songs is paused.
         if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
             mp.play();
-            
+
         } //chililove: f you click stop when the songs is playing it stops the song.
         else if (mp != null && mp.getStatus() == MediaPlayer.Status.PLAYING) {
             mp.pause();
@@ -347,14 +348,17 @@ public class MyTunesController implements Initializable {
             mp.play();
             showsongplayed.setText(song.toString());
             mp.setVolume(voliumslider.getValue());
-            
 
         }
     }
 
     @FXML
     private void clickBackbtn(ActionEvent event) {
+         Song song = currentListSelection.getSelectedItem();
         currentListSelection.selectPrevious();
+        if(song==currentListSelection.getSelectedItem()){
+            currentListSelection.selectLast();
+        }
 
         clickStop(event);
         playMyDud(event);
@@ -363,8 +367,11 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickNextbtn(ActionEvent event) {
-
+        Song song = currentListSelection.getSelectedItem();
         currentListSelection.selectNext();
+        if(song==currentListSelection.getSelectedItem()){
+            currentListSelection.selectFirst();
+        }
 
         clickStop(event);
         playMyDud(event);
@@ -373,13 +380,13 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void volSlider(MouseEvent event) {
-    
-    if(mp!=null){
-     System.out.println(voliumslider.getValue());
-     mp.setVolume(voliumslider.getValue()*100);
-     mp.setVolume(voliumslider.getValue()/100);
+
+        if (mp != null) {
+            System.out.println(voliumslider.getValue());
+            mp.setVolume(voliumslider.getValue() * 100);
+            mp.setVolume(voliumslider.getValue() / 100);
+        }
     }
-    }   
 
     @FXML
     private void addsongstoplaylistbutton(ActionEvent event) {
@@ -392,7 +399,6 @@ public class MyTunesController implements Initializable {
 
     }
 
-
     @FXML
     private void searchbarfield(ActionEvent event) {
     }
@@ -404,42 +410,42 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickUp(ActionEvent event) {
-        
-       int index = playlistSongsView.getSelectionModel().getSelectedIndex();
-         if(index !=0){
-           playlistSongsView.getItems().add(index- 1,playlistSongsView.getItems().remove(index));
-           
-           playlistSongsView.getSelectionModel().clearAndSelect(index - 1);
-         }
-        
+
+        int index = playlistSongsView.getSelectionModel().getSelectedIndex();
+        if (index != 0) {
+            playlistSongsView.getItems().add(index - 1, playlistSongsView.getItems().remove(index));
+
+            playlistSongsView.getSelectionModel().clearAndSelect(index - 1);
+        }
+
     }
 
     @FXML
     private void clickDown(ActionEvent event) {
-         int index = playlistSongsView.getSelectionModel().getSelectedIndex();
-         if(index!=0){
-          playlistSongsView.getItems().add(index+ 1,playlistSongsView.getItems().remove(index));
-          playlistSongsView.getSelectionModel().clearAndSelect(index + 1);
-         }
-        
+        int index = playlistSongsView.getSelectionModel().getSelectedIndex();
+        if (index != 0) {
+            playlistSongsView.getItems().add(index + 1, playlistSongsView.getItems().remove(index));
+            playlistSongsView.getSelectionModel().clearAndSelect(index + 1);
+        }
+
     }
 
     @FXML
     private void clickplayerSlider(MouseEvent event) {
-        
-       // This Code can be used to make a Song Slider 
+
+        // This Code can be used to make a Song Slider 
         Double time = mp.getTotalDuration().toSeconds();
 
-    mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
-        playerslider.setValue(newValue.toSeconds());
-    });
-     playerslider.maxProperty().bind(Bindings.createDoubleBinding(
-    () -> mp.getTotalDuration().toSeconds(),
-    mp.totalDurationProperty()));
-     
-    playerslider.setOnMouseClicked((MouseEvent mouseEvent) -> {
-        mp.seek(Duration.seconds(playerslider.getValue()));
-    });
-    }
+        mp.currentTimeProperty().addListener((ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) -> {
+            playerslider.setValue(newValue.toSeconds());
+        });
+        playerslider.maxProperty().bind(Bindings.createDoubleBinding(
+                () -> mp.getTotalDuration().toSeconds(),
+                mp.totalDurationProperty()));
 
+        playerslider.setOnMouseClicked((MouseEvent mouseEvent) -> {
+            mp.seek(Duration.seconds(playerslider.getValue()));
+        });
+
+    }
 }
