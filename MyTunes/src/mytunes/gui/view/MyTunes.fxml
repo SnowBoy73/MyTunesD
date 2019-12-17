@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -38,10 +39,13 @@
             <TableColumn fx:id="allSongsTime" prefWidth="75.0" text="Time" />
         </columns>
       </TableView>
-      <Button fx:id="playbutton" layoutX="404.0" layoutY="422.0" mnemonicParsing="false" onAction="#playMyDud" prefHeight="54.0" prefWidth="64.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Play" />
-      <Slider fx:id="voliumslider" layoutX="636.0" layoutY="450.0" onMouseDragged="#volSlider" prefHeight="16.0" prefWidth="121.0" value="5.0" />
-      <Button fx:id="backbutton" layoutX="288.0" layoutY="445.0" mnemonicParsing="false" onAction="#clickBackbtn" prefHeight="16.0" prefWidth="58.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Back" />
-      <Button fx:id="nextbutton" layoutX="526.0" layoutY="445.0" mnemonicParsing="false" onAction="#clickNextbtn" style="-fx-background-color: #83a6d1#83a6d1;" text="Next" />
+      <Button fx:id="playbutton" layoutX="405.0" layoutY="405.0" mnemonicParsing="false" onAction="#playMyDud" prefHeight="54.0" prefWidth="64.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Play" />
+      <Slider fx:id="voliumslider" layoutX="659.0" layoutY="433.0" onMouseDragged="#volSlider" prefHeight="16.0" prefWidth="121.0" value="3.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Slider>
+      <Button fx:id="backbutton" layoutX="289.0" layoutY="428.0" mnemonicParsing="false" onAction="#clickBackbtn" prefHeight="16.0" prefWidth="58.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Back" />
+      <Button fx:id="nextbutton" layoutX="527.0" layoutY="428.0" mnemonicParsing="false" onAction="#clickNextbtn" style="-fx-background-color: #83a6d1#83a6d1;" text="Next" />
       <Button fx:id="upbutton" layoutX="218.0" layoutY="268.0" mnemonicParsing="false" onAction="#clickUp" prefHeight="27.0" prefWidth="40.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Up" />
       <Button fx:id="downbutton" layoutX="218.0" layoutY="306.0" mnemonicParsing="false" onAction="#clickDown" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #83a6d1#83a6d1;" text="Down" />
       <Button fx:id="deletebutton" layoutX="218.0" layoutY="338.0" mnemonicParsing="false" onAction="#clickDeletePlaylistSong" style="-fx-background-color: #83a6d1#83a6d1;" text="Delete" />
@@ -56,11 +60,11 @@
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="showsongplayed" cache="true" layoutX="241.0" layoutY="371.0" onDragDetected="#showSongPlayed" prefHeight="22.0" prefWidth="538.0" textFill="#4a5bbf" />
+      <Label fx:id="showsongplayed" cache="true" layoutX="235.0" layoutY="383.0" onDragDetected="#showSongPlayed" prefHeight="22.0" prefWidth="515.0" textFill="#4a5bbf" />
       <TextField fx:id="searchbarField" layoutX="636.0" layoutY="25.0" onAction="#searchbarfield" />
       <Button fx:id="newsongbutton" layoutX="408.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickNewSong" style="-fx-background-color: #83a6d1#83a6d1;" text="New" />
-      <Button fx:id="pausebutton" layoutX="346.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickPause" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Pause" />
-      <Button fx:id="stopbutton" layoutX="468.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickStop" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Stop" />
-      <Slider fx:id="playerslider" layoutX="269.0" layoutY="406.0" onMouseDragged="#clickplayerSlider" prefHeight="16.0" prefWidth="311.0" />
+      <Button fx:id="pausebutton" layoutX="347.0" layoutY="427.0" mnemonicParsing="false" onAction="#clickPause" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Pause" />
+      <Button fx:id="stopbutton" layoutX="469.0" layoutY="427.0" mnemonicParsing="false" onAction="#clickStop" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Stop" />
+      <Slider fx:id="playerslider" blendMode="DIFFERENCE" cache="true" layoutX="258.0" layoutY="468.0" onMouseDragged="#clickplayerSlider" prefHeight="16.0" prefWidth="364.0" style="-fx-background-color: #83a6d1#83a6d1 #83a6d1#83a6d1;" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="258.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="468.0" />
     </children>
 </AnchorPane>
