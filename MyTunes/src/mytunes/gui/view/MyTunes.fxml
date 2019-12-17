@@ -58,7 +58,7 @@
             <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="showsongplayed" cache="true" layoutX="235.0" layoutY="383.0" onDragDetected="#showSongPlayed" prefHeight="22.0" prefWidth="515.0" textFill="#4a5bbf" />
+      <Label fx:id="showsongplayed" alignment="CENTER" cache="true" layoutX="259.0" layoutY="383.0" onDragDetected="#showSongPlayed" prefHeight="22.0" prefWidth="353.0" textFill="#4a5bbf" />
       <TextField fx:id="searchbarField" layoutX="636.0" layoutY="25.0" onAction="#searchbarfield" />
       <Button fx:id="newsongbutton" layoutX="408.0" layoutY="320.0" mnemonicParsing="false" onAction="#clickNewSong" style="-fx-background-color: #83a6d1#83a6d1;" text="New" />
       <Button fx:id="pausebutton" layoutX="347.0" layoutY="427.0" mnemonicParsing="false" onAction="#clickPause" prefHeight="27.0" prefWidth="58.0" style="-fx-background-color: #4a5bbf#4a5bbf;" text="Pause" />
