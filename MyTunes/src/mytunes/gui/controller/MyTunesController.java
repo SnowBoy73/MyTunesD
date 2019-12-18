@@ -45,6 +45,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import mytunes.MyTunes;
 import mytunes.be.Song;
@@ -190,10 +191,10 @@ public class MyTunesController implements Initializable {
 
     @FXML
     private void clickNewPlaylist(ActionEvent event) throws IOException { //This method creates the new playlist 
-       
+
         FXMLLoader playlistLoader = new FXMLLoader(getClass().getResource("/mytunes/gui/view/NewPlaylist.fxml"));
         Parent root = playlistLoader.load();
-        NewPlaylistController newplaylist = playlistLoader.getController(); 
+        NewPlaylistController newplaylist = playlistLoader.getController();
         ObservableList<Playlist> playlist = playlistsview.getItems();
         newplaylist.setPlaylistNew(playlist);
         Scene scene = new Scene(root);
@@ -211,7 +212,6 @@ public class MyTunesController implements Initializable {
         Parent root = playlistLoader.load();
         EditPlaylistController editplaylist = playlistLoader.getController();
         editplaylist.setList(playlistsview);
-        
 
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -313,14 +313,16 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void clickPause(ActionEvent event) { //This method pauses the musicplayer 
+    private void clickPause(ActionEvent event
+    ) { //This method pauses the musicplayer 
 
         mp.pause();
     }
 
     @FXML
-    private void clickStop(ActionEvent event) { //This method stopps the musicplayer
-        if (mp != null && mp.getStatus() != MediaPlayer.Status.STOPPED) {  
+    private void clickStop(ActionEvent event
+    ) { //This method stopps the musicplayer
+        if (mp != null && mp.getStatus() != MediaPlayer.Status.STOPPED) {
             mp.stop();
             showsongplayed.setText("");
             mp.dispose();
@@ -329,10 +331,11 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void playMyDud(ActionEvent event) {
+    private void playMyDud(ActionEvent event
+    ) {
 
         //chililove: if song is paused, play from where songs is paused.
-        if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) { 
+        if (mp != null && mp.getStatus() == MediaPlayer.Status.PAUSED) {
             mp.play();
 
         } //chililove: f you click stop when the songs is playing it stops the song.
@@ -343,20 +346,33 @@ public class MyTunesController implements Initializable {
             Song song = currentListSelection.getSelectedItem();
             mp = new MediaPlayer(new Media(new File(song.getPath()).toURI().toString())); //This line is giving me problems xxx
 
-               
             mp.setStartTime(new Duration(0)); //This line of code needs to be written for the player to be functioning on MAC.
             mp.play();
             showsongplayed.setText(song.toString());
             mp.setVolume(voliumslider.getValue()); //Set up the volume, by getting the volumeslider's value. 
+            mp.currentTimeProperty().addListener(new javafx.beans.value.ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                    if (newValue.toMillis() > mp.getMedia().getDuration().toMillis() - 100) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ignored) {
+                        }
+
+                        clickNextbtn(null);
+                    }
+                }
+            });
 
         }
     }
 
     @FXML
-    private void clickBackbtn(ActionEvent event) {  
-         Song song = currentListSelection.getSelectedItem(); //Gets the song from the list and selects the previous song
+    private void clickBackbtn(ActionEvent event
+    ) {
+        Song song = currentListSelection.getSelectedItem(); //Gets the song from the list and selects the previous song
         currentListSelection.selectPrevious();
-        if(song==currentListSelection.getSelectedItem()){ 
+        if (song == currentListSelection.getSelectedItem()) {
             currentListSelection.selectLast();
         }
 
@@ -369,7 +385,7 @@ public class MyTunesController implements Initializable {
     private void clickNextbtn(ActionEvent event) { //Method for the next button function
         Song song = currentListSelection.getSelectedItem();
         currentListSelection.selectNext();
-        if(song==currentListSelection.getSelectedItem()){
+        if (song == currentListSelection.getSelectedItem()) {
             currentListSelection.selectFirst();
         }
 
@@ -379,9 +395,10 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void volSlider(MouseEvent event) { 
-     //VolumeSlider-> if the music player doesnt eqaul null aka playing the volumeslider gets the value and sets it so it multiplies and divides with 100.
-        if (mp != null) {  
+    private void volSlider(MouseEvent event
+    ) {
+        //VolumeSlider-> if the music player doesnt eqaul null aka playing the volumeslider gets the value and sets it so it multiplies and divides with 100.
+        if (mp != null) {
             System.out.println(voliumslider.getValue());
             mp.setVolume(voliumslider.getValue() * 100);
             mp.setVolume(voliumslider.getValue() / 100);
@@ -389,7 +406,8 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void addsongstoplaylistbutton(ActionEvent event) { 
+    private void addsongstoplaylistbutton(ActionEvent event
+    ) {
 
         Playlist playlist = playlistsview.getSelectionModel().getSelectedItem();
         Song song = songTable.getSelectionModel().getSelectedItem();
@@ -400,16 +418,19 @@ public class MyTunesController implements Initializable {
     }
 
     @FXML
-    private void searchbarfield(ActionEvent event) {
+    private void searchbarfield(ActionEvent event
+    ) {
     }
 
     @FXML
-    private void showSongPlayed(MouseEvent event) {
+    private void showSongPlayed(MouseEvent event
+    ) {
 
     }
 
     @FXML
-    private void clickUp(ActionEvent event) { //This method gets the button to move songs up in the songs of the Playlist.
+    private void clickUp(ActionEvent event
+    ) { //This method gets the button to move songs up in the songs of the Playlist.
 
         int index = playlistSongsView.getSelectionModel().getSelectedIndex();
         if (index != 0) {
@@ -417,21 +438,23 @@ public class MyTunesController implements Initializable {
 
             playlistSongsView.getSelectionModel().clearAndSelect(index - 1);
         }
- //Basically we need the index of the int in the playlistsongsView. index -1 makes the selected item move up.
+        //Basically we need the index of the int in the playlistsongsView. index -1 makes the selected item move up.
     }
 
     @FXML
-    private void clickDown(ActionEvent event) { //This method gets the button to move songs up in the songs of the Playlist.
+    private void clickDown(ActionEvent event
+    ) { //This method gets the button to move songs up in the songs of the Playlist.
         int index = playlistSongsView.getSelectionModel().getSelectedIndex();
         if (index != 0) {
             playlistSongsView.getItems().add(index + 1, playlistSongsView.getItems().remove(index));
             playlistSongsView.getSelectionModel().clearAndSelect(index + 1);
         }
-     //index +1 because it needs to move the song(item) down.
+        //index +1 because it needs to move the song(item) down.
     }
 
     @FXML
-    private void clickplayerSlider(MouseEvent event) {
+    private void clickplayerSlider(MouseEvent event
+    ) {
 
         // This Code can be used to make the progression musicplayer bar.
         Double time = mp.getTotalDuration().toSeconds(); //we get the total duration in seconds.
@@ -440,8 +463,8 @@ public class MyTunesController implements Initializable {
             playerslider.setValue(newValue.toSeconds());
         }); //Get the currentTime and add change listner, which will be notified whenever the value of the ObservableValue changes and that we get the new value and set it to the slider 
         playerslider.maxProperty().bind(Bindings.createDoubleBinding( //We need binding in order for the slider to be bind to the musicplayer(song).
-                () -> mp.getTotalDuration().toSeconds(),          //The media player won't know the total duration of the song before it has read enough info from the song that's why we use binidng.
-                mp.totalDurationProperty()));     
+                () -> mp.getTotalDuration().toSeconds(), //The media player won't know the total duration of the song before it has read enough info from the song that's why we use binidng.
+                mp.totalDurationProperty()));
 
         playerslider.setOnMouseClicked((MouseEvent mouseEvent) -> { //This Method shows the progress of the progress bar
             mp.seek(Duration.seconds(playerslider.getValue())); //It seeks the duration in seconds ofc. 
